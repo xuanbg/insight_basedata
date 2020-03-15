@@ -1,2 +1,2 @@
-# insight_common
-公共服务
+# insight_basedata
+基础数据服务
