@@ -1,8 +1,8 @@
 package com.insight.basedata.common.mapper;
 
 import com.insight.basedata.common.dto.AreaListDto;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2020/3/15
  * @remark 行政区划DAL
  */
-@Mapper
+@Repository
 public interface AreaMapper {
 
     /**
