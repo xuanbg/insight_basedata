@@ -2,8 +2,8 @@ package com.insight.basedata.area;
 
 import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.mapper.AreaMapper;
-import com.insight.util.ReplyHelper;
-import com.insight.util.pojo.Reply;
+import com.insight.utils.ReplyHelper;
+import com.insight.utils.pojo.Reply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

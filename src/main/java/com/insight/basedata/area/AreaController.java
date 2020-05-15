@@ -1,7 +1,7 @@
 package com.insight.basedata.area;
 
-import com.insight.util.ReplyHelper;
-import com.insight.util.pojo.Reply;
+import com.insight.utils.ReplyHelper;
+import com.insight.utils.pojo.Reply;
 import org.springframework.web.bind.annotation.*;
 
 /**
