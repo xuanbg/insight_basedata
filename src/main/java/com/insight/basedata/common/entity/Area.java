@@ -1,19 +1,21 @@
-package com.insight.basedata.common.dto;
+package com.insight.basedata.common.entity;
 
 import com.insight.utils.Json;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * @author 宣炳刚
- * @date 2020/3/15
- * @remark 行政区划DTO
+ * @date 2020/6/2
+ * @remark 行政区划实体类
  */
-public class AreaListDto implements Serializable {
+public class Area implements Serializable {
     private static final long serialVersionUID = -1L;
 
     /**
-     * UUID主键
+     * 唯一ID
      */
     private String id;
 
@@ -30,12 +32,28 @@ public class AreaListDto implements Serializable {
     /**
      * 名称
      */
+    @NotEmpty
     private String name;
 
     /**
      * 别名
      */
     private String alias;
+
+    /**
+     * 创建人
+     */
+    private String creator;
+
+    /**
+     * 创建人ID
+     */
+    private String creatorId;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createdTime;
 
     public String getId() {
         return id;
@@ -75,6 +93,30 @@ public class AreaListDto implements Serializable {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(LocalDateTime createdTime) {
+        this.createdTime = createdTime;
     }
 
     @Override

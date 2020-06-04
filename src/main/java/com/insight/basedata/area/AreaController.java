@@ -1,8 +1,13 @@
 package com.insight.basedata.area;
 
+import com.insight.basedata.common.entity.Area;
+import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
+import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author 宣炳刚
@@ -11,12 +16,13 @@ import org.springframework.web.bind.annotation.*;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/common/basedata/area")
+@RequestMapping("/common/area")
 public class AreaController {
     private final AreaService service;
 
     /**
      * 构造方法
+     *
      * @param service AreaService
      */
     public AreaController(AreaService service) {
@@ -46,5 +52,47 @@ public class AreaController {
         }
 
         return service.getAreas(id);
+    }
+
+    /**
+     * 新增行政区划
+     *
+     * @param info 用户关键信息
+     * @param area 行政区划实体
+     * @return Reply
+     */
+    @PostMapping("/v1.0/areas")
+    public Reply addArea(@RequestHeader("loginInfo") String info, @Valid @RequestBody Area area) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.addArea(loginInfo, area);
+    }
+
+    /**
+     * 编辑行政区划
+     *
+     * @param info 用户关键信息
+     * @param area 行政区划实体
+     * @return Reply
+     */
+    @PutMapping("/v1.0/areas")
+    public Reply editArea(@RequestHeader("loginInfo") String info, @Valid @RequestBody Area area) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.editArea(loginInfo, area);
+    }
+
+    /**
+     * 删除行政区划
+     *
+     * @param info 用户关键信息
+     * @param id   行政区划ID
+     * @return Reply
+     */
+    @DeleteMapping("/v1.0/areas")
+    public Reply editArea(@RequestHeader("loginInfo") String info, @RequestBody String id) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.deleteArea(loginInfo, id);
     }
 }

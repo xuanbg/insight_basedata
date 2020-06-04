@@ -1,8 +1,11 @@
 package com.insight;
 
+import com.insight.basedata.common.TaskRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author 宣炳刚
@@ -11,6 +14,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  */
 @SpringBootApplication
 @EnableEurekaClient
+@EnableFeignClients
 public class Application {
 
     /**
@@ -21,4 +25,13 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-}
+
+    /**
+     * 加载初始化数据
+     *
+     * @return TaskRunner
+     */
+    @Bean
+    public TaskRunner taskRunner() {
+        return new TaskRunner();
+    }}
