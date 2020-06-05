@@ -95,4 +95,36 @@ public class AreaController {
 
         return service.deleteArea(loginInfo, id);
     }
+
+    /**
+     * 获取日志列表
+     *
+     * @param info    用户关键信息
+     * @param keyword 查询关键词
+     * @param page    分页页码
+     * @param size    每页记录数
+     * @return Reply
+     */
+    @GetMapping("/v1.0/areas/logs")
+    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam(required = false) String keyword,
+                         @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.getLogs(loginInfo.getTenantId(), keyword, page, size);
+    }
+
+    /**
+     * 获取日志详情
+     *
+     * @param id 日志ID
+     * @return Reply
+     */
+    @GetMapping("/v1.0/areas/logs/{id}")
+    Reply getLog(@PathVariable String id) {
+        if (id == null || id.isEmpty()) {
+            return ReplyHelper.invalidParam();
+        }
+
+        return service.getLog(id);
+    }
 }

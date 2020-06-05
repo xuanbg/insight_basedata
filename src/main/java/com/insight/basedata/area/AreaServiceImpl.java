@@ -1,11 +1,14 @@
 package com.insight.basedata.area;
 
+import com.insight.basedata.common.Core;
+import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
 import com.insight.basedata.common.mapper.AreaMapper;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.LoginInfo;
+import com.insight.utils.pojo.OperateType;
 import com.insight.utils.pojo.Reply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +24,20 @@ import java.util.List;
  */
 @Service
 public class AreaServiceImpl implements AreaService {
+    private static final String BUSINESS = "行政区划管理";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final AreaMapper mapper;
+    private final Core core;
 
     /**
      * 构造方法
      *
      * @param mapper AreaMapper
+     * @param core   Core
      */
-    public AreaServiceImpl(AreaMapper mapper) {
+    public AreaServiceImpl(AreaMapper mapper, Core core) {
         this.mapper = mapper;
+        this.core = core;
     }
 
     /**
@@ -79,13 +86,15 @@ public class AreaServiceImpl implements AreaService {
      */
     @Override
     public Reply addArea(LoginInfo info, Area area) {
-        area.setId(Util.uuid());
+        String id = Util.uuid();
+        area.setId(id);
         area.setCreator(info.getUserName());
         area.setCreatorId(info.getUserId());
         area.setCreatedTime(LocalDateTime.now());
         mapper.addArea(area);
+        LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, area);
 
-        return ReplyHelper.success();
+        return ReplyHelper.success(id);
     }
 
     /**
@@ -97,12 +106,15 @@ public class AreaServiceImpl implements AreaService {
      */
     @Override
     public Reply editArea(LoginInfo info, Area area) {
-        AreaListDto data = mapper.getArea(area.getId());
-        if (data == null){
+        String id = area.getId();
+        AreaListDto data = mapper.getArea(id);
+        if (data == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
         }
 
         mapper.updateArea(area);
+        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, area);
+
         return ReplyHelper.success();
     }
 
@@ -116,11 +128,38 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public Reply deleteArea(LoginInfo info, String id) {
         AreaListDto data = mapper.getArea(id);
-        if (data == null){
+        if (data == null) {
             return ReplyHelper.fail("ID不存在,未删除数据");
         }
 
         mapper.deleteArea(id);
+        LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
+
         return ReplyHelper.success();
+    }
+
+    /**
+     * 获取日志列表
+     *
+     * @param tenantId 租户ID
+     * @param keyword  查询关键词
+     * @param page     分页页码
+     * @param size     每页记录数
+     * @return Reply
+     */
+    @Override
+    public Reply getLogs(String tenantId, String keyword, int page, int size) {
+        return core.getLogs(tenantId, BUSINESS, keyword, page, size);
+    }
+
+    /**
+     * 获取日志详情
+     *
+     * @param id 日志ID
+     * @return Reply
+     */
+    @Override
+    public Reply getLog(String id) {
+        return core.getLog(id);
     }
 }

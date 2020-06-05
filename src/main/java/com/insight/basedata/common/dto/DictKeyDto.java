@@ -3,7 +3,6 @@ package com.insight.basedata.common.dto;
 import com.insight.utils.Json;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author 宣炳刚
@@ -19,14 +18,19 @@ public class DictKeyDto implements Serializable {
     private String id;
 
     /**
+     * 排序字段
+     */
+    private Integer index;
+
+    /**
      * 编码
      */
     private String code;
 
     /**
-     * 名称
+     * 键值
      */
-    private String name;
+    private String value;
 
     /**
      * 扩展数据
@@ -46,6 +50,14 @@ public class DictKeyDto implements Serializable {
         this.id = id;
     }
 
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
     public String getCode() {
         return code;
     }
@@ -54,12 +66,12 @@ public class DictKeyDto implements Serializable {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public String getValue() {
+        return value;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public Object getExtend() {

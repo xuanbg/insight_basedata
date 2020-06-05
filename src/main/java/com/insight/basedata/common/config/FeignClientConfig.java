@@ -16,7 +16,7 @@ import java.util.Enumeration;
  */
 @Configuration
 public class FeignClientConfig implements RequestInterceptor {
-    private static final String REGULAR = "fingerprint|requestId|loginInfo";
+    private static final String REGULAR = "fingerprint|requestid|logininfo";
 
     /**
      * 应用配置

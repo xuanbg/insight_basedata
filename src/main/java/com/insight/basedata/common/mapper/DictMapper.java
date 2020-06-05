@@ -4,7 +4,7 @@ import com.insight.basedata.common.dto.DictDto;
 import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
-import com.insight.utils.common.ArrayTypeHandler;
+import com.insight.utils.common.JsonTypeHandler;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -35,8 +35,8 @@ public interface DictMapper {
      * @param dictId   字典ID
      * @return 键值DTO集合
      */
-    @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = ArrayTypeHandler.class)})
-    @Select("select * from (select * from icd_dict_value where dict_id = #{dictId} and isnull(tenant_id) union all" +
+    @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
+    @Select("select * from (select * from icd_dict_value where dict_id = #{dictId} and isnull(tenant_id) union all " +
             "select * from icd_dict_value where dict_id = #{dictId} and tenant_id = #{tenantId}) t order by t.index;")
     List<DictKeyDto> getDictKeys(@Param("tenantId") String tenantId, @Param("dictId") String dictId);
 
@@ -80,6 +80,7 @@ public interface DictMapper {
      * @param id 键值ID
      * @return 键值DTO
      */
+    @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select * from icd_dict_value where id = #{id};")
     DictKey getDictKey(String id);
 

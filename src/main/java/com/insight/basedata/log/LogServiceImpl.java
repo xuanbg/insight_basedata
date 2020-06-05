@@ -1,14 +1,8 @@
 package com.insight.basedata.log;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.insight.basedata.common.mapper.LogMapper;
-import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.Log;
+import com.insight.basedata.common.Core;
 import com.insight.utils.pojo.Reply;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -17,15 +11,15 @@ import java.util.List;
  */
 @Service
 public class LogServiceImpl implements LogService {
-    private final LogMapper mapper;
+    private final Core core;
 
     /**
      * 构造函数
      *
-     * @param mapper LogMapper
+     * @param core LogMapper
      */
-    public LogServiceImpl(LogMapper mapper) {
-        this.mapper = mapper;
+    public LogServiceImpl(Core core) {
+        this.core = core;
     }
 
     /**
@@ -40,11 +34,7 @@ public class LogServiceImpl implements LogService {
      */
     @Override
     public Reply getLogs(String tenantId, String business, String keyword, int page, int size) {
-        PageHelper.startPage(page, size);
-        List<Log> logs = mapper.getLogs(tenantId, business, keyword);
-        PageInfo<Log> pageInfo = new PageInfo<>(logs);
-
-        return ReplyHelper.success(logs, pageInfo.getTotal());
+        return core.getLogs(tenantId, business, keyword, page, size);
     }
 
     /**
@@ -55,11 +45,6 @@ public class LogServiceImpl implements LogService {
      */
     @Override
     public Reply getLog(String id) {
-        Log log = mapper.getLog(id);
-        if (log == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
-        }
-
-        return ReplyHelper.success(log);
+        return core.getLog(id);
     }
 }

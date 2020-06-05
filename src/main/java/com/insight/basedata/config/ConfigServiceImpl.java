@@ -2,6 +2,7 @@ package com.insight.basedata.config;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.entity.InterfaceConfig;
 import com.insight.basedata.common.mapper.ConfigMapper;
@@ -24,14 +25,17 @@ import java.util.List;
 public class ConfigServiceImpl implements ConfigService {
     private static final String BUSINESS = "接口配置管理";
     private final ConfigMapper mapper;
+    private final Core core;
 
     /**
      * 构造函数
      *
      * @param mapper ConfigMapper
+     * @param core   Core
      */
-    public ConfigServiceImpl(ConfigMapper mapper) {
+    public ConfigServiceImpl(ConfigMapper mapper, Core core) {
         this.mapper = mapper;
+        this.core = core;
     }
 
     /**
@@ -156,5 +160,30 @@ public class ConfigServiceImpl implements ConfigService {
         Redis.set("Config:Interface", json);
 
         return ReplyHelper.success();
+    }
+
+    /**
+     * 获取日志列表
+     *
+     * @param tenantId 租户ID
+     * @param keyword  查询关键词
+     * @param page     分页页码
+     * @param size     每页记录数
+     * @return Reply
+     */
+    @Override
+    public Reply getLogs(String tenantId, String keyword, int page, int size) {
+        return core.getLogs(tenantId, BUSINESS, keyword, page, size);
+    }
+
+    /**
+     * 获取日志详情
+     *
+     * @param id 日志ID
+     * @return Reply
+     */
+    @Override
+    public Reply getLog(String id) {
+        return core.getLog(id);
     }
 }

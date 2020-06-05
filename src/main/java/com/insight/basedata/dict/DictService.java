@@ -85,4 +85,23 @@ public interface DictService {
      * @return Reply
      */
     Reply deleteDictKey(LoginInfo info, String id);
+
+    /**
+     * 获取日志列表
+     *
+     * @param tenantId 租户ID
+     * @param keyword  查询关键词
+     * @param page     分页页码
+     * @param size     每页记录数
+     * @return Reply
+     */
+    Reply getLogs(String tenantId, String keyword, int page, int size);
+
+    /**
+     * 获取日志详情
+     *
+     * @param id 日志ID
+     * @return Reply
+     */
+    Reply getLog(String id);
 }
