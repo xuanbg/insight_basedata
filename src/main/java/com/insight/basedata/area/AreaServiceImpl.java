@@ -141,15 +141,15 @@ public class AreaServiceImpl implements AreaService {
     /**
      * 获取日志列表
      *
-     * @param tenantId 租户ID
-     * @param keyword  查询关键词
-     * @param page     分页页码
-     * @param size     每页记录数
+     * @param info    用户关键信息
+     * @param keyword 查询关键词
+     * @param page    分页页码
+     * @param size    每页记录数
      * @return Reply
      */
     @Override
-    public Reply getLogs(String tenantId, String keyword, int page, int size) {
-        return core.getLogs(tenantId, BUSINESS, keyword, page, size);
+    public Reply getLogs(LoginInfo info, String keyword, int page, int size) {
+        return core.getLogs(info, BUSINESS, keyword, page, size);
     }
 
     /**

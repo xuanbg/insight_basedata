@@ -1,6 +1,7 @@
 package com.insight.basedata.log;
 
 import com.insight.basedata.common.Core;
+import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,7 @@ public class LogServiceImpl implements LogService {
     /**
      * 获取日志列表
      *
-     * @param tenantId 租户ID
+     * @param info     用户关键信息
      * @param business 业务类型
      * @param keyword  查询关键词
      * @param page     分页页码
@@ -33,8 +34,8 @@ public class LogServiceImpl implements LogService {
      * @return Reply
      */
     @Override
-    public Reply getLogs(String tenantId, String business, String keyword, int page, int size) {
-        return core.getLogs(tenantId, business, keyword, page, size);
+    public Reply getLogs(LoginInfo info, String business, String keyword, int page, int size) {
+        return core.getLogs(info, business, keyword, page, size);
     }
 
     /**

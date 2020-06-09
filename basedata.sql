@@ -94,19 +94,19 @@ CREATE TABLE `ici_interface` (
 DROP TABLE IF EXISTS `icl_operate_log`;
 CREATE TABLE `icl_operate_log` (
   `id` char(32) NOT NULL COMMENT 'UUID主键',
+  `app_id` char(32) NOT NULL COMMENT '应用ID',
+  `business` varchar(16) NOT NULL COMMENT '业务名称',
   `tenant_id` char(32) DEFAULT NULL COMMENT '租户ID',
-  `type` varchar(16) NOT NULL COMMENT '类型',
   `business_id` char(32) DEFAULT NULL COMMENT '业务ID',
-  `business` varchar(16) DEFAULT NULL COMMENT '业务名称',
+  `type` varchar(16) NOT NULL COMMENT '类型',
   `content` json DEFAULT NULL COMMENT '日志内容',
   `creator` varchar(32) NOT NULL COMMENT '创建人,系统自动为系统',
   `creator_id` char(32) NOT NULL COMMENT '创建人ID,系统自动为32个0',
   `created_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_operate_log_app_id&business` (`app_id`, `business`) USING BTREE,
   KEY `idx_operate_log_tenant_id` (`tenant_id`) USING BTREE,
-  KEY `idx_operate_log_type` (`type`) USING BTREE,
   KEY `idx_operate_log_business_id` (`business_id`) USING BTREE,
-  KEY `idx_operate_log_creator_id` (`creator_id`) USING BTREE,
   KEY `idx_operate_log_created_time` (`created_time`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='操作日志记录表';
 

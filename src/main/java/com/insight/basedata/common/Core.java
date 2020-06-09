@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.insight.basedata.common.mapper.LogMapper;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.Log;
+import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import org.springframework.stereotype.Component;
 
@@ -30,16 +31,16 @@ public class Core {
     /**
      * 获取日志列表
      *
-     * @param tenantId 租户ID
+     * @param info 租户ID
      * @param business 业务类型
      * @param keyword  查询关键词
      * @param page     分页页码
      * @param size     每页记录数
      * @return Reply
      */
-    public Reply getLogs(String tenantId, String business, String keyword, int page, int size) {
+    public Reply getLogs(LoginInfo info, String business, String keyword, int page, int size) {
         PageHelper.startPage(page, size);
-        List<Log> logs = mapper.getLogs(tenantId, business, keyword);
+        List<Log> logs = mapper.getLogs(info.getAppId(), info.getTenantId(), business, keyword);
         PageInfo<Log> pageInfo = new PageInfo<>(logs);
 
         return ReplyHelper.success(logs, pageInfo.getTotal());

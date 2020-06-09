@@ -41,7 +41,7 @@ public class LogController {
                          @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.getLogs(loginInfo.getTenantId(), business, keyword, page, size);
+        return service.getLogs(loginInfo, business, keyword, page, size);
     }
 
     /**
