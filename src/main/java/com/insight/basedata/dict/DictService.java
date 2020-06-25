@@ -4,6 +4,7 @@ import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.SearchDto;
 
 /**
  * @author 宣炳刚
@@ -15,13 +16,11 @@ public interface DictService {
     /**
      * 获取字典列表
      *
-     * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param info 用户关键信息
+     * @param dto  查询参数DTO
      * @return Reply
      */
-    Reply getDicts(LoginInfo info, String keyword, int page, int size);
+    Reply getDicts(LoginInfo info, SearchDto dto);
 
     /**
      * 获取字典键值集合
@@ -62,7 +61,7 @@ public interface DictService {
     /**
      * 新增字典键值
      *
-     * @param info 用户关键信息
+     * @param info    用户关键信息
      * @param dictKey 字典键值实体
      * @return Reply
      */
@@ -71,7 +70,7 @@ public interface DictService {
     /**
      * 编辑字典键值
      *
-     * @param info 用户关键信息
+     * @param info    用户关键信息
      * @param dictKey 字典键值实体
      * @return Reply
      */

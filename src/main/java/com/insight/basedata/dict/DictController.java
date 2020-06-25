@@ -6,6 +6,7 @@ import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.SearchDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,18 +34,15 @@ public class DictController {
     /**
      * 获取字典列表
      *
-     * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param info 用户关键信息
+     * @param dto  查询参数DTO
      * @return Reply
      */
     @GetMapping("/v1.0/dicts")
-    public Reply getDicts(@RequestHeader("loginInfo") String info, @RequestParam(required = false) String keyword,
-                          @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size) {
+    public Reply getDicts(@RequestHeader("loginInfo") String info, SearchDto dto) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.getDicts(loginInfo, keyword, page, size);
+        return service.getDicts(loginInfo, dto);
     }
 
     /**

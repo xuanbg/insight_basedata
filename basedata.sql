@@ -1,3 +1,42 @@
+-- ----------------------------
+-- Table structure for icc_param
+-- ----------------------------
+DROP TABLE IF EXISTS `icc_param`;
+CREATE TABLE `icc_param` (
+  `id` char(32) NOT NULL COMMENT 'UUID主键',
+  `tenant_id` char(32) NOT NULL COMMENT '租户ID',
+  `module_id` char(32) NOT NULL COMMENT '模块ID',
+  `user_id` char(32) DEFAULT NULL COMMENT '用户ID',
+  `key` varchar(16) NOT NULL COMMENT '配置KEY',
+  `value` varchar(64) NOT NULL COMMENT '配置键值',
+  `creator` varchar(64) NOT NULL COMMENT '创建人',
+  `creator_id` char(32) NOT NULL COMMENT '创建人ID',
+  `created_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_param_id` (`tenant_id`,`module_id`),
+  KEY `idx_param_user_id` (`user_id`),
+  KEY `idx_param_key` (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='配置表';
+
+-- ----------------------------
+-- Table structure for icc_template
+-- ----------------------------
+DROP TABLE IF EXISTS `icc_template`;
+CREATE TABLE `icc_template` (
+  `id` char(32) NOT NULL COMMENT 'UUID主键',
+  `tenant_id` char(32) NOT NULL COMMENT '租户ID',
+  `code` varchar(16) NOT NULL COMMENT '编码',
+  `name` varchar(64) NOT NULL COMMENT '名称',
+  `content` text NOT NULL COMMENT '模板内容',
+  `remark` varchar(1024) DEFAULT NULL COMMENT '描述',
+  `is_invalid` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否失效:0.有效;1.失效',
+  `creator` varchar(64) NOT NULL COMMENT '创建人',
+  `creator_id` char(32) NOT NULL COMMENT '创建人ID',
+  `created_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_template_tenant_id` (`tenant_id`),
+  KEY `idx_template_code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='报表模板表';
 
 -- ----------------------------
 -- Table structure for icd_area
@@ -17,7 +56,7 @@ CREATE TABLE `icd_area` (
   KEY `idx_area_code` (`code`),
   KEY `idx_area_name` (`name`),
   KEY `idx_area_alias` (`alias`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='行政区划表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='行政区划表';
 
 
 -- ----------------------------
@@ -37,7 +76,7 @@ CREATE TABLE `icd_dict_key` (
   PRIMARY KEY (`id`),
   KEY `idx_dict_app_id` (`app_id`),
   KEY `idx_dict_code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='字典表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='字典表';
 
 -- ----------------------------
 -- Table structure for icd_dict_value
@@ -59,7 +98,7 @@ CREATE TABLE `icd_dict_value` (
   KEY `idx_dict_dict_id` (`dict_id`),
   KEY `idx_dict_tenant_id` (`tenant_id`),
   KEY `idx_dict_code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='字典键值表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='字典键值表';
 
 
 -- ----------------------------
@@ -85,7 +124,7 @@ CREATE TABLE `ici_interface` (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_interface_hash` (`method`,`url`) USING BTREE,
   KEY `idx_interface_created_time` (`created_time`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='接口配置表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='接口配置表';
 
 
 -- ----------------------------
@@ -108,7 +147,7 @@ CREATE TABLE `icl_operate_log` (
   KEY `idx_operate_log_tenant_id` (`tenant_id`) USING BTREE,
   KEY `idx_operate_log_business_id` (`business_id`) USING BTREE,
   KEY `idx_operate_log_created_time` (`created_time`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='操作日志记录表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='操作日志记录表';
 
 
 -- ----------------------------
@@ -286,6 +325,23 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 (replace(uuid(), '-', ''), '加载接口配置表', 'GET', '/common/config/v1.0/configs/load', 'loadConfig', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取接口配置日志列表', 'GET', '/common/config/v1.0/configs/logs', 'getConfigLog', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取接口配置日志详情', 'GET', '/common/config/v1.0/configs/logs/{id}', 'getConfigLog', 1, NULL, NULL, NULL, 1, 1, now()),
+
+(replace(uuid(), '-', ''), '获取选项参数列表', 'GET', '/common/param/v1.0/params', 'setParam', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取选项参数', 'GET', '/common/param/v1.0/params/{id}', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
+(replace(uuid(), '-', ''), '更新选项参数', 'PUT', '/common/param/v1.0/params', 'setParam', 1, NULL, NULL, NULL, 1, 1, now()),
+
+(replace(uuid(), '-', ''), '获取报表模板列表', 'GET', '/common/report/v1.0/templates', 'getTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取报表模板详情', 'GET', '/common/report/v1.0/templates/{id}', 'getTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取报表模板内容', 'GET', '/common/report/v1.0/templates/{id}/content', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
+(replace(uuid(), '-', ''), '导入报表模板', 'POST', '/common/report/v1.0/templates', 'importTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '复制报表模板', 'POST', '/common/report/v1.0/templates/{id}', 'copyTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '编辑报表模板', 'PUT', '/common/report/v1.0/templates', 'editTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '删除报表模板', 'DELETE', '/common/report/v1.0/templates', 'deleteTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '设计报表模板', 'PUT', '/common/report/v1.0/templates/content', 'designTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '禁用报表模板', 'PUT', '/common/report/v1.0/templates/disable', 'disableTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '启用报表模板', 'PUT', '/common/report/v1.0/templates/enable', 'enableTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取报表模板日志列表', 'GET', '/common/report/v1.0/templates/logs', 'getTemplateLog', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取报表模板日志详情', 'GET', '/common/report/v1.0/templates/logs/{id}', 'getTemplateLog', 1, NULL, NULL, NULL, 1, 1, now()),
 
 (replace(uuid(), '-', ''), '查询全部省级行政区划', 'GET', '/common/area/v1.0/areas/provinces', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '查询指定行政区划的下级区划', 'GET', '/common/area/v1.0/areas/{is}/subs', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),

@@ -17,6 +17,7 @@ import com.insight.utils.Util;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.OperateType;
 import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.SearchDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -51,14 +52,12 @@ public class DictServiceImpl implements DictService {
     /**
      * 获取字典列表
      *
-     * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param info 用户关键信息
+     * @param dto  查询参数DTO
      * @return Reply
      */
     @Override
-    public Reply getDicts(LoginInfo info, String keyword, int page, int size) {
+    public Reply getDicts(LoginInfo info, SearchDto dto) {
         List<String> ids = null;
         String tenantId = info.getTenantId();
         if (tenantId != null) {
@@ -72,7 +71,7 @@ public class DictServiceImpl implements DictService {
             ids = apps.stream().map(AppListDto::getId).collect(Collectors.toList());
         }
 
-        PageHelper.startPage(page, size);
+        PageHelper.startPage(dto.getPage(), dto.getSize());
         List<DictDto> list = mapper.getDicts(ids);
         PageInfo<DictDto> pageInfo = new PageInfo<>(list);
 
