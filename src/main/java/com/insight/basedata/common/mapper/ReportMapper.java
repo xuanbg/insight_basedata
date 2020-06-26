@@ -59,7 +59,7 @@ public interface ReportMapper {
      *
      * @param template 报表模板实体
      */
-    @Update("update icc_template set name = #{}, remark = #{} where id = #{id};")
+    @Update("update icc_template set `name` = #{name}, remark = #{remark} where id = #{id};")
     void updateTemplate(Template template);
 
     /**

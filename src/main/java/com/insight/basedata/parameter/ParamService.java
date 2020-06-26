@@ -13,7 +13,7 @@ import com.insight.utils.pojo.Reply;
 public interface ParamService {
 
     /**
-     * 获取选项参数列表
+     * 查询选项参数
      *
      * @param info 用户关键信息
      * @param dto  选项参数查询DTO

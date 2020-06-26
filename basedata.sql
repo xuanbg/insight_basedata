@@ -327,7 +327,7 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 (replace(uuid(), '-', ''), '获取接口配置日志详情', 'GET', '/common/config/v1.0/configs/logs/{id}', 'getConfigLog', 1, NULL, NULL, NULL, 1, 1, now()),
 
 (replace(uuid(), '-', ''), '获取选项参数列表', 'GET', '/common/param/v1.0/params', 'setParam', 1, NULL, NULL, NULL, 1, 1, now()),
-(replace(uuid(), '-', ''), '获取选项参数', 'GET', '/common/param/v1.0/params/{id}', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
+(replace(uuid(), '-', ''), '获取选项参数', 'GET', '/common/param/v1.0/params/value', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
 (replace(uuid(), '-', ''), '更新选项参数', 'PUT', '/common/param/v1.0/params', 'setParam', 1, NULL, NULL, NULL, 1, 1, now()),
 
 (replace(uuid(), '-', ''), '获取报表模板列表', 'GET', '/common/report/v1.0/templates', 'getTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
