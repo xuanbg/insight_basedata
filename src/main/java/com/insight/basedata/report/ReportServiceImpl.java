@@ -255,9 +255,12 @@ public class ReportServiceImpl implements ReportService {
             return ReplyHelper.fail("您无权删除该数据");
         }
 
-        mapper.deleteTemplate(id);
-        LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
+        int count = mapper.deleteTemplate(id);
+        if (count == 0) {
+            return ReplyHelper.fail("无法删除使用中数据");
+        }
 
+        LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
         return ReplyHelper.success();
     }
 

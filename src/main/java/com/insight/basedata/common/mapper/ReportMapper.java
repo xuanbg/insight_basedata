@@ -83,7 +83,8 @@ public interface ReportMapper {
      * 删除报表模板数据
      *
      * @param id 报表模板ID
+     * @return 受影响行数
      */
     @Delete("delete from icc_template where id = #{id} and is_invalid = 1;")
-    void deleteTemplate(String id);
+    int deleteTemplate(String id);
 }
