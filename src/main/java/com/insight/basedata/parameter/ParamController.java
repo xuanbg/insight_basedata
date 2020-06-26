@@ -7,6 +7,8 @@ import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author 宣炳刚
  * @date 2020/6/25
@@ -59,13 +61,13 @@ public class ParamController {
      * 更新选项参数
      *
      * @param info 用户关键信息
-     * @param dto  选项参数实体
+     * @param parameters 选项参数实体集合
      * @return Reply
      */
     @PutMapping("/v1.0/params")
-    public Reply setParameter(@RequestHeader("loginInfo") String info, @RequestBody Parameter dto) {
+    public Reply setParameter(@RequestHeader("loginInfo") String info, @RequestBody List<Parameter> parameters) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.setParameter(loginInfo, dto);
+        return service.setParameter(loginInfo, parameters);
     }
 }

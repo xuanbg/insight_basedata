@@ -5,6 +5,8 @@ import com.insight.basedata.common.entity.Parameter;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 
+import java.util.List;
+
 /**
  * @author 宣炳刚
  * @date 2020/6/24
@@ -33,9 +35,9 @@ public interface ParamService {
     /**
      * 更新选项参数
      *
-     * @param info 用户关键信息
-     * @param dto  选项参数实体
+     * @param info       用户关键信息
+     * @param parameters 选项参数实体集合
      * @return Reply
      */
-    Reply setParameter(LoginInfo info, Parameter dto);
+    Reply setParameter(LoginInfo info, List<Parameter> parameters);
 }

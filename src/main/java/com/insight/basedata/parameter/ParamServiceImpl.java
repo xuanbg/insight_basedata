@@ -9,6 +9,7 @@ import com.insight.utils.Util;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -67,24 +68,27 @@ public class ParamServiceImpl implements ParamService {
     /**
      * 更新选项参数
      *
-     * @param info 用户关键信息
-     * @param dto  选项参数实体
+     * @param info       用户关键信息
+     * @param parameters 选项参数实体集合
      * @return Reply
      */
     @Override
-    public Reply setParameter(LoginInfo info, Parameter dto) {
-        String id = dto.getId();
-        if (id == null || id.isEmpty()) {
-            id = Util.uuid();
-            dto.setId(id);
-            dto.setTenantId(info.getTenantId());
-            dto.setCreator(info.getUserName());
-            dto.setCreatorId(info.getUserId());
-            dto.setCreatedTime(LocalDateTime.now());
+    @Transactional
+    public Reply setParameter(LoginInfo info, List<Parameter> parameters) {
+        for (Parameter dto : parameters) {
+            String id = dto.getId();
+            if (id == null || id.isEmpty()) {
+                id = Util.uuid();
+                dto.setId(id);
+                dto.setTenantId(info.getTenantId());
+                dto.setCreator(info.getUserName());
+                dto.setCreatorId(info.getUserId());
+                dto.setCreatedTime(LocalDateTime.now());
 
-            mapper.addParameter(dto);
-        } else {
-            mapper.updateParameter(dto);
+                mapper.addParameter(dto);
+            } else {
+                mapper.updateParameter(dto);
+            }
         }
 
         return ReplyHelper.success();
