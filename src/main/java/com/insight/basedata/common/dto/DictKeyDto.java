@@ -18,6 +18,16 @@ public class DictKeyDto implements Serializable {
     private String id;
 
     /**
+     * 租户ID
+     */
+    private String tenantId;
+
+    /**
+     * 字典ID
+     */
+    private String dictId;
+
+    /**
      * 排序字段
      */
     private Integer index;
@@ -48,6 +58,22 @@ public class DictKeyDto implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
+
+    public String getDictId() {
+        return dictId;
+    }
+
+    public void setDictId(String dictId) {
+        this.dictId = dictId;
     }
 
     public Integer getIndex() {

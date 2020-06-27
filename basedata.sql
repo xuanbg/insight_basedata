@@ -65,9 +65,9 @@ CREATE TABLE `icd_area` (
 DROP TABLE IF EXISTS `icd_dict_key`;
 CREATE TABLE `icd_dict_key` (
   `id` char(32) NOT NULL COMMENT 'UUID主键',
-  `app_id` char(32) DEFAULT NULL COMMENT '应用ID',
-  `app_name` varchar(64) DEFAULT NULL COMMENT '应用名称',
-  `code` varchar(16) DEFAULT NULL COMMENT '编码',
+  `app_id` char(32) NOT NULL COMMENT '应用ID',
+  `app_name` varchar(64) NOT NULL COMMENT '应用名称',
+  `code` varchar(16) NOT NULL COMMENT '编码',
   `name` varchar(64) NOT NULL COMMENT '名称',
   `remark` varchar(1024) DEFAULT NULL COMMENT '描述',
   `creator` varchar(64) NOT NULL COMMENT '创建人',
@@ -84,7 +84,7 @@ CREATE TABLE `icd_dict_key` (
 DROP TABLE IF EXISTS `icd_dict_value`;
 CREATE TABLE `icd_dict_value` (
   `id` char(32) NOT NULL COMMENT 'UUID主键',
-  `dict_id` char(32) DEFAULT NULL COMMENT '字典ID',
+  `dict_id` char(32) NOT NULL COMMENT '字典ID',
   `tenant_id` char(32) DEFAULT NULL COMMENT '租户ID',
   `index` int(11) unsigned NOT NULL COMMENT '序号',
   `code` varchar(16) DEFAULT NULL COMMENT '编码',

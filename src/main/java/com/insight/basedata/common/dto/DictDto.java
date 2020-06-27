@@ -3,7 +3,6 @@ package com.insight.basedata.common.dto;
 import com.insight.utils.Json;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author 宣炳刚
@@ -17,6 +16,11 @@ public class DictDto implements Serializable {
      * 唯一ID
      */
     private String id;
+
+    /**
+     * 应用ID
+     */
+    private String appId;
 
     /**
      * 应用名称
@@ -44,6 +48,14 @@ public class DictDto implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
     }
 
     public String getAppName() {

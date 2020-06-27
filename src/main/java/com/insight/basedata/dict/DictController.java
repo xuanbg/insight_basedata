@@ -133,7 +133,7 @@ public class DictController {
      * 删除字典键值
      *
      * @param info 用户关键信息
-     * @param id   字典ID
+     * @param id   字典键值ID
      * @return Reply
      */
     @DeleteMapping("/v1.0/dicts/keys")
