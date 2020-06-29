@@ -93,6 +93,20 @@ public class DictServiceImpl implements DictService {
     }
 
     /**
+     * 获取指定键名的键值集合
+     *
+     * @param info 用户关键信息
+     * @param key  字典键名
+     * @return Reply
+     */
+    @Override
+    public Reply getValues(LoginInfo info, String key) {
+        List<DictKeyDto> list = mapper.getValues(info.getAppId(), info.getTenantId(), key);
+
+        return ReplyHelper.success(list);
+    }
+
+    /**
      * 新增字典
      *
      * @param info 用户关键信息

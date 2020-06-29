@@ -60,6 +60,20 @@ public class DictController {
     }
 
     /**
+     * 获取指定键名的键值集合
+     *
+     * @param info 用户关键信息
+     * @param key  字典键名
+     * @return Reply
+     */
+    @GetMapping("/v1.0/dicts/values")
+    public Reply getValues(@RequestHeader("loginInfo") String info, @RequestParam String key) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.getValues(loginInfo, key);
+    }
+
+    /**
      * 新增字典
      *
      * @param info 用户关键信息
