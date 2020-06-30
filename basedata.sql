@@ -354,6 +354,7 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 
 (replace(uuid(), '-', ''), '获取字典列表', 'GET', '/common/dict/v1.0/dicts', "getDict", 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取字典键值集合', 'GET', '/common/dict/v1.0/dicts/{id}', "getDict", 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取指定键名的键值集合', 'GET', '/common/dict/v1.0/dicts/values', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '新增字典', 'POST', '/common/dict/v1.0/dicts', "newDict", 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '编辑字典', 'PUT', '/common/dict/v1.0/dicts', "editDict", 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '删除字典', 'DELETE', '/common/dict/v1.0/dicts', "deleteDict", 1, NULL, NULL, NULL, 1, 1, now()),
