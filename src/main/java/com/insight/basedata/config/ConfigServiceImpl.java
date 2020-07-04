@@ -82,15 +82,8 @@ public class ConfigServiceImpl implements ConfigService {
     public Reply newConfig(LoginInfo info, InterfaceConfig dto) {
         String id = Util.uuid();
         dto.setId(id);
-        if (dto.getNeedToken() == null) {
-            dto.setNeedToken(false);
-        }
-
-        if (dto.getLogResult() == null) {
-            dto.setLogResult(false);
-        }
-
         dto.setCreatedTime(LocalDateTime.now());
+
         mapper.addConfig(dto);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dto);
 

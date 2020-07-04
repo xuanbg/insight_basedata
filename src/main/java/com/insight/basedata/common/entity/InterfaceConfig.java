@@ -129,7 +129,7 @@ public class InterfaceConfig {
     }
 
     public String getAuthCode() {
-        return authCode;
+        return authCode != null && authCode.isEmpty() ? null : authCode;
     }
 
     public void setAuthCode(String authCode) {
@@ -145,7 +145,7 @@ public class InterfaceConfig {
     }
 
     public Integer getLimitCycle() {
-        return limitCycle;
+        return limitCycle != null && limitCycle == 0 ? null : limitCycle;
     }
 
     public void setLimitCycle(Integer limitCycle) {
@@ -153,7 +153,7 @@ public class InterfaceConfig {
     }
 
     public Integer getLimitMax() {
-        return limitMax;
+        return limitMax != null && limitMax == 0 ? null : limitMax;
     }
 
     public void setLimitMax(Integer limitMax) {
