@@ -21,13 +21,21 @@ public class TaskRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         List<InterfaceDto> configs = mapper.loadConfigs();
-        if (configs == null || configs.isEmpty()) {
-            return;
+        if (configs != null && !configs.isEmpty()) {
+            String json = Json.toJson(configs);
+            Redis.set("Config:Interface", json);
         }
 
-        String json = Json.toJson(configs);
-        Redis.set("Config:Interface", json);
-        Redis.set("Config:DefaultHead", "head_default.png");
-        Redis.set("Config:FileHost", "https://images.insight.com/");
+        String headKey = "Config:DefaultHead";
+        String defaultHead = Redis.get(headKey);
+        if (defaultHead == null || defaultHead.isEmpty()) {
+            Redis.set(headKey, "head_default.png");
+        }
+
+        String hostKey = "Config:FileHost";
+        String fileHost = Redis.get(hostKey);
+        if (fileHost == null || fileHost.isEmpty()) {
+            Redis.set(hostKey, "https://images.i-facture.com/");
+        }
     }
 }
