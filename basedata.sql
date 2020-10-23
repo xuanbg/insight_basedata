@@ -7,7 +7,7 @@ CREATE TABLE `icc_param` (
   `tenant_id` char(32) NOT NULL COMMENT '租户ID',
   `module_id` char(32) NOT NULL COMMENT '模块ID',
   `user_id` char(32) DEFAULT NULL COMMENT '用户ID',
-  `key` varchar(16) NOT NULL COMMENT '配置KEY',
+  `key` varchar(32) NOT NULL COMMENT '配置KEY',
   `value` varchar(64) NOT NULL COMMENT '配置键值',
   `creator` varchar(64) NOT NULL COMMENT '创建人',
   `creator_id` char(32) NOT NULL COMMENT '创建人ID',
