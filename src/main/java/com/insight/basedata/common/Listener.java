@@ -36,7 +36,7 @@ public class Listener {
     }
 
     /**
-     * 从队列订阅新增角色消息
+     * 从队列订阅日志消息
      *
      * @param channel Channel
      * @param message Message
@@ -58,6 +58,8 @@ public class Listener {
         } catch (Exception ex) {
             logger.error("发生异常: {}", ex.getMessage());
             channel.basicPublish(QueueConfig.DELAY_EXCHANGE_NAME, QueueConfig.DELAY_QUEUE_NAME, null, message.getBody());
+        }finally {
+            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         }
     }
 }
