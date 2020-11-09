@@ -294,9 +294,10 @@ public class ReportServiceImpl implements ReportService {
      * @return 模板编码
      */
     private String getCode(String tenantId) {
-        String group = "Report-Template:" + tenantId;
+        String group = "Common:Template:" + tenantId;
+        String format = "RT-#5";
         while (true) {
-            String code = Generator.newCode("T-#4", group, false);
+            String code = Generator.newCode(format, group, false);
             int count = mapper.getCount(tenantId, code);
             if (count > 0) {
                 continue;
