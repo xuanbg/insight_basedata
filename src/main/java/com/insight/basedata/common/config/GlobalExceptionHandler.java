@@ -2,9 +2,11 @@ package com.insight.basedata.common.config;
 
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
+import com.insight.utils.common.BusinessException;
 import com.insight.utils.pojo.Reply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -158,6 +160,28 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 业务异常
+     *
+     * @param ex 业务异常
+     * @return Reply
+     */
+    @ExceptionHandler(BusinessException.class)
+    public Reply handleBusinessException(BusinessException ex) {
+        return ReplyHelper.fail(ex.getMessage());
+    }
+
+    /**
+     * 数据库操作出现异常：插入、删除和修改数据的时候，违背数据完整性约束抛出的异常
+     *
+     * @param ex 违背数据完整性约异常
+     * @return Reply
+     */
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public Reply handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        return ReplyHelper.invalidParam(ex.getCause().getMessage());
+    }
+
+    /**
      * 数据库操作出现异常：插入、删除和修改数据的时候，违背数据完整性约束抛出的异常
      *
      * @param ex 违背数据完整性约异常
@@ -242,7 +266,7 @@ public class GlobalExceptionHandler {
      */
     private void initError(Exception ex) {
         String message = ex.getMessage();
-        if (message == null){
+        if (message == null) {
             message = ex.getClass().getSimpleName();
         }
 

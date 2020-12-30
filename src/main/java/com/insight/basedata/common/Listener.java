@@ -44,7 +44,7 @@ public class Listener {
      */
     @RabbitHandler
     @RabbitListener(queues = QueueConfig.PROCESS_QUEUE_NAME)
-    public void receiveRole(Channel channel, Message message) throws IOException {
+    public void receiveLog(Channel channel, Message message) throws IOException {
         try {
             String body = new String(message.getBody());
             Log log = Json.toBean(body, Log.class);
