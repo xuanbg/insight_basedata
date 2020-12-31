@@ -316,6 +316,12 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 (replace(uuid(), '-', ''), '获取用户消息详情', 'GET', '/common/message/v1.0/messages/{id}', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '删除用户消息', 'DELETE', '/common/message/v1.0/messages', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 
+-- 上传文件接口
+(replace(uuid(), '-', ''), '获取七牛上传Token', 'GET', '/common/file/v1.0/token', 'getQiniuToken', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '文件直接上传', 'POST', '/common/file/v1.0/upload', 'uploadFile', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '文件流上传', 'POST', '/common/file/v1.0/stream', 'uploadFile', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), 'Base64编码上传', 'POST', '/common/file/v1.0/data', 'uploadFile', 1, NULL, NULL, NULL, 1, 1, now()),
+
 -- 基础数据接口配置
 (replace(uuid(), '-', ''), '获取接口配置列表', 'GET', '/common/config/v1.0/configs', 'getConfig', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取接口配置详情', 'GET', '/common/config/v1.0/configs/{id}', 'getConfig', 1, NULL, NULL, NULL, 1, 1, now()),
