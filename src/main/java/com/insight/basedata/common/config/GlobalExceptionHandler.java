@@ -4,6 +4,7 @@ import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.common.BusinessException;
 import com.insight.utils.pojo.Reply;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -157,6 +158,19 @@ public class GlobalExceptionHandler {
         LOGGER.info("参数类型不匹配: {}", ex.getMessage());
 
         return ReplyHelper.invalidParam("参数类型不匹配");
+    }
+
+    /**
+     * 服务调用异常
+     *
+     * @param ex 服务调用异常
+     * @return Reply
+     */
+    @ExceptionHandler(FeignException.class)
+    public Reply handleUnexpectedTypeException(FeignException ex) {
+        LOGGER.info("服务调用异常: {}", ex.getMessage());
+
+        return ReplyHelper.fail("服务调用异常");
     }
 
     /**

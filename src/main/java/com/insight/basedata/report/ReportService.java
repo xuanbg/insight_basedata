@@ -1,5 +1,6 @@
 package com.insight.basedata.report;
 
+import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
@@ -94,6 +95,24 @@ public interface ReportService {
      * @return Reply
      */
     Reply deleteTemplate(LoginInfo info, String id);
+
+    /**
+     * 获取报表详情
+     *
+     * @param info 用户关键信息
+     * @param id   报表ID
+     * @return Reply
+     */
+    Reply getReport(LoginInfo info, long id);
+
+    /**
+     * 新增报表
+     *
+     * @param info   用户关键信息
+     * @param report 报表实体类
+     * @return Reply
+     */
+    Reply newReport(LoginInfo info, Report report);
 
     /**
      * 获取日志列表

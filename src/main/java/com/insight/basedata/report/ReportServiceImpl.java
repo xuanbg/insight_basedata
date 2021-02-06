@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.dto.TemplateDto;
+import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.basedata.common.mapper.ReportMapper;
 import com.insight.utils.Generator;
@@ -262,6 +263,44 @@ public class ReportServiceImpl implements ReportService {
 
         LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
         return ReplyHelper.success();
+    }
+
+    /**
+     * 获取报表详情
+     *
+     * @param info 用户关键信息
+     * @param id   报表ID
+     * @return Reply
+     */
+    @Override
+    public Reply getReport(LoginInfo info, long id) {
+        Report data = mapper.getReport(id);
+        if (data == null) {
+            return ReplyHelper.fail("ID不存在,未读取数据");
+        }
+
+        if (!data.getTenantId().equals(info.getTenantId())) {
+            return ReplyHelper.fail("您无权读取该数据");
+        }
+
+        return ReplyHelper.success(data);
+    }
+
+    /**
+     * 新增报表
+     *
+     * @param info   用户关键信息
+     * @param report 报表实体类
+     * @return Reply
+     */
+    @Override
+    public Reply newReport(LoginInfo info, Report report) {
+        report.setTenantId(info.getTenantId());
+        report.setCreator(info.getUserName());
+        report.setCreatorId(info.getUserId());
+
+        int count = mapper.addReport(report);
+        return count > 0 ? ReplyHelper.created(report) : ReplyHelper.fail("保存数据失败");
     }
 
     /**

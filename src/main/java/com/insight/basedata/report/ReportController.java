@@ -1,5 +1,6 @@
 package com.insight.basedata.report;
 
+import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.LoginInfo;
@@ -166,6 +167,34 @@ public class ReportController {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.deleteTemplate(loginInfo, id);
+    }
+
+    /**
+     * 获取报表实例详情
+     *
+     * @param info 用户关键信息
+     * @param id   实例ID
+     * @return Reply
+     */
+    @GetMapping("/v1.0/reports/{id}")
+    public Reply getReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.getReport(loginInfo, id);
+    }
+
+    /**
+     * 新增报表实例
+     *
+     * @param info   用户关键信息
+     * @param report 报表实例实体
+     * @return Reply
+     */
+    @PostMapping("/v1.0/reports")
+    public Reply importTemplate(@RequestHeader("loginInfo") String info, @RequestBody Report report) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.newReport(loginInfo, report);
     }
 
     /**

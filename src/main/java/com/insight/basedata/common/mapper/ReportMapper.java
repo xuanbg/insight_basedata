@@ -1,6 +1,7 @@
 package com.insight.basedata.common.mapper;
 
 import com.insight.basedata.common.dto.TemplateDto;
+import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.utils.pojo.SearchDto;
 import org.apache.ibatis.annotations.*;
@@ -87,4 +88,24 @@ public interface ReportMapper {
      */
     @Delete("delete from icc_template where id = #{id} and is_invalid = 1;")
     int deleteTemplate(String id);
+
+    /**
+     * 获取报表详情
+     *
+     * @param id 报表ID
+     * @return 报表详情
+     */
+    @Select("select * from icc_report where id = #{id};")
+    Report getReport(long id);
+
+
+    /**
+     * 新增报表
+     *
+     * @param report 报表实体类
+     * @return 受影响行数
+     */
+    @Insert("insert icc_report (id, tenant_id, content, creator, creator_id, created_time) " +
+            "values (#{id}, #{tenantId}, #{content}, #{creator}, #{creatorId}, now());")
+    int addReport(Report report);
 }

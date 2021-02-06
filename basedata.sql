@@ -39,6 +39,21 @@ CREATE TABLE `icc_template` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='报表模板表';
 
 -- ----------------------------
+-- Table structure for icc_report
+-- ----------------------------
+DROP TABLE IF EXISTS `icc_report`;
+CREATE TABLE `icc_report` (
+  `id` char(32) NOT NULL COMMENT 'UUID主键',
+  `tenant_id` char(32) NOT NULL COMMENT '租户ID',
+  `content` text NOT NULL COMMENT '模板内容',
+  `creator` varchar(64) NOT NULL COMMENT '创建人',
+  `creator_id` char(32) NOT NULL COMMENT '创建人ID',
+  `created_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_report_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=COMPACT COMMENT='报表实例表';
+
+-- ----------------------------
 -- Table structure for icd_area
 -- ----------------------------
 DROP TABLE IF EXISTS `icd_area`;
@@ -332,7 +347,7 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 (replace(uuid(), '-', ''), '获取接口配置日志列表', 'GET', '/common/config/v1.0/configs/logs', 'getConfigLog', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取接口配置日志详情', 'GET', '/common/config/v1.0/configs/logs/{id}', 'getConfigLog', 1, NULL, NULL, NULL, 1, 1, now()),
 
-(replace(uuid(), '-', ''), '获取选项参数列表', 'GET', '/common/param/v1.0/params', 'setParam', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取选项参数列表', 'GET', '/common/param/v1.0/params', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取选项参数', 'GET', '/common/param/v1.0/params/value', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
 (replace(uuid(), '-', ''), '更新选项参数', 'PUT', '/common/param/v1.0/params', 'setParam', 1, NULL, NULL, NULL, 1, 1, now()),
 
@@ -346,6 +361,8 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 (replace(uuid(), '-', ''), '设计报表模板', 'PUT', '/common/report/v1.0/templates/content', 'designTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '禁用报表模板', 'PUT', '/common/report/v1.0/templates/disable', 'disableTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '启用报表模板', 'PUT', '/common/report/v1.0/templates/enable', 'enableTemplate', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '获取报表实例详情', 'GET', '/common/report/v1.0/reports/{id}', 'getReport', 1, NULL, NULL, NULL, 1, 1, now()),
+(replace(uuid(), '-', ''), '新增报表实例', 'POST', '/common/report/v1.0/reports', 'newReport', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取报表模板日志列表', 'GET', '/common/report/v1.0/templates/logs', 'getTemplateLog', 1, NULL, NULL, NULL, 1, 1, now()),
 (replace(uuid(), '-', ''), '获取报表模板日志详情', 'GET', '/common/report/v1.0/templates/logs/{id}', 'getTemplateLog', 1, NULL, NULL, NULL, 1, 1, now()),
 
