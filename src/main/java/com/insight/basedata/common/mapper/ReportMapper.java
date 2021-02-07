@@ -90,22 +90,29 @@ public interface ReportMapper {
     int deleteTemplate(String id);
 
     /**
-     * 获取报表详情
-     *
-     * @param id 报表ID
-     * @return 报表详情
-     */
-    @Select("select id, tenant_id, content as bytes, creator, creator_id, created_time from icc_report where id = #{id};")
-    Report getReport(long id);
-
-
-    /**
      * 新增报表
      *
-     * @param report 报表实体类
+     * @param report 报表实例实体类
      * @return 受影响行数
      */
     @Insert("insert icc_report (id, tenant_id, content, creator, creator_id, created_time) " +
             "values (#{id}, #{tenantId}, #{bytes}, #{creator}, #{creatorId}, now());")
     int addReport(Report report);
+
+    /**
+     * 获取报表详情
+     *
+     * @param id 报表实例ID
+     * @return 报表详情
+     */
+    @Select("select id, tenant_id, content as bytes, creator, creator_id, created_time from icc_report where id = #{id};")
+    Report getReport(long id);
+
+    /**
+     * 删除报表实例
+     * @param id 报表实例ID
+     * @return 受影响行数
+     */
+    @Delete("delete from icc_report where id = #{id};")
+    int deleteReport(long id);
 }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * @author 宣炳刚
  * @date 2020/6/2
- * @remark 报表实体类
+ * @remark 报表实例实体类
  */
 public class Report implements Serializable {
     private static final long serialVersionUID = -1L;

@@ -267,6 +267,23 @@ public class ReportServiceImpl implements ReportService {
     }
 
     /**
+     * 新增报表实例
+     *
+     * @param info   用户关键信息
+     * @param report 报表实例实体类
+     * @return Reply
+     */
+    @Override
+    public Reply newReport(LoginInfo info, Report report) {
+        report.setTenantId(info.getTenantId());
+        report.setCreator(info.getUserName());
+        report.setCreatorId(info.getUserId());
+
+        int count = mapper.addReport(report);
+        return count > 0 ? ReplyHelper.created(report) : ReplyHelper.fail("保存数据失败");
+    }
+
+    /**
      * 获取报表详情
      *
      * @param info 用户关键信息
@@ -297,20 +314,25 @@ public class ReportServiceImpl implements ReportService {
     }
 
     /**
-     * 新增报表
+     * 删除报表实例
      *
-     * @param info   用户关键信息
-     * @param report 报表实体类
+     * @param info 用户关键信息
+     * @param id   报表实例ID
      * @return Reply
      */
     @Override
-    public Reply newReport(LoginInfo info, Report report) {
-        report.setTenantId(info.getTenantId());
-        report.setCreator(info.getUserName());
-        report.setCreatorId(info.getUserId());
+    public Reply deleteReport(LoginInfo info, long id) {
+        Report data = mapper.getReport(id);
+        if (data == null) {
+            return ReplyHelper.fail("ID不存在,未读取数据");
+        }
 
-        int count = mapper.addReport(report);
-        return count > 0 ? ReplyHelper.created(report) : ReplyHelper.fail("保存数据失败");
+        if (!data.getTenantId().equals(info.getTenantId())) {
+            return ReplyHelper.fail("您无权读取该数据");
+        }
+
+        int count = mapper.deleteReport(id);
+        return count > 0 ? ReplyHelper.success("删除数据成功") : ReplyHelper.fail("删除数据失败");
     }
 
     /**

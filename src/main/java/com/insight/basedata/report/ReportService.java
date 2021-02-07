@@ -97,22 +97,31 @@ public interface ReportService {
     Reply deleteTemplate(LoginInfo info, String id);
 
     /**
-     * 获取报表详情
+     * 新增报表实例
+     *
+     * @param info   用户关键信息
+     * @param report 报表实例实体类
+     * @return Reply
+     */
+    Reply newReport(LoginInfo info, Report report);
+
+    /**
+     * 获取报表实例
      *
      * @param info 用户关键信息
-     * @param id   报表ID
+     * @param id   报表实例ID
      * @return Reply
      */
     Reply getReport(LoginInfo info, long id);
 
     /**
-     * 新增报表
+     * 删除报表实例
      *
-     * @param info   用户关键信息
-     * @param report 报表实体类
+     * @param info 用户关键信息
+     * @param id   报表实例ID
      * @return Reply
      */
-    Reply newReport(LoginInfo info, Report report);
+    Reply deleteReport(LoginInfo info, long id);
 
     /**
      * 获取日志列表

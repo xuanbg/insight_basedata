@@ -170,20 +170,6 @@ public class ReportController {
     }
 
     /**
-     * 获取报表实例详情
-     *
-     * @param info 用户关键信息
-     * @param id   实例ID
-     * @return Reply
-     */
-    @GetMapping("/v1.0/reports/{id}")
-    public Reply getReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.getReport(loginInfo, id);
-    }
-
-    /**
      * 新增报表实例
      *
      * @param info   用户关键信息
@@ -195,6 +181,34 @@ public class ReportController {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.newReport(loginInfo, report);
+    }
+
+    /**
+     * 获取报表实例
+     *
+     * @param info 用户关键信息
+     * @param id   报表实例ID
+     * @return Reply
+     */
+    @GetMapping("/v1.0/reports/{id}")
+    public Reply getReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.getReport(loginInfo, id);
+    }
+
+    /**
+     * 删除报表实例
+     *
+     * @param info 用户关键信息
+     * @param id   报表实例ID
+     * @return Reply
+     */
+    @DeleteMapping("/v1.0/reports/{id}")
+    public Reply deleteReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
+        return service.deleteReport(loginInfo, id);
     }
 
     /**
