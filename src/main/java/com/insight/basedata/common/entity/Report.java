@@ -24,6 +24,11 @@ public class Report implements Serializable {
     private String tenantId;
 
     /**
+     * 二进制报表内容
+     */
+    private Byte[] bytes;
+
+    /**
      * 报表内容
      */
     private String content;
@@ -57,6 +62,14 @@ public class Report implements Serializable {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    public Byte[] getBytes() {
+        return bytes;
+    }
+
+    public void setBytes(Byte[] bytes) {
+        this.bytes = bytes;
     }
 
     public String getContent() {

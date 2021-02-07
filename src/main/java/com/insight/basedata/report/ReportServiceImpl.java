@@ -9,6 +9,7 @@ import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.basedata.common.mapper.ReportMapper;
 import com.insight.utils.Generator;
+import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.LoginInfo;
@@ -282,6 +283,15 @@ public class ReportServiceImpl implements ReportService {
         if (!data.getTenantId().equals(info.getTenantId())) {
             return ReplyHelper.fail("您无权读取该数据");
         }
+
+        Byte[] bytes = data.getBytes();
+        Integer[] content = new Integer[bytes.length];
+        for (int i = 0; i < bytes.length; i++){
+            content[i] = bytes[i] & 0xff;
+        }
+
+        data.setBytes(null);
+        data.setContent(Json.toJson(content));
 
         return ReplyHelper.success(data);
     }

@@ -95,7 +95,7 @@ public interface ReportMapper {
      * @param id 报表ID
      * @return 报表详情
      */
-    @Select("select * from icc_report where id = #{id};")
+    @Select("select id, tenant_id, content as bytes, creator, creator_id, created_time from icc_report where id = #{id};")
     Report getReport(long id);
 
 
@@ -106,6 +106,6 @@ public interface ReportMapper {
      * @return 受影响行数
      */
     @Insert("insert icc_report (id, tenant_id, content, creator, creator_id, created_time) " +
-            "values (#{id}, #{tenantId}, #{content}, #{creator}, #{creatorId}, now());")
+            "values (#{id}, #{tenantId}, #{bytes}, #{creator}, #{creatorId}, now());")
     int addReport(Report report);
 }
