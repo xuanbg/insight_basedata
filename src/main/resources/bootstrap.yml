@@ -10,7 +10,7 @@ spring:
         service-name: ${spring.application.name}
         ip-address: ${spring.cloud.client.ip-address}
         prefer-ip-address: true
-        health-check-critical-timeout: 10
+        health-check-critical-timeout: 10s
         heartbeat:
           enabled: true
       config:
