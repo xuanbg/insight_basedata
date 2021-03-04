@@ -14,7 +14,7 @@ spring:
         enabled: true
         format: yaml
         prefix: config
-        defaultContext: common-basedata
+        defaultContext: ${spring.application.name}
   profiles:
     active: dev
 ---
