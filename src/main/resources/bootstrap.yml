@@ -1,5 +1,5 @@
 server:
-  port: 6502
+  port: 6202
 spring:
   application:
     name: common-basedata
