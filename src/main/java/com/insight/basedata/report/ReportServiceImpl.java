@@ -324,7 +324,7 @@ public class ReportServiceImpl implements ReportService {
     public Reply deleteReport(LoginInfo info, long id) {
         Report data = mapper.getReport(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
+            return ReplyHelper.success("ID不存在,未读取数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
