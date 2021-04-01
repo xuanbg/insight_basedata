@@ -67,7 +67,7 @@ public class GlobalExceptionHandler {
         String msg = "不合法的参数: " + ex.getMessage();
         logger(LogLevel.WARN, msg);
 
-        return ReplyHelper.invalidParam("不合法的参数");
+        return ReplyHelper.invalidParam(msg);
     }
 
     /**
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
         String msg = "参数绑定错误: " + ex.getMessage();
         logger(LogLevel.WARN, msg);
 
-        return ReplyHelper.invalidParam("参数绑定错误");
+        return ReplyHelper.invalidParam(msg);
     }
 
     /**
@@ -95,7 +95,7 @@ public class GlobalExceptionHandler {
         String msg = "参数解析失败: " + ex.getMessage();
         logger(LogLevel.WARN, msg);
 
-        return ReplyHelper.invalidParam("参数解析失败");
+        return ReplyHelper.invalidParam(msg);
     }
 
     /**
@@ -115,7 +115,10 @@ public class GlobalExceptionHandler {
         }
 
         String parameter = error.getField();
-        return ReplyHelper.invalidParam("参数「" + parameter + "」" + error.getDefaultMessage());
+        String msg = "参数绑定失败: " + parameter;
+        logger(LogLevel.WARN, msg);
+
+        return ReplyHelper.invalidParam(msg);
     }
 
     /**
@@ -138,7 +141,7 @@ public class GlobalExceptionHandler {
         String msg = "参数绑定失败: " + parameter;
         logger(LogLevel.WARN, msg);
 
-        return ReplyHelper.invalidParam("参数「" + parameter + "」" + error.getDefaultMessage());
+        return ReplyHelper.invalidParam(msg);
     }
 
     /**
@@ -152,7 +155,7 @@ public class GlobalExceptionHandler {
         String msg = "不支持当前媒体类型: " + ex.getMessage();
         logger(LogLevel.WARN, msg);
 
-        return ReplyHelper.invalidParam("不支持当前媒体类型");
+        return ReplyHelper.invalidParam(msg);
     }
 
     /**
@@ -166,7 +169,7 @@ public class GlobalExceptionHandler {
         String msg = "参数类型不匹配: " + ex.getMessage();
         logger(LogLevel.WARN, msg);
 
-        return ReplyHelper.invalidParam("参数类型不匹配");
+        return ReplyHelper.invalidParam(msg);
     }
 
     /**
@@ -180,7 +183,7 @@ public class GlobalExceptionHandler {
         String msg = "服务调用异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail("服务调用异常");
+        return ReplyHelper.fail(msg);
     }
 
     /**
@@ -194,7 +197,7 @@ public class GlobalExceptionHandler {
         String msg = "业务发生异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(ex.getMessage());
+        return ReplyHelper.fail(msg);
     }
 
     /**
@@ -205,10 +208,10 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public Reply handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        String msg = "数据库操作异常: " + ex.getMessage();
+        String msg = "数据库操作异常: " + ex.getCause().getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.invalidParam(ex.getCause().getMessage());
+        return ReplyHelper.fail(msg);
     }
 
     /**
@@ -222,7 +225,7 @@ public class GlobalExceptionHandler {
         String msg = "数据库操作异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.error();
+        return ReplyHelper.fail(msg);
     }
 
     /**
@@ -236,7 +239,7 @@ public class GlobalExceptionHandler {
         String msg = "数据库操作异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.error();
+        return ReplyHelper.fail(msg);
     }
 
     /**
@@ -250,7 +253,7 @@ public class GlobalExceptionHandler {
         String msg = "空指针异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.error();
+        return ReplyHelper.fail(msg);
     }
 
     /**
@@ -264,7 +267,7 @@ public class GlobalExceptionHandler {
         String msg = "异步请求超时异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.error();
+        return ReplyHelper.fail(msg);
     }
 
     /**
