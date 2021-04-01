@@ -176,7 +176,7 @@ public class GlobalExceptionHandler {
      * @return Reply
      */
     @ExceptionHandler(FeignException.class)
-    public Reply handleUnexpectedTypeException(FeignException ex) {
+    public Reply handleFeignException(FeignException ex) {
         String msg = "服务调用异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
