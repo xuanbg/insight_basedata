@@ -11,6 +11,7 @@ import org.springframework.boot.logging.LogLevel;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -220,9 +221,23 @@ public class GlobalExceptionHandler {
      * @param ex 违背数据完整性约异常
      * @return Reply
      */
+    @ExceptionHandler(BadSqlGrammarException.class)
+    public Reply handleBadSqlGrammarException(BadSqlGrammarException ex) {
+        String msg = "数据库操作异常: " + ex.getCause().getMessage();
+        logger(LogLevel.ERROR, msg);
+
+        return ReplyHelper.fail(msg);
+    }
+
+    /**
+     * 数据库操作出现异常：插入、删除和修改数据的时候，违背数据完整性约束抛出的异常
+     *
+     * @param ex 违背数据完整性约异常
+     * @return Reply
+     */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public Reply handleSqlIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException ex) {
-        String msg = "数据库操作异常: " + ex.getMessage();
+        String msg = "数据库操作异常: " + ex.getCause().getMessage();
         logger(LogLevel.ERROR, msg);
 
         return ReplyHelper.fail(msg);
@@ -236,7 +251,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(SQLSyntaxErrorException.class)
     public Reply handleSqlSyntaxErrorException(SQLSyntaxErrorException ex) {
-        String msg = "数据库操作异常: " + ex.getMessage();
+        String msg = "数据库操作异常: " + ex.getCause().getMessage();
         logger(LogLevel.ERROR, msg);
 
         return ReplyHelper.fail(msg);
