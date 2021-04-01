@@ -174,6 +174,20 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 业务异常
+     *
+     * @param ex 业务异常
+     * @return Reply
+     */
+    @ExceptionHandler(BusinessException.class)
+    public Reply handleBusinessException(BusinessException ex) {
+        String msg = "业务发生异常: " + ex.getMessage();
+        logger(LogLevel.WARN, msg);
+
+        return ReplyHelper.fail(msg);
+    }
+
+    /**
      * 服务调用异常
      *
      * @param ex 服务调用异常
@@ -184,21 +198,7 @@ public class GlobalExceptionHandler {
         String msg = "服务调用异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(msg);
-    }
-
-    /**
-     * 业务异常
-     *
-     * @param ex 业务异常
-     * @return Reply
-     */
-    @ExceptionHandler(BusinessException.class)
-    public Reply handleBusinessException(BusinessException ex) {
-        String msg = "业务发生异常: " + ex.getMessage();
-        logger(LogLevel.ERROR, msg);
-
-        return ReplyHelper.fail(msg);
+        return ReplyHelper.error();
     }
 
     /**
@@ -212,7 +212,7 @@ public class GlobalExceptionHandler {
         String msg = "数据库操作异常: " + ex.getCause().getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(msg);
+        return ReplyHelper.error();
     }
 
     /**
@@ -226,7 +226,7 @@ public class GlobalExceptionHandler {
         String msg = "数据库操作异常: " + ex.getCause().getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(msg);
+        return ReplyHelper.error();
     }
 
     /**
@@ -240,7 +240,7 @@ public class GlobalExceptionHandler {
         String msg = "数据库操作异常: " + ex.getCause().getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(msg);
+        return ReplyHelper.error();
     }
 
     /**
@@ -254,7 +254,7 @@ public class GlobalExceptionHandler {
         String msg = "数据库操作异常: " + ex.getCause().getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(msg);
+        return ReplyHelper.error();
     }
 
     /**
@@ -268,7 +268,7 @@ public class GlobalExceptionHandler {
         String msg = "空指针异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(msg);
+        return ReplyHelper.error();
     }
 
     /**
@@ -282,7 +282,7 @@ public class GlobalExceptionHandler {
         String msg = "异步请求超时异常: " + ex.getMessage();
         logger(LogLevel.ERROR, msg);
 
-        return ReplyHelper.fail(msg);
+        return ReplyHelper.error();
     }
 
     /**
