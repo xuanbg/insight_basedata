@@ -5,7 +5,6 @@ import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.basedata.common.mapper.ParamMapper;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.Util;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import org.springframework.stereotype.Service;
@@ -76,10 +75,8 @@ public class ParamServiceImpl implements ParamService {
     @Transactional
     public Reply setParameter(LoginInfo info, List<Parameter> parameters) {
         for (Parameter dto : parameters) {
-            String id = dto.getId();
-            if (id == null || id.isEmpty()) {
-                id = Util.uuid();
-                dto.setId(id);
+            Long id = dto.getId();
+            if (id == null) {
                 dto.setTenantId(info.getTenantId());
                 dto.setCreator(info.getUserName());
                 dto.setCreatorId(info.getUserId());

@@ -3,6 +3,7 @@ package com.insight.basedata.area;
 import com.insight.basedata.common.entity.Area;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.SearchDto;
 
 /**
  * @author 宣炳刚
@@ -31,7 +32,7 @@ public interface AreaService {
      * @param id 行政区划ID
      * @return Reply
      */
-    Reply getAreas(String id);
+    Reply getAreas(Long id);
 
     /**
      * 新增行政区划
@@ -58,18 +59,16 @@ public interface AreaService {
      * @param id   行政区划ID
      * @return Reply
      */
-    Reply deleteArea(LoginInfo info, String id);
+    Reply deleteArea(LoginInfo info, Long id);
 
     /**
      * 获取日志列表
      *
      * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param search 查询实体类
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, String keyword, int page, int size);
+    Reply getLogs(LoginInfo info, SearchDto search);
 
     /**
      * 获取日志详情
@@ -77,5 +76,5 @@ public interface AreaService {
      * @param id 日志ID
      * @return Reply
      */
-    Reply getLog(String id);
+    Reply getLog(Long id);
 }

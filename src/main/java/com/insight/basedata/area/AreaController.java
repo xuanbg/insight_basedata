@@ -5,6 +5,7 @@ import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.SearchDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -46,8 +47,8 @@ public class AreaController {
      * @return Reply
      */
     @GetMapping("/v1.0/areas/{id}/subs")
-    public Reply getAreas(@PathVariable String id) {
-        if (id == null || id.isEmpty()) {
+    public Reply getAreas(@PathVariable Long id) {
+        if (id == null) {
             return ReplyHelper.invalidParam();
         }
 
@@ -90,7 +91,7 @@ public class AreaController {
      * @return Reply
      */
     @DeleteMapping("/v1.0/areas")
-    public Reply editArea(@RequestHeader("loginInfo") String info, @RequestBody String id) {
+    public Reply editArea(@RequestHeader("loginInfo") String info, @RequestBody Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.deleteArea(loginInfo, id);
@@ -100,17 +101,14 @@ public class AreaController {
      * 获取日志列表
      *
      * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param search 查询实体类
      * @return Reply
      */
     @GetMapping("/v1.0/areas/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam(required = false) String keyword,
-                         @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size) {
+    public Reply getLogs(@RequestHeader("loginInfo") String info, SearchDto search) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.getLogs(loginInfo, keyword, page, size);
+        return service.getLogs(loginInfo, search);
     }
 
     /**
@@ -120,8 +118,8 @@ public class AreaController {
      * @return Reply
      */
     @GetMapping("/v1.0/areas/logs/{id}")
-    Reply getLog(@PathVariable String id) {
-        if (id == null || id.isEmpty()) {
+    Reply getLog(@PathVariable Long id) {
+        if (id == null) {
             return ReplyHelper.invalidParam();
         }
 

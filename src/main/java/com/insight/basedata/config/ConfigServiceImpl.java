@@ -9,7 +9,7 @@ import com.insight.basedata.common.mapper.ConfigMapper;
 import com.insight.utils.Json;
 import com.insight.utils.Redis;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.Util;
+import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.*;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +24,19 @@ import java.util.List;
 @Service
 public class ConfigServiceImpl implements ConfigService {
     private static final String BUSINESS = "接口配置管理";
+    private final SnowflakeCreator creator;
     private final ConfigMapper mapper;
     private final Core core;
 
     /**
      * 构造函数
      *
-     * @param mapper ConfigMapper
-     * @param core   Core
+     * @param creator 雪花算法ID生成器
+     * @param mapper  ConfigMapper
+     * @param core    Core
      */
-    public ConfigServiceImpl(ConfigMapper mapper, Core core) {
+    public ConfigServiceImpl(SnowflakeCreator creator, ConfigMapper mapper, Core core) {
+        this.creator = creator;
         this.mapper = mapper;
         this.core = core;
     }
@@ -62,7 +65,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @return Reply
      */
     @Override
-    public Reply getConfig(String id) {
+    public Reply getConfig(Long id) {
         InterfaceConfig config = mapper.getConfig(id);
         if (config == null) {
             return ReplyHelper.fail("ID不存在,未读取数据");
@@ -80,7 +83,7 @@ public class ConfigServiceImpl implements ConfigService {
      */
     @Override
     public Reply newConfig(LoginInfo info, InterfaceConfig dto) {
-        String id = Util.uuid();
+        Long id = creator.nextId(4);
         dto.setId(id);
         dto.setCreatedTime(LocalDateTime.now());
 
@@ -105,7 +108,7 @@ public class ConfigServiceImpl implements ConfigService {
      */
     @Override
     public Reply editConfig(LoginInfo info, InterfaceConfig dto) {
-        String id = dto.getId();
+        Long id = dto.getId();
         InterfaceConfig config = mapper.getConfig(id);
         if (config == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
@@ -125,7 +128,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @return Reply
      */
     @Override
-    public Reply deleteConfig(LoginInfo info, String id) {
+    public Reply deleteConfig(LoginInfo info, Long id) {
         InterfaceConfig config = mapper.getConfig(id);
         if (config == null) {
             return ReplyHelper.fail("ID不存在,未删除数据");
@@ -159,14 +162,12 @@ public class ConfigServiceImpl implements ConfigService {
      * 获取日志列表
      *
      * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param search 查询实体类
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, String keyword, int page, int size) {
-        return core.getLogs(info, BUSINESS, keyword, page, size);
+    public Reply getLogs(LoginInfo info, SearchDto search) {
+        return core.getLogs(info, BUSINESS, search);
     }
 
     /**
@@ -176,7 +177,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @return Reply
      */
     @Override
-    public Reply getLog(String id) {
+    public Reply getLog(Long id) {
         return core.getLog(id);
     }
 }

@@ -21,7 +21,7 @@ public class Report implements Serializable {
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 二进制报表内容
@@ -41,7 +41,7 @@ public class Report implements Serializable {
     /**
      * 创建人ID
      */
-    private String creatorId;
+    private Long creatorId;
 
     /**
      * 创建时间
@@ -56,11 +56,11 @@ public class Report implements Serializable {
         this.id = id;
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 
@@ -88,11 +88,11 @@ public class Report implements Serializable {
         this.creator = creator;
     }
 
-    public String getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(String creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 

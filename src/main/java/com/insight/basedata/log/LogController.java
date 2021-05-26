@@ -4,6 +4,7 @@ import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.SearchDto;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -31,17 +32,14 @@ public class LogController {
      *
      * @param info     用户关键信息
      * @param business 业务类型
-     * @param keyword  查询关键词
-     * @param page     分页页码
-     * @param size     每页记录数
+     * @param search   查询参数DTO
      * @return Reply
      */
     @GetMapping("/v1.0/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam String business, @RequestParam(required = false) String keyword,
-                         @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size) {
+    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam String business, SearchDto search) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.getLogs(loginInfo, business, keyword, page, size);
+        return service.getLogs(loginInfo, business, search);
     }
 
     /**
@@ -51,8 +49,8 @@ public class LogController {
      * @return Reply
      */
     @GetMapping("/v1.0/logs/{id}")
-    Reply getLog(@PathVariable String id) {
-        if (id == null || id.isEmpty()) {
+    Reply getLog(@PathVariable Long id) {
+        if (id == null) {
             return ReplyHelper.invalidParam();
         }
 

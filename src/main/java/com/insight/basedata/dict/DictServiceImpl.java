@@ -13,7 +13,7 @@ import com.insight.basedata.common.entity.DictKey;
 import com.insight.basedata.common.mapper.DictMapper;
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.Util;
+import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.OperateType;
 import com.insight.utils.pojo.Reply;
@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 @Service
 public class DictServiceImpl implements DictService {
     private static final String BUSINESS = "字典数据管理";
+    private final SnowflakeCreator creator;
     private final DictMapper mapper;
     private final TenantClient client;
     private final Core core;
@@ -39,11 +40,13 @@ public class DictServiceImpl implements DictService {
     /**
      * 构造方法
      *
-     * @param mapper DictMapper
-     * @param client TenantClient
-     * @param core   Core
+     * @param creator 雪花算法ID生成器
+     * @param mapper  DictMapper
+     * @param client  TenantClient
+     * @param core    Core
      */
-    public DictServiceImpl(DictMapper mapper, TenantClient client, Core core) {
+    public DictServiceImpl(SnowflakeCreator creator, DictMapper mapper, TenantClient client, Core core) {
+        this.creator = creator;
         this.mapper = mapper;
         this.client = client;
         this.core = core;
@@ -58,8 +61,8 @@ public class DictServiceImpl implements DictService {
      */
     @Override
     public Reply getDicts(LoginInfo info, SearchDto dto) {
-        List<String> ids = null;
-        String tenantId = info.getTenantId();
+        List<Long> ids = null;
+        Long tenantId = info.getTenantId();
         if (tenantId != null) {
             Reply reply = client.getApps(tenantId);
             if (!reply.getSuccess()) {
@@ -86,7 +89,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply getDictKeys(LoginInfo info, String id) {
+    public Reply getDictKeys(LoginInfo info, Long id) {
         List<DictKeyDto> list = mapper.getDictKeys(info.getTenantId(), id);
 
         return ReplyHelper.success(list);
@@ -115,7 +118,7 @@ public class DictServiceImpl implements DictService {
      */
     @Override
     public Reply addDict(LoginInfo info, Dict dict) {
-        String id = Util.uuid();
+        Long id = creator.nextId(2);
         dict.setId(id);
         dict.setCreator(info.getUserName());
         dict.setCreatorId(info.getUserId());
@@ -135,7 +138,7 @@ public class DictServiceImpl implements DictService {
      */
     @Override
     public Reply editDict(LoginInfo info, Dict dict) {
-        String id = dict.getId();
+        Long id = dict.getId();
         DictDto data = mapper.getDict(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
@@ -155,7 +158,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply deleteDict(LoginInfo info, String id) {
+    public Reply deleteDict(LoginInfo info, Long id) {
         DictDto data = mapper.getDict(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未删除数据");
@@ -176,7 +179,7 @@ public class DictServiceImpl implements DictService {
      */
     @Override
     public Reply addDictKey(LoginInfo info, DictKey dictKey) {
-        String id = Util.uuid();
+        Long id = creator.nextId(3);
         int count = mapper.getDictKeyCount(dictKey.getDictId(), dictKey.getCode(), dictKey.getValue());
         if (count > 0) {
             return ReplyHelper.invalidParam("已存在键值或编码");
@@ -202,7 +205,7 @@ public class DictServiceImpl implements DictService {
      */
     @Override
     public Reply editDictKey(LoginInfo info, DictKey dictKey) {
-        String id = dictKey.getId();
+        Long id = dictKey.getId();
         DictKey data = mapper.getDictKey(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
@@ -226,7 +229,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply deleteDictKey(LoginInfo info, String id) {
+    public Reply deleteDictKey(LoginInfo info, Long id) {
         DictKey data = mapper.getDictKey(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未删除数据");
@@ -245,15 +248,13 @@ public class DictServiceImpl implements DictService {
     /**
      * 获取日志列表
      *
-     * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param info   用户关键信息
+     * @param search 查询实体类
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, String keyword, int page, int size) {
-        return core.getLogs(info, BUSINESS, keyword, page, size);
+    public Reply getLogs(LoginInfo info, SearchDto search) {
+        return core.getLogs(info, BUSINESS, search);
     }
 
     /**
@@ -263,7 +264,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply getLog(String id) {
+    public Reply getLog(Long id) {
         return core.getLog(id);
     }
 }

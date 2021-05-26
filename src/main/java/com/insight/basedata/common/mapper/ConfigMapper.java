@@ -32,7 +32,7 @@ public interface ConfigMapper {
      * @return 接口配置详情
      */
     @Select("select * from ici_interface where id = #{id};")
-    InterfaceConfig getConfig(String id);
+    InterfaceConfig getConfig(Long id);
 
     /**
      * 在数据库中写入接口配置
@@ -59,7 +59,7 @@ public interface ConfigMapper {
      * @param id 接口配置ID
      */
     @Delete("delete from ici_interface where id = #{id};")
-    void deleteConfig(String id);
+    void deleteConfig(Long id);
 
     /**
      * 获取接口配置

@@ -11,27 +11,23 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class QueueConfig {
-    private final static int QUEUE_EXPIRATION = 1000 * 300;
-
     /**
      * exchange name
      */
     public final static String TOPIC_EXCHANGE_NAME = "amq.topic";
-
     /**
      * process queue
      */
     public final static String PROCESS_QUEUE_NAME = "insight.log";
-
     /**
      * dlx exchange name
      */
     public final static String DELAY_EXCHANGE_NAME = "amq.direct";
-
     /**
      * delay queue
      */
     public final static String DELAY_QUEUE_NAME = "dlx.insight.log";
+    private final static int QUEUE_EXPIRATION = 1000 * 300;
 
     /**
      * dlx exchange

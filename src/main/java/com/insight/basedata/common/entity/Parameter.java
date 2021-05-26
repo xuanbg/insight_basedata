@@ -17,23 +17,23 @@ public class Parameter implements Serializable {
     /**
      * 唯一ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 模块ID
      */
     @NotEmpty(message = "模块ID不能为空")
-    private String moduleId;
+    private Long moduleId;
 
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
 
     /**
      * 配置KEY
@@ -55,42 +55,42 @@ public class Parameter implements Serializable {
     /**
      * 创建人ID
      */
-    private String creatorId;
+    private Long creatorId;
 
     /**
      * 创建时间
      */
     private LocalDateTime createdTime;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 
-    public String getModuleId() {
+    public Long getModuleId() {
         return moduleId;
     }
 
-    public void setModuleId(String moduleId) {
+    public void setModuleId(Long moduleId) {
         this.moduleId = moduleId;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -118,11 +118,11 @@ public class Parameter implements Serializable {
         this.creator = creator;
     }
 
-    public String getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(String creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 

@@ -21,5 +21,5 @@ public interface TenantClient {
      * @return Reply
      */
     @GetMapping("/base/tenant/v1.0/tenants/{id}/apps")
-    Reply getApps(@PathVariable String id);
+    Reply getApps(@PathVariable Long id);
 }

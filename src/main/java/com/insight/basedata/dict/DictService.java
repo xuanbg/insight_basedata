@@ -29,7 +29,7 @@ public interface DictService {
      * @param id   字典ID
      * @return Reply
      */
-    Reply getDictKeys(LoginInfo info, String id);
+    Reply getDictKeys(LoginInfo info, Long id);
 
     /**
      * 获取指定键名的键值集合
@@ -65,7 +65,7 @@ public interface DictService {
      * @param id   字典ID
      * @return Reply
      */
-    Reply deleteDict(LoginInfo info, String id);
+    Reply deleteDict(LoginInfo info, Long id);
 
     /**
      * 新增字典键值
@@ -92,18 +92,16 @@ public interface DictService {
      * @param id   字典ID
      * @return Reply
      */
-    Reply deleteDictKey(LoginInfo info, String id);
+    Reply deleteDictKey(LoginInfo info, Long id);
 
     /**
      * 获取日志列表
      *
-     * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param info   用户关键信息
+     * @param search 查询实体类
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, String keyword, int page, int size);
+    Reply getLogs(LoginInfo info, SearchDto search);
 
     /**
      * 获取日志详情
@@ -111,5 +109,5 @@ public interface DictService {
      * @param id 日志ID
      * @return Reply
      */
-    Reply getLog(String id);
+    Reply getLog(Long id);
 }

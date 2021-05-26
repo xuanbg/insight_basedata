@@ -34,7 +34,7 @@ public interface ReportMapper {
      * @return 报表模板实体
      */
     @Select("select * from icc_template where id = #{id};")
-    Template getTemplate(String id);
+    Template getTemplate(Long id);
 
     /**
      * 获取指定租户下指定编码的数量
@@ -44,7 +44,7 @@ public interface ReportMapper {
      * @return 数量
      */
     @Select("select count(*) from icc_template where tenant_id = #{tenantId} and code = #{code}")
-    int getCount(@Param("tenantId") String tenantId, @Param("code") String code);
+    int getCount(@Param("tenantId") Long tenantId, @Param("code") String code);
 
     /**
      * 新增报表模板
@@ -78,7 +78,7 @@ public interface ReportMapper {
      * @param status 有效状态
      */
     @Update("update icc_template set is_invalid = #{status} where id = #{id};")
-    void updateTemplateStatus(@Param("id") String id, @Param("status") boolean status);
+    void updateTemplateStatus(@Param("id") Long id, @Param("status") boolean status);
 
     /**
      * 删除报表模板数据
@@ -87,7 +87,7 @@ public interface ReportMapper {
      * @return 受影响行数
      */
     @Delete("delete from icc_template where id = #{id} and is_invalid = 1;")
-    int deleteTemplate(String id);
+    int deleteTemplate(Long id);
 
     /**
      * 新增报表
@@ -110,6 +110,7 @@ public interface ReportMapper {
 
     /**
      * 删除报表实例
+     *
      * @param id 报表实例ID
      * @return 受影响行数
      */

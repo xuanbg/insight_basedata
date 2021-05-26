@@ -15,17 +15,17 @@ public class DictKeyDto implements Serializable {
     /**
      * 唯一ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 字典ID
      */
-    private String dictId;
+    private Long dictId;
 
     /**
      * 排序字段
@@ -52,27 +52,27 @@ public class DictKeyDto implements Serializable {
      */
     private String remark;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 
-    public String getDictId() {
+    public Long getDictId() {
         return dictId;
     }
 
-    public void setDictId(String dictId) {
+    public void setDictId(Long dictId) {
         this.dictId = dictId;
     }
 

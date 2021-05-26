@@ -19,12 +19,12 @@ public class Area implements Serializable {
     /**
      * 唯一ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 父ID
      */
-    private String parentId;
+    private Long parentId;
 
     /**
      * 编码
@@ -50,7 +50,7 @@ public class Area implements Serializable {
     /**
      * 创建人ID
      */
-    private String creatorId;
+    private Long creatorId;
 
     /**
      * 创建时间
@@ -59,19 +59,19 @@ public class Area implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdTime;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
@@ -107,11 +107,11 @@ public class Area implements Serializable {
         this.creator = creator;
     }
 
-    public String getCreatorId() {
+    public Long getCreatorId() {
         return creatorId;
     }
 
-    public void setCreatorId(String creatorId) {
+    public void setCreatorId(Long creatorId) {
         this.creatorId = creatorId;
     }
 

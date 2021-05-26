@@ -34,4 +34,5 @@ public class Application {
     @Bean
     public TaskRunner taskRunner() {
         return new TaskRunner();
-    }}
+    }
+}

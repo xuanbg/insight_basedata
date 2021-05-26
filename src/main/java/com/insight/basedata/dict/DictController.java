@@ -53,7 +53,7 @@ public class DictController {
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/{id}")
-    public Reply getDictKeys(@RequestHeader("loginInfo") String info, @PathVariable String id) {
+    public Reply getDictKeys(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getDictKeys(loginInfo, id);
@@ -109,7 +109,7 @@ public class DictController {
      * @return Reply
      */
     @DeleteMapping("/v1.0/dicts")
-    public Reply deleteDict(@RequestHeader("loginInfo") String info, @RequestBody String id) {
+    public Reply deleteDict(@RequestHeader("loginInfo") String info, @RequestBody Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.deleteDict(loginInfo, id);
@@ -151,7 +151,7 @@ public class DictController {
      * @return Reply
      */
     @DeleteMapping("/v1.0/dicts/keys")
-    public Reply deleteDictKey(@RequestHeader("loginInfo") String info, @RequestBody String id) {
+    public Reply deleteDictKey(@RequestHeader("loginInfo") String info, @RequestBody Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.deleteDictKey(loginInfo, id);
@@ -160,18 +160,15 @@ public class DictController {
     /**
      * 获取日志列表
      *
-     * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param info   用户关键信息
+     * @param search 查询实体类
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam(required = false) String keyword,
-                         @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size) {
+    public Reply getLogs(@RequestHeader("loginInfo") String info, SearchDto search) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.getLogs(loginInfo, keyword, page, size);
+        return service.getLogs(loginInfo, search);
     }
 
     /**
@@ -181,8 +178,8 @@ public class DictController {
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/logs/{id}")
-    Reply getLog(@PathVariable String id) {
-        if (id == null || id.isEmpty()) {
+    Reply getLog(@PathVariable Long id) {
+        if (id == null) {
             return ReplyHelper.invalidParam();
         }
 

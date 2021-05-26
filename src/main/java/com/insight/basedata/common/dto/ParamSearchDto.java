@@ -12,26 +12,26 @@ public class ParamSearchDto extends SearchDto {
     /**
      * 模块ID
      */
-    private String moduleId;
+    private Long moduleId;
 
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
 
-    public String getModuleId() {
+    public Long getModuleId() {
         return moduleId;
     }
 
-    public void setModuleId(String moduleId) {
+    public void setModuleId(Long moduleId) {
         this.moduleId = moduleId;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 }

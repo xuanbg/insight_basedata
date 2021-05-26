@@ -29,7 +29,7 @@ public interface ReportService {
      * @param id   模板ID
      * @return Reply
      */
-    Reply getTemplate(LoginInfo info, String id);
+    Reply getTemplate(LoginInfo info, Long id);
 
     /**
      * 获取报表模板内容
@@ -38,7 +38,7 @@ public interface ReportService {
      * @param id   模板ID
      * @return Reply
      */
-    Reply getTemplateContent(LoginInfo info, String id);
+    Reply getTemplateContent(LoginInfo info, Long id);
 
     /**
      * 导入报表模板
@@ -57,7 +57,7 @@ public interface ReportService {
      * @param template 报表模板实体
      * @return Reply
      */
-    Reply copyTemplate(LoginInfo info, String id, Template template);
+    Reply copyTemplate(LoginInfo info, Long id, Template template);
 
     /**
      * 编辑报表模板
@@ -85,7 +85,7 @@ public interface ReportService {
      * @param status 状态
      * @return Reply
      */
-    Reply updateTemplateStatus(LoginInfo info, String id, boolean status);
+    Reply updateTemplateStatus(LoginInfo info, Long id, boolean status);
 
     /**
      * 删除报表模板
@@ -94,7 +94,7 @@ public interface ReportService {
      * @param id   模板ID
      * @return Reply
      */
-    Reply deleteTemplate(LoginInfo info, String id);
+    Reply deleteTemplate(LoginInfo info, Long id);
 
     /**
      * 新增报表实例
@@ -112,7 +112,7 @@ public interface ReportService {
      * @param id   报表实例ID
      * @return Reply
      */
-    Reply getReport(LoginInfo info, long id);
+    Reply getReport(LoginInfo info, Long id);
 
     /**
      * 删除报表实例
@@ -121,7 +121,7 @@ public interface ReportService {
      * @param id   报表实例ID
      * @return Reply
      */
-    Reply deleteReport(LoginInfo info, long id);
+    Reply deleteReport(LoginInfo info, Long id);
 
     /**
      * 获取日志列表
@@ -138,5 +138,5 @@ public interface ReportService {
      * @param id 日志ID
      * @return Reply
      */
-    Reply getLog(String id);
+    Reply getLog(Long id);
 }

@@ -26,7 +26,7 @@ public interface DictMapper {
     @Select("<script>select * from icd_dict_key <if test = 'list != null'>where app_id in " +
             "<foreach collection =\"list\" item=\"item\" index= \"index\" separator =\",\" open =\"(\" close =\") \">#{item}</foreach>" +
             "</if> order by created_time</script>")
-    List<DictDto> getDicts(@Param("list") List<String> appIds);
+    List<DictDto> getDicts(@Param("list") List<Long> appIds);
 
     /**
      * 获取字典键值集合
@@ -38,7 +38,7 @@ public interface DictMapper {
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select * from (select * from icd_dict_value where dict_id = #{dictId} and isnull(tenant_id) union all " +
             "select * from icd_dict_value where dict_id = #{dictId} and tenant_id = #{tenantId}) t order by t.index;")
-    List<DictKeyDto> getDictKeys(@Param("tenantId") String tenantId, @Param("dictId") String dictId);
+    List<DictKeyDto> getDictKeys(@Param("tenantId") Long tenantId, @Param("dictId") Long dictId);
 
     /**
      * 获取字典键值集合
@@ -51,7 +51,7 @@ public interface DictMapper {
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select v.* from icd_dict_key k join icd_dict_value v on v.dict_id = k.id where k.app_id = #{appId} " +
             "and k.`code` = #{key} and (isnull(v.tenant_id) or v.tenant_id = #{tenantId}) order by v.index;")
-    List<DictKeyDto> getValues(@Param("appId") String appId, @Param("tenantId") String tenantId, @Param("key") String key);
+    List<DictKeyDto> getValues(@Param("appId") Long appId, @Param("tenantId") Long tenantId, @Param("key") String key);
 
     /**
      * 获取字典数据
@@ -60,7 +60,7 @@ public interface DictMapper {
      * @return 字典DTO
      */
     @Select("select * from icd_dict_key where id = #{id};")
-    DictDto getDict(String id);
+    DictDto getDict(Long id);
 
     /**
      * 新增字典数据
@@ -85,7 +85,7 @@ public interface DictMapper {
      * @param id 字典ID
      */
     @Delete("delete k, v from icd_dict_key k left join icd_dict_value v on v.dict_id = k.id where k.id = #{id};")
-    void deleteDict(String id);
+    void deleteDict(Long id);
 
     /**
      * 获取字典键值
@@ -95,7 +95,7 @@ public interface DictMapper {
      */
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select * from icd_dict_value where id = #{id};")
-    DictKey getDictKey(String id);
+    DictKey getDictKey(Long id);
 
     /**
      * 查询字典键值数量
@@ -106,7 +106,7 @@ public interface DictMapper {
      * @return 键值数量
      */
     @Select("select count(*) from icd_dict_value where dict_id = #{dictId} and (`code` = #{code} or `value` = #{value});")
-    int getDictKeyCount(@Param("dictId") String dictId, @Param("code") String code, @Param("value") String value);
+    int getDictKeyCount(@Param("dictId") Long dictId, @Param("code") String code, @Param("value") String value);
 
     /**
      * 新增键值数据
@@ -133,5 +133,5 @@ public interface DictMapper {
      * @param id 键值ID
      */
     @Delete("delete from icd_dict_value where id = #{id};")
-    void deleteDictKey(String id);
+    void deleteDictKey(Long id);
 }

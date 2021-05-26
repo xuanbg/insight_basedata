@@ -15,7 +15,7 @@ public class ParameterDto implements Serializable {
     /**
      * 唯一ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 配置KEY
@@ -27,11 +27,11 @@ public class ParameterDto implements Serializable {
      */
     private String value;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

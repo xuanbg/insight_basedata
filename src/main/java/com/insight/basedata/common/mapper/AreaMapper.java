@@ -36,7 +36,7 @@ public interface AreaMapper {
      * @return 行政区划集合
      */
     @Select("select id, parent_id, `code`, `name`, alias from icd_area where parent_id = #{id} order by `code`;")
-    List<AreaListDto> getAreas(String id);
+    List<AreaListDto> getAreas(Long id);
 
     /**
      * 查询指定行政区划
@@ -45,7 +45,7 @@ public interface AreaMapper {
      * @return 行政区划DTO
      */
     @Select("select id, parent_id, `code`, `name`, alias from icd_area where id = #{id};")
-    AreaListDto getArea(String id);
+    AreaListDto getArea(Long id);
 
     /**
      * 新增行政区划数据
@@ -70,5 +70,5 @@ public interface AreaMapper {
      * @param id 行政区划ID
      */
     @Delete("delete p, c, d from icd_area p left join icd_area c on c.parent_id = p.id left join icd_area d on d.parent_id = c.id where p.id = #{id};")
-    void deleteArea(String id);
+    void deleteArea(Long id);
 }

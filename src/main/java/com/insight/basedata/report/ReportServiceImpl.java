@@ -11,7 +11,7 @@ import com.insight.basedata.common.mapper.ReportMapper;
 import com.insight.utils.Generator;
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.Util;
+import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.OperateType;
 import com.insight.utils.pojo.Reply;
@@ -29,16 +29,19 @@ import java.util.List;
 @Service
 public class ReportServiceImpl implements ReportService {
     private static final String BUSINESS = "报表模板管理";
+    private final SnowflakeCreator creator;
     private final ReportMapper mapper;
     private final Core core;
 
     /**
      * 构造方法
      *
-     * @param mapper ReportMapper
-     * @param core   Core
+     * @param creator 雪花算法ID生成器
+     * @param mapper  ReportMapper
+     * @param core    Core
      */
-    public ReportServiceImpl(ReportMapper mapper, Core core) {
+    public ReportServiceImpl(SnowflakeCreator creator, ReportMapper mapper, Core core) {
+        this.creator = creator;
         this.mapper = mapper;
         this.core = core;
     }
@@ -68,7 +71,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getTemplate(LoginInfo info, String id) {
+    public Reply getTemplate(LoginInfo info, Long id) {
         Template template = mapper.getTemplate(id);
         if (template == null) {
             return ReplyHelper.fail("ID不存在,未读取数据");
@@ -89,7 +92,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getTemplateContent(LoginInfo info, String id) {
+    public Reply getTemplateContent(LoginInfo info, Long id) {
         Template template = mapper.getTemplate(id);
         if (template == null) {
             return ReplyHelper.fail("ID不存在,未读取数据");
@@ -111,10 +114,10 @@ public class ReportServiceImpl implements ReportService {
      */
     @Override
     public Reply importTemplate(LoginInfo info, Template template) {
-        String tenantId = info.getTenantId();
+        Long tenantId = info.getTenantId();
         String code = getCode(tenantId);
 
-        String id = Util.uuid();
+        Long id = creator.nextId(0);
         template.setId(id);
         template.setTenantId(tenantId);
         template.setCode(code);
@@ -137,7 +140,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply copyTemplate(LoginInfo info, String id, Template template) {
+    public Reply copyTemplate(LoginInfo info, Long id, Template template) {
         Template data = mapper.getTemplate(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未读取数据");
@@ -147,9 +150,9 @@ public class ReportServiceImpl implements ReportService {
             return ReplyHelper.fail("您无权读取该数据");
         }
 
-        String tenantId = info.getTenantId();
+        Long tenantId = info.getTenantId();
         String code = getCode(tenantId);
-        String newId = Util.uuid();
+        Long newId = creator.nextId(0);
         template.setId(newId);
         template.setTenantId(tenantId);
         template.setCode(code);
@@ -173,7 +176,7 @@ public class ReportServiceImpl implements ReportService {
      */
     @Override
     public Reply editTemplate(LoginInfo info, Template template) {
-        String id = template.getId();
+        Long id = template.getId();
         Template data = mapper.getTemplate(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
@@ -198,7 +201,7 @@ public class ReportServiceImpl implements ReportService {
      */
     @Override
     public Reply designTemplate(LoginInfo info, Template template) {
-        String id = template.getId();
+        Long id = template.getId();
         Template data = mapper.getTemplate(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
@@ -223,7 +226,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply updateTemplateStatus(LoginInfo info, String id, boolean status) {
+    public Reply updateTemplateStatus(LoginInfo info, Long id, boolean status) {
         Template data = mapper.getTemplate(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
@@ -247,7 +250,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply deleteTemplate(LoginInfo info, String id) {
+    public Reply deleteTemplate(LoginInfo info, Long id) {
         Template data = mapper.getTemplate(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未删除数据");
@@ -291,7 +294,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getReport(LoginInfo info, long id) {
+    public Reply getReport(LoginInfo info, Long id) {
         Report data = mapper.getReport(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未读取数据");
@@ -303,7 +306,7 @@ public class ReportServiceImpl implements ReportService {
 
         Byte[] bytes = data.getBytes();
         Integer[] content = new Integer[bytes.length];
-        for (int i = 0; i < bytes.length; i++){
+        for (int i = 0; i < bytes.length; i++) {
             content[i] = bytes[i] & 0xff;
         }
 
@@ -321,7 +324,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply deleteReport(LoginInfo info, long id) {
+    public Reply deleteReport(LoginInfo info, Long id) {
         Report data = mapper.getReport(id);
         if (data == null) {
             return ReplyHelper.success("ID不存在,未读取数据");
@@ -338,13 +341,13 @@ public class ReportServiceImpl implements ReportService {
     /**
      * 获取日志列表
      *
-     * @param info 用户关键信息
-     * @param dto  查询参数DTO
+     * @param info   用户关键信息
+     * @param search 查询参数DTO
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, SearchDto dto) {
-        return core.getLogs(info, BUSINESS, dto.getKeyword(), dto.getPage(), dto.getSize());
+    public Reply getLogs(LoginInfo info, SearchDto search) {
+        return core.getLogs(info, BUSINESS, search);
     }
 
     /**
@@ -354,7 +357,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getLog(String id) {
+    public Reply getLog(Long id) {
         return core.getLog(id);
     }
 
@@ -364,7 +367,7 @@ public class ReportServiceImpl implements ReportService {
      * @param tenantId 租户ID
      * @return 模板编码
      */
-    private String getCode(String tenantId) {
+    private String getCode(Long tenantId) {
         String group = "Common:Template:" + tenantId;
         String format = "RT-#5";
         while (true) {

@@ -16,12 +16,12 @@ public class AppListDto implements Serializable {
     /**
      * 应用ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 应用名称
@@ -48,19 +48,19 @@ public class AppListDto implements Serializable {
      */
     private LocalDate expireDate;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getTenantId() {
+    public Long getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId) {
+    public void setTenantId(Long tenantId) {
         this.tenantId = tenantId;
     }
 

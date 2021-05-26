@@ -15,7 +15,7 @@ public class TemplateDto implements Serializable {
     /**
      * 唯一ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 编码
@@ -37,11 +37,11 @@ public class TemplateDto implements Serializable {
      */
     private Boolean isInvalid;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

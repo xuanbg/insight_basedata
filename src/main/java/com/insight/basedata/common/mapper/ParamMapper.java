@@ -42,8 +42,8 @@ public interface ParamMapper {
      *
      * @param dto 选项参数实体
      */
-    @Insert("insert icc_param(id, tenant_id, module_id, user_id, key, value, creator, creator_id, created_time) " +
-            "values (#{id}, #{tenantId}, #{moduleId}, #{userId}, #{key}, #{value}, #{creator}, #{creatorId}, #{createdTime});")
+    @Insert("insert icc_param(tenant_id, module_id, user_id, key, value, creator, creator_id, created_time) " +
+            "values (#{tenantId}, #{moduleId}, #{userId}, #{key}, #{value}, #{creator}, #{creatorId}, #{createdTime});")
     void addParameter(Parameter dto);
 
     /**

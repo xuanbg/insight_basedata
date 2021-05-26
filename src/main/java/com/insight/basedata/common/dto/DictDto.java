@@ -15,12 +15,12 @@ public class DictDto implements Serializable {
     /**
      * 唯一ID
      */
-    private String id;
+    private Long id;
 
     /**
      * 应用ID
      */
-    private String appId;
+    private Long appId;
 
     /**
      * 应用名称
@@ -42,19 +42,19 @@ public class DictDto implements Serializable {
      */
     private String remark;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getAppId() {
+    public Long getAppId() {
         return appId;
     }
 
-    public void setAppId(String appId) {
+    public void setAppId(Long appId) {
         this.appId = appId;
     }
 

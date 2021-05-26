@@ -6,10 +6,11 @@ import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
 import com.insight.basedata.common.mapper.AreaMapper;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.Util;
+import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.OperateType;
 import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.SearchDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.List;
 @Service
 public class AreaServiceImpl implements AreaService {
     private static final String BUSINESS = "行政区划管理";
+    private final SnowflakeCreator creator;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final AreaMapper mapper;
     private final Core core;
@@ -32,10 +34,12 @@ public class AreaServiceImpl implements AreaService {
     /**
      * 构造方法
      *
-     * @param mapper AreaMapper
-     * @param core   Core
+     * @param creator 雪花算法ID生成器
+     * @param mapper  AreaMapper
+     * @param core    Core
      */
-    public AreaServiceImpl(AreaMapper mapper, Core core) {
+    public AreaServiceImpl(SnowflakeCreator creator, AreaMapper mapper, Core core) {
+        this.creator = creator;
         this.mapper = mapper;
         this.core = core;
     }
@@ -71,7 +75,7 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply getAreas(String id) {
+    public Reply getAreas(Long id) {
         List<AreaListDto> list = mapper.getAreas(id);
 
         return ReplyHelper.success(list);
@@ -86,7 +90,7 @@ public class AreaServiceImpl implements AreaService {
      */
     @Override
     public Reply addArea(LoginInfo info, Area area) {
-        String id = Util.uuid();
+        Long id = creator.nextId(1);
         area.setId(id);
         area.setCreator(info.getUserName());
         area.setCreatorId(info.getUserId());
@@ -106,7 +110,7 @@ public class AreaServiceImpl implements AreaService {
      */
     @Override
     public Reply editArea(LoginInfo info, Area area) {
-        String id = area.getId();
+        Long id = area.getId();
         AreaListDto data = mapper.getArea(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未更新数据");
@@ -126,7 +130,7 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply deleteArea(LoginInfo info, String id) {
+    public Reply deleteArea(LoginInfo info, Long id) {
         AreaListDto data = mapper.getArea(id);
         if (data == null) {
             return ReplyHelper.fail("ID不存在,未删除数据");
@@ -142,14 +146,12 @@ public class AreaServiceImpl implements AreaService {
      * 获取日志列表
      *
      * @param info    用户关键信息
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param search 查询实体类
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, String keyword, int page, int size) {
-        return core.getLogs(info, BUSINESS, keyword, page, size);
+    public Reply getLogs(LoginInfo info, SearchDto search) {
+        return core.getLogs(info, BUSINESS, search);
     }
 
     /**
@@ -159,7 +161,7 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply getLog(String id) {
+    public Reply getLog(Long id) {
         return core.getLog(id);
     }
 }

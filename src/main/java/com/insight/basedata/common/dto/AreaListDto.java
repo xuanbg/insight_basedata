@@ -15,12 +15,12 @@ public class AreaListDto implements Serializable {
     /**
      * UUID主键
      */
-    private String id;
+    private Long id;
 
     /**
      * 父ID
      */
-    private String parentId;
+    private Long parentId;
 
     /**
      * 编码
@@ -37,19 +37,19 @@ public class AreaListDto implements Serializable {
      */
     private String alias;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 

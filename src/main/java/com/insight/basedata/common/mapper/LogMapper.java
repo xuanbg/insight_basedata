@@ -29,7 +29,7 @@ public interface LogMapper {
             "<if test = 'tenantId == null'>and isnull(tenant_id) </if>" +
             "<if test = 'key!=null'>and (business_id = #{key} or creator = #{key})</if>" +
             "order by created_time</script>")
-    List<Log> getLogs(@Param("appId") String appId, @Param("tenantId") String tenantId, @Param("business") String business, @Param("key") String key);
+    List<Log> getLogs(@Param("appId") Long appId, @Param("tenantId") Long tenantId, @Param("business") String business, @Param("key") String key);
 
     /**
      * 获取操作日志列表
@@ -39,15 +39,15 @@ public interface LogMapper {
      */
     @Results({@Result(property = "content", column = "content", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select * from icl_operate_log where id = #{id};")
-    Log getLog(String id);
+    Log getLog(Long id);
 
     /**
      * 记录操作日志
      *
      * @param log 日志DTO
      */
-    @Insert("insert icl_operate_log(id, app_id, tenant_id, type, business, business_id, content, creator, creator_id, created_time) values " +
-            "(#{id}, #{appId}, #{tenantId}, #{type}, #{business}, #{businessId}, #{content, typeHandler = com.insight.utils.common.JsonTypeHandler}, " +
+    @Insert("insert icl_operate_log(app_id, tenant_id, type, business, business_id, content, creator, creator_id, created_time) values " +
+            "(#{appId}, #{tenantId}, #{type}, #{business}, #{businessId}, #{content, typeHandler = com.insight.utils.common.JsonTypeHandler}, " +
             "#{creator}, #{creatorId}, #{createdTime});")
     void addLog(Log log);
 }

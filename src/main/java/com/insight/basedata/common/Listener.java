@@ -3,7 +3,6 @@ package com.insight.basedata.common;
 import com.insight.basedata.common.config.QueueConfig;
 import com.insight.basedata.common.mapper.LogMapper;
 import com.insight.utils.Json;
-import com.insight.utils.Util;
 import com.insight.utils.pojo.Log;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
@@ -48,17 +47,16 @@ public class Listener {
         try {
             String body = new String(message.getBody());
             Log log = Json.toBean(body, Log.class);
-            if (log == null){
+            if (log == null) {
                 return;
             }
 
-            log.setId(Util.uuid());
             log.setCreatedTime(LocalDateTime.now());
             mapper.addLog(log);
         } catch (Exception ex) {
             logger.error("发生异常: {}", ex.getMessage());
             channel.basicPublish(QueueConfig.DELAY_EXCHANGE_NAME, QueueConfig.DELAY_QUEUE_NAME, null, message.getBody());
-        }finally {
+        } finally {
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         }
     }
