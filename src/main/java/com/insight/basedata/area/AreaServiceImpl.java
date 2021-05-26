@@ -145,7 +145,7 @@ public class AreaServiceImpl implements AreaService {
     /**
      * 获取日志列表
      *
-     * @param info    用户关键信息
+     * @param info   用户关键信息
      * @param search 查询实体类
      * @return Reply
      */
