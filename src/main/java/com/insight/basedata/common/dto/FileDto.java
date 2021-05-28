@@ -1,18 +1,16 @@
 package com.insight.basedata.common.dto;
 
-import com.insight.utils.Json;
+import com.insight.utils.pojo.BaseXo;
 
 import javax.validation.constraints.NotNull;
 import java.io.InputStream;
-import java.io.Serializable;
 
 /**
  * @author 宣炳刚
  * @date 2020/12/31
  * @remark 文件DTO
  */
-public class FileDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class FileDto extends BaseXo {
 
     /**
      * 字节数组
@@ -65,10 +63,5 @@ public class FileDto implements Serializable {
 
     public void setExt(String ext) {
         this.ext = ext;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

@@ -1,8 +1,7 @@
 package com.insight.basedata.common.dto;
 
-import com.insight.utils.Json;
+import com.insight.utils.pojo.BaseXo;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -10,8 +9,7 @@ import java.time.LocalDate;
  * @date 2019/12/4
  * @remark 租户绑定应用DTO
  */
-public class AppListDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class AppListDto extends BaseXo {
 
     /**
      * 应用ID
@@ -102,10 +100,5 @@ public class AppListDto implements Serializable {
 
     public void setExpireDate(LocalDate expireDate) {
         this.expireDate = expireDate;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

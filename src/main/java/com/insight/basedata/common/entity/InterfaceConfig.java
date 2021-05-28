@@ -1,6 +1,7 @@
 package com.insight.basedata.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.insight.utils.pojo.BaseXo;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
  * @date 2019-08-29
  * @remark 接口配置信息
  */
-public class InterfaceConfig {
+public class InterfaceConfig extends BaseXo {
 
     /**
      * 唯一ID

@@ -1,8 +1,7 @@
 package com.insight.basedata.common.entity;
 
-import com.insight.utils.Json;
+import com.insight.utils.pojo.BaseXo;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -10,8 +9,7 @@ import java.time.LocalDateTime;
  * @date 2020/6/2
  * @remark 报表实例实体类
  */
-public class Report implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class Report extends BaseXo {
 
     /**
      * 唯一ID
@@ -102,10 +100,5 @@ public class Report implements Serializable {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

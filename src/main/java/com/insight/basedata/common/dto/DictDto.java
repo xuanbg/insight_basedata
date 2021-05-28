@@ -1,16 +1,13 @@
 package com.insight.basedata.common.dto;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
+import com.insight.utils.pojo.BaseXo;
 
 /**
  * @author 宣炳刚
  * @date 2020/6/1
  * @remark 字典实体类
  */
-public class DictDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class DictDto extends BaseXo {
 
     /**
      * 唯一ID
@@ -88,10 +85,5 @@ public class DictDto implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

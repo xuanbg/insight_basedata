@@ -1,16 +1,13 @@
 package com.insight.basedata.common.dto;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
+import com.insight.utils.pojo.BaseXo;
 
 /**
  * @author 宣炳刚
  * @date 2020/6/25
  * @remark 报表模板DTO
  */
-public class TemplateDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class TemplateDto extends BaseXo {
 
     /**
      * 唯一ID
@@ -75,10 +72,5 @@ public class TemplateDto implements Serializable {
 
     public void setInvalid(Boolean invalid) {
         isInvalid = invalid;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

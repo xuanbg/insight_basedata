@@ -1,16 +1,13 @@
 package com.insight.basedata.common.dto;
 
-import com.insight.utils.Json;
-
-import java.io.Serializable;
+import com.insight.utils.pojo.BaseXo;
 
 /**
  * @author 宣炳刚
  * @date 2020/3/15
  * @remark 行政区划DTO
  */
-public class AreaListDto implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class AreaListDto extends BaseXo {
 
     /**
      * UUID主键
@@ -75,10 +72,5 @@ public class AreaListDto implements Serializable {
 
     public void setAlias(String alias) {
         this.alias = alias;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }

@@ -1,11 +1,10 @@
 package com.insight.basedata.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.insight.utils.Json;
+import com.insight.utils.pojo.BaseXo;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -13,8 +12,7 @@ import java.time.LocalDateTime;
  * @date 2020/6/1
  * @remark 字典实体类
  */
-public class Dict implements Serializable {
-    private static final long serialVersionUID = -1L;
+public class Dict extends BaseXo {
 
     /**
      * 唯一ID
@@ -137,10 +135,5 @@ public class Dict implements Serializable {
 
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdTime = createdTime;
-    }
-
-    @Override
-    public String toString() {
-        return Json.toJson(this);
     }
 }
