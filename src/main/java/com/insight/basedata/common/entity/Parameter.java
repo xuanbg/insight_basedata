@@ -3,6 +3,7 @@ package com.insight.basedata.common.entity;
 import com.insight.utils.pojo.BaseXo;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -25,7 +26,7 @@ public class Parameter extends BaseXo {
     /**
      * 模块ID
      */
-    @NotEmpty(message = "模块ID不能为空")
+    @NotNull(message = "模块ID不能为空")
     private Long moduleId;
 
     /**

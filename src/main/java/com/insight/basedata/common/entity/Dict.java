@@ -5,6 +5,7 @@ import com.insight.utils.pojo.BaseXo;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -22,7 +23,7 @@ public class Dict extends BaseXo {
     /**
      * 应用ID
      */
-    @NotEmpty
+    @NotNull
     private Long appId;
 
     /**

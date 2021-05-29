@@ -23,7 +23,7 @@ public class DictKey extends BaseXo {
     /**
      * 字典ID
      */
-    @NotEmpty
+    @NotNull
     private Long dictId;
 
     /**
