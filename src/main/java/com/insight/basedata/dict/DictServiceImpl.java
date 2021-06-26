@@ -21,6 +21,7 @@ import com.insight.utils.pojo.SearchDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,9 +62,13 @@ public class DictServiceImpl implements DictService {
      */
     @Override
     public Reply getDicts(LoginInfo info, SearchDto dto) {
-        List<Long> ids = null;
+        List<Long> ids = new ArrayList<>();
+        if (dto.getOwnerId() != null) {
+            ids.add(dto.getOwnerId());
+        }
+
         Long tenantId = info.getTenantId();
-        if (tenantId != null) {
+        if (ids.isEmpty() && tenantId != null) {
             Reply reply = client.getApps(tenantId);
             if (!reply.getSuccess()) {
                 return reply;
