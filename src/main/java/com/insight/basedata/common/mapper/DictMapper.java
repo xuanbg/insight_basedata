@@ -23,7 +23,7 @@ public interface DictMapper {
      * @param appIds 应用ID集合
      * @return 字典DTO集合
      */
-    @Select("<script>select * from icd_dict_key <if test = 'list != null'>where app_id in " +
+    @Select("<script>select * from icd_dict_key <if test = 'list != null and list.size() > 0'>where app_id in " +
             "<foreach collection =\"list\" item=\"item\" index= \"index\" separator =\",\" open =\"(\" close =\") \">#{item}</foreach>" +
             "</if> order by created_time</script>")
     List<DictDto> getDicts(@Param("list") List<Long> appIds);
