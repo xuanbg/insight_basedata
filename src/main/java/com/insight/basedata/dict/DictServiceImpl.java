@@ -63,8 +63,8 @@ public class DictServiceImpl implements DictService {
     @Override
     public Reply getDicts(LoginInfo info, SearchDto dto) {
         List<Long> ids = new ArrayList<>();
-        if (dto.getOwnerId() != null) {
-            ids.add(dto.getOwnerId());
+        if (dto.getAppId() != null) {
+            ids.add(dto.getAppId());
         }
 
         Long tenantId = info.getTenantId();
