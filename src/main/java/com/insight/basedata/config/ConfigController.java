@@ -2,7 +2,6 @@ package com.insight.basedata.config;
 
 import com.insight.basedata.common.entity.InterfaceConfig;
 import com.insight.utils.Json;
-import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import com.insight.utils.pojo.SearchDto;
@@ -51,10 +50,6 @@ public class ConfigController {
      */
     @GetMapping("/v1.0/configs/{id}")
     Reply getConfig(@PathVariable Long id) {
-        if (id == null) {
-            return ReplyHelper.invalidParam();
-        }
-
         return service.getConfig(id);
     }
 
@@ -76,12 +71,14 @@ public class ConfigController {
      * 编辑接口配置
      *
      * @param info 用户关键信息
+     * @param id   接口配置ID
      * @param dto  接口配置
      * @return Reply
      */
-    @PutMapping("/v1.0/configs")
-    public Reply editConfig(@RequestHeader("loginInfo") String info, @Valid @RequestBody InterfaceConfig dto) {
+    @PutMapping("/v1.0/configs/{id}")
+    public Reply editConfig(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody InterfaceConfig dto) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+        dto.setId(id);
 
         return service.editConfig(loginInfo, dto);
     }
@@ -93,13 +90,10 @@ public class ConfigController {
      * @param id   接口配置ID
      * @return Reply
      */
-    @DeleteMapping("/v1.0/configs")
-    Reply deleteConfig(@RequestHeader("loginInfo") String info, @RequestBody Long id) {
-        if (id == null) {
-            return ReplyHelper.invalidParam();
-        }
-
+    @DeleteMapping("/v1.0/configs/{id}")
+    Reply deleteConfig(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+
         return service.deleteConfig(loginInfo, id);
     }
 
@@ -135,10 +129,6 @@ public class ConfigController {
      */
     @GetMapping("/v1.0/configs/logs/{id}")
     Reply getLog(@PathVariable Long id) {
-        if (id == null) {
-            return ReplyHelper.invalidParam();
-        }
-
         return service.getLog(id);
     }
 }

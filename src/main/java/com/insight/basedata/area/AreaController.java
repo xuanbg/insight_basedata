@@ -73,12 +73,14 @@ public class AreaController {
      * 编辑行政区划
      *
      * @param info 用户关键信息
+     * @param id   行政区划ID
      * @param area 行政区划实体
      * @return Reply
      */
-    @PutMapping("/v1.0/areas")
-    public Reply editArea(@RequestHeader("loginInfo") String info, @Valid @RequestBody Area area) {
+    @PutMapping("/v1.0/areas/{id}")
+    public Reply editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody Area area) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+        area.setId(id);
 
         return service.editArea(loginInfo, area);
     }
@@ -90,8 +92,8 @@ public class AreaController {
      * @param id   行政区划ID
      * @return Reply
      */
-    @DeleteMapping("/v1.0/areas")
-    public Reply editArea(@RequestHeader("loginInfo") String info, @RequestBody Long id) {
+    @DeleteMapping("/v1.0/areas/{id}")
+    public Reply editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.deleteArea(loginInfo, id);
@@ -119,10 +121,6 @@ public class AreaController {
      */
     @GetMapping("/v1.0/areas/logs/{id}")
     Reply getLog(@PathVariable Long id) {
-        if (id == null) {
-            return ReplyHelper.invalidParam();
-        }
-
         return service.getLog(id);
     }
 }

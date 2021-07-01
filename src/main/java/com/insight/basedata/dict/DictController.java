@@ -3,7 +3,6 @@ package com.insight.basedata.dict;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
 import com.insight.utils.Json;
-import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import com.insight.utils.pojo.SearchDto;
@@ -91,12 +90,14 @@ public class DictController {
      * 编辑字典
      *
      * @param info 用户关键信息
+     * @param id   字典ID
      * @param dict 字典实体
      * @return Reply
      */
-    @PutMapping("/v1.0/dicts")
-    public Reply editDict(@RequestHeader("loginInfo") String info, @Valid @RequestBody Dict dict) {
+    @PutMapping("/v1.0/dicts/{id}")
+    public Reply editDict(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody Dict dict) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+        dict.setId(id);
 
         return service.editDict(loginInfo, dict);
     }
@@ -108,8 +109,8 @@ public class DictController {
      * @param id   字典ID
      * @return Reply
      */
-    @DeleteMapping("/v1.0/dicts")
-    public Reply deleteDict(@RequestHeader("loginInfo") String info, @RequestBody Long id) {
+    @DeleteMapping("/v1.0/dicts/{id}")
+    public Reply deleteDict(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.deleteDict(loginInfo, id);
@@ -119,12 +120,14 @@ public class DictController {
      * 新增字典键值
      *
      * @param info    用户关键信息
+     * @param id      字典ID
      * @param dictKey 字典键值实体
      * @return Reply
      */
-    @PostMapping("/v1.0/dicts/keys")
-    public Reply addDictKey(@RequestHeader("loginInfo") String info, @Valid @RequestBody DictKey dictKey) {
+    @PostMapping("/v1.0/dicts/{id}/keys")
+    public Reply addDictKey(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody DictKey dictKey) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+        dictKey.setDictId(id);
 
         return service.addDictKey(loginInfo, dictKey);
     }
@@ -133,11 +136,12 @@ public class DictController {
      * 编辑字典键值
      *
      * @param info    用户关键信息
+     * @param id      字典键值ID
      * @param dictKey 字典键值实体
      * @return Reply
      */
-    @PutMapping("/v1.0/dicts/keys")
-    public Reply editDictKey(@RequestHeader("loginInfo") String info, @Valid @RequestBody DictKey dictKey) {
+    @PutMapping("/v1.0/dicts/keys/{id}")
+    public Reply editDictKey(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody DictKey dictKey) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.editDictKey(loginInfo, dictKey);
@@ -150,8 +154,8 @@ public class DictController {
      * @param id   字典键值ID
      * @return Reply
      */
-    @DeleteMapping("/v1.0/dicts/keys")
-    public Reply deleteDictKey(@RequestHeader("loginInfo") String info, @RequestBody Long id) {
+    @DeleteMapping("/v1.0/dicts/keys/{id}")
+    public Reply deleteDictKey(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.deleteDictKey(loginInfo, id);
@@ -179,10 +183,6 @@ public class DictController {
      */
     @GetMapping("/v1.0/dicts/logs/{id}")
     Reply getLog(@PathVariable Long id) {
-        if (id == null) {
-            return ReplyHelper.invalidParam();
-        }
-
         return service.getLog(id);
     }
 }

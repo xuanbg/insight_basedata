@@ -1,7 +1,6 @@
 package com.insight.basedata.log;
 
 import com.insight.utils.Json;
-import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.Reply;
 import com.insight.utils.pojo.SearchDto;
@@ -50,10 +49,6 @@ public class LogController {
      */
     @GetMapping("/v1.0/logs/{id}")
     Reply getLog(@PathVariable Long id) {
-        if (id == null) {
-            return ReplyHelper.invalidParam();
-        }
-
         return service.getLog(id);
     }
 }
