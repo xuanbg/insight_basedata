@@ -367,7 +367,7 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 
 (135177814776217621, '获取字典列表', 'GET', '/common/dict/v1.0/dicts', "getDict", 1, NULL, NULL, NULL, 1, 1, now()),
 (135178120691974165, '获取字典键值集合', 'GET', '/common/dict/v1.0/dicts/{id}', "getDict", 1, NULL, NULL, NULL, 1, 1, now()),
-(135178348383961109, '获取指定键名的键值集合', 'GET', '/common/dict/v1.0/dicts/values', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
+(135178348383961109, '获取指定键名的键值集合', 'GET', '/common/dict/v1.0/dicts/values', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
 (135178523206746133, '新增字典', 'POST', '/common/dict/v1.0/dicts', "newDict", 1, NULL, NULL, NULL, 1, 1, now()),
 (135178642207539221, '编辑字典', 'PUT', '/common/dict/v1.0/dicts/{id}', "editDict", 1, NULL, NULL, NULL, 1, 1, now()),
 (135178938505756693, '删除字典', 'DELETE', '/common/dict/v1.0/dicts/{id}', "deleteDict", 1, NULL, NULL, NULL, 1, 1, now()),
