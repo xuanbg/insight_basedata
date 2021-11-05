@@ -169,13 +169,16 @@ CREATE TABLE `icl_operate_log` (
 -- 初始化接口配置
 -- ---------------------------- 
 INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, `limit_cycle`, `limit_max`, `message`, `is_verify`, `is_limit`, `created_time`) VALUES 
-(134659190399434773, '获取Code', 'GET', '/base/auth/v1.0/tokens/codes', NULL, 1, 86400, 360, '获取Code接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
-(134660755520749589, '获取Token', 'POST', '/base/auth/v1.0/tokens', NULL, 1, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
-(134661909612855317, '通过微信授权码获取Token', 'POST', '/base/auth/v1.0/tokens/withWechatCode', NULL, 1, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
-(134667548749725717, '通过微信UnionId获取Token', 'POST', '/base/auth/v1.0/tokens/withWechatUnionId', NULL, 1, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
+(134659190399434773, '获取Code', 'GET', '/base/auth/v1.0/tokens/codes', NULL, NULL, 86400, 360, '获取Code接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
+(134660755520749589, '获取Token', 'POST', '/base/auth/v1.0/tokens', NULL, NULL, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
+(134660855520749589, '获取授权码', 'POST', '/base/auth/v1.0/tokens/codes', NULL, NULL, 86400, 360, '获取授权URL接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
+(134660865520749589, '扫码授权', 'PUT', '/base/auth/v1.0/tokens/{code}', NULL, NULL, 86400, 360, '扫码授权接口每24小时调用次数为360次,请合理使用', 1, 1, now()),
+(134660875520749589, '扫码授权获取Token', 'POST', '/base/auth/v1.0/tokens/{code}', NULL, NULL, NULL, NULL, NULL, 0, 0, now()),
+(134661909612855317, '通过微信授权码获取Token', 'POST', '/base/auth/v1.0/tokens/wechat/code', NULL, NULL, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
+(134667548749725717, '通过微信UnionId获取Token', 'POST', '/base/auth/v1.0/tokens/wechat/unionid', NULL, NULL, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
 (134668047163064341, '验证Token', 'GET', '/base/auth/v1.0/tokens/status', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
-(134668810484449301, '刷新Token', 'PUT', '/base/auth/v1.0/tokens', NULL, 10, 3600, 10, '刷新Token接口每小时调用次数为10次,请合理使用', 0, 1, now()),
-(134671174327074837, '用户账号离线', 'DELETE', '/base/auth/v1.0/tokens', NULL, 10, NULL, NULL, NULL, 1, 1, now()),
+(134668810484449301, '刷新Token', 'PUT', '/base/auth/v1.0/tokens', NULL, NULL, 3600, 10, '刷新Token接口每小时调用次数为10次,请合理使用', 0, 1, now()),
+(134671174327074837, '用户账号离线', 'DELETE', '/base/auth/v1.0/tokens', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
 (134676639631015957, '获取提交数据用临时Token', 'GET', '/base/auth/v1.0/tokens', NULL, NULL, 300, 30, '获取临时Token接口每5分钟调用次数为30次,请合理使用', 1, 1, now()),
 (134685654863839253, '获取用户可选租户', 'GET', '/base/auth/v1.0/{id}/tenants', NULL, 1, NULL, NULL, NULL, 0, 1, now()),
 (134686969383878677, '获取用户导航栏', 'GET', '/base/auth/v1.0/navigators', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
