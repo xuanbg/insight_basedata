@@ -167,8 +167,8 @@ CREATE TABLE `icl_operate_log` (
 
 -- ----------------------------
 -- 初始化接口配置
--- ---------------------------- 
-INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, `limit_cycle`, `limit_max`, `message`, `is_verify`, `is_limit`, `created_time`) VALUES 
+-- ----------------------------
+INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, `limit_cycle`, `limit_max`, `message`, `is_verify`, `is_limit`, `created_time`) VALUES
 (134659190399434773, '获取Code', 'GET', '/base/auth/v1.0/tokens/codes', NULL, NULL, 86400, 360, '获取Code接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
 (134660755520749589, '获取Token', 'POST', '/base/auth/v1.0/tokens', NULL, NULL, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
 (134660855520749589, '获取授权码', 'POST', '/base/auth/v1.0/tokens/codes', NULL, NULL, 86400, 360, '获取授权URL接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
@@ -361,21 +361,21 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 
 (135171600923230229, '查询全部省级行政区划', 'GET', '/common/area/v1.0/areas/provinces', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 (135173284881760277, '查询指定行政区划的下级区划', 'GET', '/common/area/v1.0/areas/{is}/subs', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
-(135173440305889301, '获取全部行政区划', 'GET', '/common/area/v1.0/areas', "getArea", 1, NULL, NULL, NULL, 1, 1, now()),
-(135175504108978197, '新增行政区划', 'POST', '/common/area/v1.0/areas', "newArea", 1, NULL, NULL, NULL, 1, 1, now()),
-(135175590381617173, '编辑行政区划', 'PUT', '/common/area/v1.0/areas/{id}', "editArea", 1, NULL, NULL, NULL, 1, 1, now()),
-(135176858319716373, '删除行政区划', 'DELETE', '/common/area/v1.0/areas/{id}', "deleteArea", 1, NULL, NULL, NULL, 1, 1, now()),
+(135173440305889301, '获取全部行政区划', 'GET', '/common/area/v1.0/areas', 'getArea', 1, NULL, NULL, NULL, 1, 1, now()),
+(135175504108978197, '新增行政区划', 'POST', '/common/area/v1.0/areas', 'newArea', 1, NULL, NULL, NULL, 1, 1, now()),
+(135175590381617173, '编辑行政区划', 'PUT', '/common/area/v1.0/areas/{id}', 'editArea', 1, NULL, NULL, NULL, 1, 1, now()),
+(135176858319716373, '删除行政区划', 'DELETE', '/common/area/v1.0/areas/{id}', 'deleteArea', 1, NULL, NULL, NULL, 1, 1, now()),
 (135177297907941397, '获取行政区划日志列表', 'GET', '/common/area/v1.0/areas/logs', 'getAreaLog', 1, NULL, NULL, NULL, 1, 1, now()),
 (135177720211439637, '获取行政区划日志详情', 'GET', '/common/area/v1.0/areas/logs/{id}', 'getAreaLog', 1, NULL, NULL, NULL, 1, 1, now()),
 
-(135177814776217621, '获取字典列表', 'GET', '/common/dict/v1.0/dicts', "getDict", 1, NULL, NULL, NULL, 1, 1, now()),
-(135178120691974165, '获取字典键值集合', 'GET', '/common/dict/v1.0/dicts/{id}', "getDict", 1, NULL, NULL, NULL, 1, 1, now()),
+(135177814776217621, '获取字典列表', 'GET', '/common/dict/v1.0/dicts', 'getDict', 1, NULL, NULL, NULL, 1, 1, now()),
+(135178120691974165, '获取字典键值集合', 'GET', '/common/dict/v1.0/dicts/{id}', 'getDict', 1, NULL, NULL, NULL, 1, 1, now()),
 (135178348383961109, '获取指定键名的键值集合', 'GET', '/common/dict/v1.0/dicts/values', NULL, NULL, NULL, NULL, NULL, 1, 0, now()),
-(135178523206746133, '新增字典', 'POST', '/common/dict/v1.0/dicts', "newDict", 1, NULL, NULL, NULL, 1, 1, now()),
-(135178642207539221, '编辑字典', 'PUT', '/common/dict/v1.0/dicts/{id}', "editDict", 1, NULL, NULL, NULL, 1, 1, now()),
-(135178938505756693, '删除字典', 'DELETE', '/common/dict/v1.0/dicts/{id}', "deleteDict", 1, NULL, NULL, NULL, 1, 1, now()),
-(135179306799202325, '新增字典键值', 'POST', '/common/dict/v1.0/dicts/{id}/keys', "newValue", 1, NULL, NULL, NULL, 1, 1, now()),
-(135179539595657237, '编辑字典键值', 'PUT', '/common/dict/v1.0/dicts/keys/{id}', "editValue", 1, NULL, NULL, NULL, 1, 1, now()),
-(135179577952567317, '删除字典键值', 'DELETE', '/common/dict/v1.0/dicts/keys/{id}', "deleteValue", 1, NULL, NULL, NULL, 1, 1, now()),
+(135178523206746133, '新增字典', 'POST', '/common/dict/v1.0/dicts', 'newDict', 1, NULL, NULL, NULL, 1, 1, now()),
+(135178642207539221, '编辑字典', 'PUT', '/common/dict/v1.0/dicts/{id}', 'editDict', 1, NULL, NULL, NULL, 1, 1, now()),
+(135178938505756693, '删除字典', 'DELETE', '/common/dict/v1.0/dicts/{id}', 'deleteDict', 1, NULL, NULL, NULL, 1, 1, now()),
+(135179306799202325, '新增字典键值', 'POST', '/common/dict/v1.0/dicts/{id}/keys', 'newValue', 1, NULL, NULL, NULL, 1, 1, now()),
+(135179539595657237, '编辑字典键值', 'PUT', '/common/dict/v1.0/dicts/keys/{id}', 'editValue', 1, NULL, NULL, NULL, 1, 1, now()),
+(135179577952567317, '删除字典键值', 'DELETE', '/common/dict/v1.0/dicts/keys/{id}', 'deleteValue', 1, NULL, NULL, NULL, 1, 1, now()),
 (135179920992108565, '获取字典日志列表', 'GET', '/common/dict/v1.0/dicts/logs', 'getDictLog', 1, NULL, NULL, NULL, 1, 1, now()),
 (135180372420853781, '获取字典日志详情', 'GET', '/common/dict/v1.0/dicts/logs/{id}', 'getDictLog', 1, NULL, NULL, NULL, 1, 1, now());
