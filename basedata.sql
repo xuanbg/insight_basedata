@@ -3,14 +3,14 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `icc_param`;
 CREATE TABLE `icc_param` (
-  `id`                 bigint            NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `tenant_id`          bigint            NOT NULL                COMMENT '租户ID',
-  `module_id`          bigint            NOT NULL                COMMENT '模块ID',
-  `user_id`            bigint                     DEFAULT NULL   COMMENT '用户ID',
+  `id`                 bigint unsigned   NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `tenant_id`          bigint unsigned   NOT NULL                COMMENT '租户ID',
+  `module_id`          bigint unsigned   NOT NULL                COMMENT '模块ID',
+  `user_id`            bigint unsigned            DEFAULT NULL   COMMENT '用户ID',
   `key`                varchar(32)       NOT NULL                COMMENT '配置KEY',
   `value`              varchar(64)       NOT NULL                COMMENT '配置键值',
   `creator`            varchar(64)       NOT NULL                COMMENT '创建人',
-  `creator_id`         bigint            NOT NULL                COMMENT '创建人ID',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_param_id` (`tenant_id`, `module_id`),
@@ -23,15 +23,15 @@ CREATE TABLE `icc_param` (
 -- ----------------------------
 DROP TABLE IF EXISTS `icc_template`;
 CREATE TABLE `icc_template` (
-  `id`                 bigint            NOT NULL                COMMENT '主键-0',
-  `tenant_id`          bigint            NOT NULL                COMMENT '租户ID',
+  `id`                 bigint unsigned   NOT NULL                COMMENT '主键-0',
+  `tenant_id`          bigint unsigned   NOT NULL                COMMENT '租户ID',
   `code`               varchar(16)       NOT NULL                COMMENT '编码',
   `name`               varchar(64)       NOT NULL                COMMENT '名称',
   `content`            text              NOT NULL                COMMENT '模板内容',
   `remark`             varchar(512)               DEFAULT NULL   COMMENT '描述',
   `is_invalid`         bit               NOT NULL DEFAULT b'0'   COMMENT '是否失效:0.有效;1.失效',
   `creator`            varchar(64)       NOT NULL                COMMENT '创建人',
-  `creator_id`         bigint            NOT NULL                COMMENT '创建人ID',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_template_tenant_id` (`tenant_id`),
@@ -43,11 +43,11 @@ CREATE TABLE `icc_template` (
 -- ----------------------------
 DROP TABLE IF EXISTS `icc_report`;
 CREATE TABLE `icc_report` (
-  `id`                 bigint            NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `tenant_id`          bigint            NOT NULL                COMMENT '租户ID',
+  `id`                 bigint unsigned   NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `tenant_id`          bigint unsigned   NOT NULL                COMMENT '租户ID',
   `content`            blob              NOT NULL                COMMENT '模板内容',
   `creator`            varchar(64)       NOT NULL                COMMENT '创建人',
-  `creator_id`         bigint            NOT NULL                COMMENT '创建人ID',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_report_tenant_id` (`tenant_id`)
@@ -58,13 +58,13 @@ CREATE TABLE `icc_report` (
 -- ----------------------------
 DROP TABLE IF EXISTS `icd_area`;
 CREATE TABLE `icd_area` (
-  `id`                 bigint            NOT NULL                COMMENT '主键-1',
-  `parent_id`          bigint                     DEFAULT NULL   COMMENT '父级ID',
+  `id`                 bigint unsigned   NOT NULL                COMMENT '主键-1',
+  `parent_id`          bigint unsigned            DEFAULT NULL   COMMENT '父级ID',
   `code`               varchar(16)                DEFAULT NULL   COMMENT '编码',
   `name`               varchar(64)       NOT NULL                COMMENT '中文名称',
   `alias`              varchar(32)                DEFAULT NULL   COMMENT '简称',
   `creator`            varchar(64)       NOT NULL                COMMENT '创建人',
-  `creator_id`         bigint            NOT NULL                COMMENT '创建人ID',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_area_parent_id` (`parent_id`),
@@ -79,14 +79,14 @@ CREATE TABLE `icd_area` (
 -- ----------------------------
 DROP TABLE IF EXISTS `icd_dict_key`;
 CREATE TABLE `icd_dict_key` (
-  `id`                 bigint            NOT NULL                COMMENT '主键-2',
-  `app_id`             bigint            NOT NULL                COMMENT '应用ID',
+  `id`                 bigint unsigned   NOT NULL                COMMENT '主键-2',
+  `app_id`             bigint unsigned   NOT NULL                COMMENT '应用ID',
   `app_name`           varchar(64)       NOT NULL                COMMENT '应用名称',
   `code`               varchar(16)       NOT NULL                COMMENT '编码',
   `name`               varchar(64)       NOT NULL                COMMENT '名称',
   `remark`             varchar(512)               DEFAULT NULL   COMMENT '描述',
   `creator`            varchar(64)       NOT NULL                COMMENT '创建人',
-  `creator_id`         bigint            NOT NULL                COMMENT '创建人ID',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_dict_app_id` (`app_id`),
@@ -98,16 +98,16 @@ CREATE TABLE `icd_dict_key` (
 -- ----------------------------
 DROP TABLE IF EXISTS `icd_dict_value`;
 CREATE TABLE `icd_dict_value` (
-  `id`                 bigint            NOT NULL                COMMENT '主键-3',
-  `dict_id`            bigint            NOT NULL                COMMENT '字典ID',
-  `tenant_id`          bigint                     DEFAULT NULL   COMMENT '租户ID',
+  `id`                 bigint unsigned   NOT NULL                COMMENT '主键-3',
+  `dict_id`            bigint unsigned   NOT NULL                COMMENT '字典ID',
+  `tenant_id`          bigint unsigned            DEFAULT NULL   COMMENT '租户ID',
   `index`              int unsigned      NOT NULL                COMMENT '序号',
   `code`               varchar(16)                DEFAULT NULL   COMMENT '编码',
   `value`              varchar(64)       NOT NULL                COMMENT '键值',
   `extend`             json                       DEFAULT NULL   COMMENT '详情',
   `remark`             varchar(512)               DEFAULT NULL   COMMENT '描述',
   `creator`            varchar(64)       NOT NULL                COMMENT '创建人',
-  `creator_id`         bigint            NOT NULL                COMMENT '创建人ID',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_dict_dict_id` (`dict_id`),
@@ -121,7 +121,7 @@ CREATE TABLE `icd_dict_value` (
 -- ----------------------------
 DROP TABLE IF EXISTS `ici_interface`;
 CREATE TABLE `ici_interface` (
-  `id`                 bigint            NOT NULL                COMMENT '主键-4',
+  `id`                 bigint unsigned   NOT NULL                COMMENT '主键-4',
   `name`               varchar(64)       NOT NULL                COMMENT '接口名称',
   `method`             varchar(8)        NOT NULL                COMMENT 'HTTP请求方法',
   `url`                varchar(128)      NOT NULL                COMMENT '接口URL',
@@ -147,15 +147,15 @@ CREATE TABLE `ici_interface` (
 -- ----------------------------
 DROP TABLE IF EXISTS `icl_operate_log`;
 CREATE TABLE `icl_operate_log` (
-  `id`                 bigint            NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `app_id`             bigint            NOT NULL                COMMENT '应用ID',
+  `id`                 bigint unsigned   NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `app_id`             bigint unsigned   NOT NULL                COMMENT '应用ID',
   `business`           varchar(16)       NOT NULL                COMMENT '业务名称',
-  `tenant_id`          bigint                     DEFAULT NULL   COMMENT '租户ID',
-  `business_id`        bigint                     DEFAULT NULL   COMMENT '业务ID',
+  `tenant_id`          bigint unsigned            DEFAULT NULL   COMMENT '租户ID',
+  `business_id`        bigint unsigned            DEFAULT NULL   COMMENT '业务ID',
   `type`               varchar(16)       NOT NULL                COMMENT '类型',
   `content`            json                       DEFAULT NULL   COMMENT '日志内容',
   `creator`            varchar(32)       NOT NULL                COMMENT '创建人,系统自动为系统',
-  `creator_id`         bigint            NOT NULL                COMMENT '创建人ID,系统自动为32个0',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID,系统自动为32个0',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_operate_log_app_id&business` (`app_id`, `business`) USING BTREE,
