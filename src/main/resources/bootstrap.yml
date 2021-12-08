@@ -14,7 +14,7 @@ spring:
   profiles: dev
   cloud:
     consul:
-      host: 192.168.0.87
+      host: 192.168.160.8
     inetutils:
       preferred-networks: 192\.168\.[\d]\.[\d]+
 ---
@@ -23,6 +23,12 @@ spring:
   cloud:
     consul:
       host: localhost
+---
+spring:
+  profiles: dte
+  cloud:
+    consul:
+      host: 192.168.30.22
 ---
 spring:
   profiles: pro
