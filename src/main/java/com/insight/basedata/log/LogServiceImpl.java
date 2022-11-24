@@ -1,9 +1,9 @@
 package com.insight.basedata.log;
 
 import com.insight.basedata.common.Core;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,7 +33,7 @@ public class LogServiceImpl implements LogService {
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, String business, SearchDto search) {
+    public Reply getLogs(LoginInfo info, String business, Search search) {
         return core.getLogs(info, business, search);
     }
 

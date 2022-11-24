@@ -3,9 +3,9 @@ package com.insight.basedata.area;
 import com.insight.basedata.common.entity.Area;
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -107,7 +107,7 @@ public class AreaController {
      * @return Reply
      */
     @GetMapping("/v1.0/areas/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, SearchDto search) {
+    public Reply getLogs(@RequestHeader("loginInfo") String info, Search search) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getLogs(loginInfo, search);

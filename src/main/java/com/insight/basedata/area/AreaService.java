@@ -1,9 +1,9 @@
 package com.insight.basedata.area;
 
 import com.insight.basedata.common.entity.Area;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 
 /**
  * @author 宣炳刚
@@ -68,7 +68,7 @@ public interface AreaService {
      * @param search 查询实体类
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, SearchDto search);
+    Reply getLogs(LoginInfo info, Search search);
 
     /**
      * 获取日志详情

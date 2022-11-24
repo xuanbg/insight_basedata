@@ -1,7 +1,7 @@
 package com.insight.basedata.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.insight.utils.pojo.BaseXo;
+import com.insight.utils.pojo.base.BaseXo;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;

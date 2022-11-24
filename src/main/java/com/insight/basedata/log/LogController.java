@@ -1,9 +1,9 @@
 package com.insight.basedata.log;
 
 import com.insight.utils.Json;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,7 +35,7 @@ public class LogController {
      * @return Reply
      */
     @GetMapping("/v1.0/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam String business, SearchDto search) {
+    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam String business, Search search) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getLogs(loginInfo, business, search);

@@ -2,6 +2,7 @@ package com.insight.basedata.common.mapper;
 
 import com.insight.utils.common.JsonTypeHandler;
 import com.insight.utils.pojo.Log;
+import com.insight.utils.pojo.base.Search;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -17,19 +18,16 @@ public interface LogMapper {
     /**
      * 获取操作日志列表
      *
-     * @param appId    应用ID
-     * @param tenantId 租户ID
-     * @param business 业务类型
-     * @param key      查询关键词
+     * @param search   查询实体类
      * @return 操作日志列表
      */
     @Select("<script>select id, type, business, business_id, creator, creator_id, created_time from icl_operate_log " +
-            "where app_id = #{appId} and business = #{business} " +
+            "where app_id = #{appId} and business = #{value} " +
             "<if test = 'tenantId != null'>and tenant_id = #{tenantId} </if>" +
             "<if test = 'tenantId == null'>and isnull(tenant_id) </if>" +
-            "<if test = 'key!=null'>and (business_id = #{key} or creator = #{key})</if>" +
+            "<if test = 'keyword!=null'>and (business_id = #{keyword} or creator = #{keyword})</if>" +
             "order by created_time</script>")
-    List<Log> getLogs(@Param("appId") Long appId, @Param("tenantId") Long tenantId, @Param("business") String business, @Param("key") String key);
+    List<Log> getLogs(Search search);
 
     /**
      * 获取操作日志列表

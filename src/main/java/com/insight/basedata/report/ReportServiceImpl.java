@@ -1,10 +1,8 @@
 package com.insight.basedata.report;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
-import com.insight.basedata.common.dto.TemplateDto;
 import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.basedata.common.mapper.ReportMapper;
@@ -12,14 +10,13 @@ import com.insight.utils.Generator;
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
-import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.OperateType;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -49,18 +46,18 @@ public class ReportServiceImpl implements ReportService {
     /**
      * 查询报表模板
      *
-     * @param info 用户关键信息
-     * @param dto  查询参数DTO
+     * @param info   用户关键信息
+     * @param search 查询参数DTO
      * @return Reply
      */
     @Override
-    public Reply getTemplates(LoginInfo info, SearchDto dto) {
-        dto.setTenantId(info.getTenantId());
-        PageHelper.startPage(dto.getPage(), dto.getSize());
-        List<TemplateDto> templates = mapper.getTemplates(dto);
-        PageInfo<TemplateDto> pageInfo = new PageInfo<>(templates);
+    public Reply getTemplates(LoginInfo info, Search search) {
+        search.setTenantId(info.getTenantId());
+        var page = PageHelper.startPage(search.getPageNum(), search.getPageSize())
+                .setOrderBy(search.getOrderBy()).doSelectPage(() -> mapper.getTemplates(search));
 
-        return ReplyHelper.success(templates, pageInfo.getTotal());
+        var total = page.getTotal();
+        return total > 0 ? ReplyHelper.success(page.getResult(), total) : ReplyHelper.resultIsEmpty();
     }
 
     /**
@@ -346,7 +343,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, SearchDto search) {
+    public Reply getLogs(LoginInfo info, Search search) {
         return core.getLogs(info, BUSINESS, search);
     }
 

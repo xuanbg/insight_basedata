@@ -3,7 +3,7 @@ package com.insight.basedata.common.mapper;
 import com.insight.basedata.common.dto.TemplateDto;
 import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.base.Search;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -25,7 +25,7 @@ public interface ReportMapper {
     @Select("<script>select id, `code`, `name`, remark, is_invalid from icc_template where tenant_id = #{tenantId} " +
             "<if test = 'keyword != null'>and (`code` = #{keyword} or `name` like concat('%',#{keyword},'%')) </if>" +
             "order by created_time</script>")
-    List<TemplateDto> getTemplates(SearchDto dto);
+    List<TemplateDto> getTemplates(Search dto);
 
     /**
      * 获取报表模板详情

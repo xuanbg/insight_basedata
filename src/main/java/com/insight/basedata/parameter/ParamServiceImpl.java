@@ -5,8 +5,8 @@ import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.basedata.common.mapper.ParamMapper;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

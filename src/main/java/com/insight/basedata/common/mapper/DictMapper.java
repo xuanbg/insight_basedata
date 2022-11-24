@@ -5,6 +5,7 @@ import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
 import com.insight.utils.common.JsonTypeHandler;
+import com.insight.utils.pojo.base.Search;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -20,13 +21,14 @@ public interface DictMapper {
     /**
      * 获取字典列表
      *
-     * @param appIds 应用ID集合
+     * @param search 查询参数DTO
      * @return 字典DTO集合
      */
-    @Select("<script>select * from icd_dict_key <if test = 'list != null and list.size() > 0'>where app_id in " +
-            "<foreach collection =\"list\" item=\"item\" index= \"index\" separator =\",\" open =\"(\" close =\") \">#{item}</foreach>" +
+    @Select("<script>select * from icd_dict_key " +
+            "<if test = 'longSet != null and longSet.size() > 0'>where app_id in " +
+            "<foreach collection =\"longSet\" item=\"item\" index= \"index\" separator =\",\" open =\"(\" close =\") \">#{item}</foreach>" +
             "</if> order by created_time</script>")
-    List<DictDto> getDicts(@Param("list") List<Long> appIds);
+    List<DictDto> getDicts(Search search);
 
     /**
      * 获取字典键值集合

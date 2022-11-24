@@ -4,7 +4,7 @@ import com.insight.basedata.common.mapper.ConfigMapper;
 import com.insight.utils.Json;
 import com.insight.utils.Redis;
 import com.insight.utils.common.ApplicationContextHolder;
-import com.insight.utils.pojo.InterfaceDto;
+import com.insight.utils.pojo.auth.InterfaceDto;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 

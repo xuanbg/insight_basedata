@@ -3,9 +3,9 @@ package com.insight.basedata.report;
 import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.utils.Json;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -36,7 +36,7 @@ public class ReportController {
      * @return Reply
      */
     @GetMapping("/v1.0/templates")
-    public Reply getTemplates(@RequestHeader("loginInfo") String info, SearchDto dto) {
+    public Reply getTemplates(@RequestHeader("loginInfo") String info, Search dto) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getTemplates(loginInfo, dto);
@@ -223,7 +223,7 @@ public class ReportController {
      * @return Reply
      */
     @GetMapping("/v1.0/templates/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, SearchDto search) {
+    public Reply getLogs(@RequestHeader("loginInfo") String info, Search search) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getLogs(loginInfo, search);

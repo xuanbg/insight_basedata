@@ -1,7 +1,6 @@
 package com.insight.basedata.dict;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.client.TenantClient;
@@ -14,10 +13,10 @@ import com.insight.basedata.common.mapper.DictMapper;
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
-import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.OperateType;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -56,15 +55,15 @@ public class DictServiceImpl implements DictService {
     /**
      * 获取字典列表
      *
-     * @param info 用户关键信息
-     * @param dto  查询参数DTO
+     * @param info   用户关键信息
+     * @param search 查询参数DTO
      * @return Reply
      */
     @Override
-    public Reply getDicts(LoginInfo info, SearchDto dto) {
+    public Reply getDicts(LoginInfo info, Search search) {
         List<Long> ids = new ArrayList<>();
-        if (dto.getAppId() != null) {
-            ids.add(dto.getAppId());
+        if (search.getAppId() != null) {
+            ids.add(search.getAppId());
         }
 
         Long tenantId = info.getTenantId();
@@ -79,11 +78,12 @@ public class DictServiceImpl implements DictService {
             ids = apps.stream().map(AppListDto::getId).collect(Collectors.toList());
         }
 
-        PageHelper.startPage(dto.getPage(), dto.getSize());
-        List<DictDto> list = mapper.getDicts(ids);
-        PageInfo<DictDto> pageInfo = new PageInfo<>(list);
+        search.setLongSet(ids);
+        var page = PageHelper.startPage(search.getPageNum(), search.getPageSize())
+                .setOrderBy(search.getOrderBy()).doSelectPage(() -> mapper.getDicts(search));
 
-        return ReplyHelper.success(list, pageInfo.getTotal());
+        var total = page.getTotal();
+        return total > 0 ? ReplyHelper.success(page.getResult(), total) : ReplyHelper.resultIsEmpty();
     }
 
     /**
@@ -258,7 +258,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, SearchDto search) {
+    public Reply getLogs(LoginInfo info, Search search) {
         return core.getLogs(info, BUSINESS, search);
     }
 

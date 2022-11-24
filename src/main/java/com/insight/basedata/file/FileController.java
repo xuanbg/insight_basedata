@@ -2,7 +2,7 @@ package com.insight.basedata.file;
 
 import com.insight.basedata.common.dto.FileDto;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.base.Reply;
 import com.qiniu.common.QiniuException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

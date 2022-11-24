@@ -2,9 +2,9 @@ package com.insight.basedata.report;
 
 import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 
 /**
  * @author 宣炳刚
@@ -20,7 +20,7 @@ public interface ReportService {
      * @param dto  查询参数DTO
      * @return Reply
      */
-    Reply getTemplates(LoginInfo info, SearchDto dto);
+    Reply getTemplates(LoginInfo info, Search dto);
 
     /**
      * 获取报表模板详情
@@ -130,7 +130,7 @@ public interface ReportService {
      * @param dto  查询参数DTO
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, SearchDto dto);
+    Reply getLogs(LoginInfo info, Search dto);
 
     /**
      * 获取日志详情

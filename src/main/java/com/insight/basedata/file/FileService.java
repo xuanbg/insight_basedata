@@ -1,7 +1,7 @@
 package com.insight.basedata.file;
 
 import com.insight.basedata.common.dto.FileDto;
-import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.base.Reply;
 import com.qiniu.common.QiniuException;
 
 /**

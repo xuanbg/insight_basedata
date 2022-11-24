@@ -3,8 +3,8 @@ package com.insight.basedata.parameter;
 import com.insight.basedata.common.dto.ParamSearchDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.utils.Json;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

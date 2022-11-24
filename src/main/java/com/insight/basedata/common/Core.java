@@ -1,16 +1,13 @@
 package com.insight.basedata.common;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.insight.basedata.common.mapper.LogMapper;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.Log;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -38,12 +35,15 @@ public class Core {
      * @param search   查询实体类
      * @return Reply
      */
-    public Reply getLogs(LoginInfo info, String business, SearchDto search) {
-        PageHelper.startPage(search.getPage(), search.getSize());
-        List<Log> logs = mapper.getLogs(info.getAppId(), info.getTenantId(), business, search.getKeyword());
-        PageInfo<Log> pageInfo = new PageInfo<>(logs);
+    public Reply getLogs(LoginInfo info, String business, Search search) {
+        search.setValue(business);
+        search.setAppId(info.getAppId());
+        search.setTenantId(info.getTenantId());
+        var page = PageHelper.startPage(search.getPageNum(), search.getPageSize())
+                .setOrderBy(search.getOrderBy()).doSelectPage(() -> mapper.getLogs(search));
 
-        return ReplyHelper.success(logs, pageInfo.getTotal());
+        var total = page.getTotal();
+        return total > 0 ? ReplyHelper.success(page.getResult(), total) : ReplyHelper.resultIsEmpty();
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.insight.basedata.common.dto;
 
-import com.insight.utils.pojo.BaseXo;
+import com.insight.utils.pojo.base.BaseXo;
 
 import javax.validation.constraints.NotNull;
 import java.io.InputStream;

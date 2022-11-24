@@ -1,8 +1,8 @@
 package com.insight.basedata.log;
 
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 
 /**
  * @author 宣炳刚
@@ -19,7 +19,7 @@ public interface LogService {
      * @param search   查询参数DTO
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, String business, SearchDto search);
+    Reply getLogs(LoginInfo info, String business, Search search);
 
     /**
      * 获取日志详情

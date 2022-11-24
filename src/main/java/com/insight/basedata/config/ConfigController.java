@@ -2,9 +2,9 @@ package com.insight.basedata.config;
 
 import com.insight.basedata.common.entity.InterfaceConfig;
 import com.insight.utils.Json;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,14 +32,12 @@ public class ConfigController {
     /**
      * 获取接口配置列表
      *
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param search 查询条件
      * @return Reply
      */
     @GetMapping("/v1.0/configs")
-    public Reply getConfigs(@RequestParam(required = false) String keyword, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "20") int size) {
-        return service.getConfigs(keyword, page, size);
+    public Reply getConfigs(Search search) {
+        return service.getConfigs(search);
     }
 
     /**
@@ -115,7 +113,7 @@ public class ConfigController {
      * @return Reply
      */
     @GetMapping("/v1.0/configs/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, SearchDto search) {
+    public Reply getLogs(@RequestHeader("loginInfo") String info, Search search) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getLogs(loginInfo, search);

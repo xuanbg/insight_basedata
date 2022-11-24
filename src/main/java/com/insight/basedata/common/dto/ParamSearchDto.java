@@ -1,13 +1,13 @@
 package com.insight.basedata.common.dto;
 
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.base.Search;
 
 /**
  * @author 宣炳刚
  * @date 2020/6/24
  * @remark
  */
-public class ParamSearchDto extends SearchDto {
+public class ParamSearchDto extends Search {
 
     /**
      * 模块ID

@@ -1,6 +1,6 @@
 package com.insight.basedata.common.entity;
 
-import com.insight.utils.pojo.BaseXo;
+import com.insight.utils.pojo.base.BaseXo;
 
 import java.time.LocalDateTime;
 

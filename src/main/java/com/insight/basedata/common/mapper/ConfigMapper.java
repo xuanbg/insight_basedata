@@ -1,7 +1,8 @@
 package com.insight.basedata.common.mapper;
 
 import com.insight.basedata.common.entity.InterfaceConfig;
-import com.insight.utils.pojo.InterfaceDto;
+import com.insight.utils.pojo.auth.InterfaceDto;
+import com.insight.utils.pojo.base.Search;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -17,13 +18,13 @@ public interface ConfigMapper {
     /**
      * 获取接口配置
      *
-     * @param key 查询关键词
+     * @param search 查询条件
      * @return 接口配置表
      */
     @Select("<script>select * from ici_interface " +
             "<if test = 'key!=null'>where name like concat('%',#{key},'%') or url like concat('%',#{key},'%') or auth_code = #{key}</if>" +
             "order by created_time</script>")
-    List<InterfaceConfig> getConfigs(@Param("key") String key);
+    List<InterfaceConfig> getConfigs(Search search);
 
     /**
      * 获取接口配置详情

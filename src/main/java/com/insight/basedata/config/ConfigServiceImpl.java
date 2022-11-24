@@ -1,7 +1,6 @@
 package com.insight.basedata.config;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.entity.InterfaceConfig;
@@ -10,7 +9,11 @@ import com.insight.utils.Json;
 import com.insight.utils.Redis;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
-import com.insight.utils.pojo.*;
+import com.insight.utils.pojo.OperateType;
+import com.insight.utils.pojo.auth.InterfaceDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -44,18 +47,16 @@ public class ConfigServiceImpl implements ConfigService {
     /**
      * 获取接口配置列表
      *
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param search 查询条件
      * @return Reply
      */
     @Override
-    public Reply getConfigs(String keyword, int page, int size) {
-        PageHelper.startPage(page, size);
-        List<InterfaceConfig> configs = mapper.getConfigs(keyword);
-        PageInfo<InterfaceConfig> pageInfo = new PageInfo<>(configs);
+    public Reply getConfigs(Search search) {
+        var page = PageHelper.startPage(search.getPageNum(), search.getPageSize())
+                .setOrderBy(search.getOrderBy()).doSelectPage(() -> mapper.getConfigs(search));
 
-        return ReplyHelper.success(configs, pageInfo.getTotal());
+        var total = page.getTotal();
+        return total > 0 ? ReplyHelper.success(page.getResult(), total) : ReplyHelper.resultIsEmpty();
     }
 
     /**
@@ -166,7 +167,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, SearchDto search) {
+    public Reply getLogs(LoginInfo info, Search search) {
         return core.getLogs(info, BUSINESS, search);
     }
 

@@ -7,10 +7,10 @@ import com.insight.basedata.common.entity.Area;
 import com.insight.basedata.common.mapper.AreaMapper;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
-import com.insight.utils.pojo.LoginInfo;
 import com.insight.utils.pojo.OperateType;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -150,7 +150,7 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, SearchDto search) {
+    public Reply getLogs(LoginInfo info, Search search) {
         return core.getLogs(info, BUSINESS, search);
     }
 

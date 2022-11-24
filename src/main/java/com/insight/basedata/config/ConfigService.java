@@ -1,9 +1,9 @@
 package com.insight.basedata.config;
 
 import com.insight.basedata.common.entity.InterfaceConfig;
-import com.insight.utils.pojo.LoginInfo;
-import com.insight.utils.pojo.Reply;
-import com.insight.utils.pojo.SearchDto;
+import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.Search;
 
 /**
  * @author 宣炳刚
@@ -15,12 +15,10 @@ public interface ConfigService {
     /**
      * 获取接口配置列表
      *
-     * @param keyword 查询关键词
-     * @param page    分页页码
-     * @param size    每页记录数
+     * @param search 查询条件
      * @return Reply
      */
-    Reply getConfigs(String keyword, int page, int size);
+    Reply getConfigs(Search search);
 
     /**
      * 获取接口配置详情
@@ -71,7 +69,7 @@ public interface ConfigService {
      * @param search 查询实体类
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, SearchDto search);
+    Reply getLogs(LoginInfo info, Search search);
 
     /**
      * 获取日志详情
