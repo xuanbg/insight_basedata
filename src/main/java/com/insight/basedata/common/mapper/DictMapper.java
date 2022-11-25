@@ -27,7 +27,7 @@ public interface DictMapper {
     @Select("<script>select * from icd_dict_key " +
             "<if test = 'longSet != null and longSet.size() > 0'>where app_id in " +
             "<foreach collection =\"longSet\" item=\"item\" index= \"index\" separator =\",\" open =\"(\" close =\") \">#{item}</foreach>" +
-            "</if> order by created_time</script>")
+            "</if></script>")
     List<DictDto> getDicts(Search search);
 
     /**

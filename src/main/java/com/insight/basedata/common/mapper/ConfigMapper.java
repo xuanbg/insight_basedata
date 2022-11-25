@@ -23,7 +23,7 @@ public interface ConfigMapper {
      */
     @Select("<script>select * from ici_interface " +
             "<if test = 'key!=null'>where name like concat('%',#{key},'%') or url like concat('%',#{key},'%') or auth_code = #{key}</if>" +
-            "order by created_time</script>")
+            "</script>")
     List<InterfaceConfig> getConfigs(Search search);
 
     /**

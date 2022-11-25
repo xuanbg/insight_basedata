@@ -24,7 +24,7 @@ public interface ReportMapper {
      */
     @Select("<script>select id, `code`, `name`, remark, is_invalid from icc_template where tenant_id = #{tenantId} " +
             "<if test = 'keyword != null'>and (`code` = #{keyword} or `name` like concat('%',#{keyword},'%')) </if>" +
-            "order by created_time</script>")
+            "</script>")
     List<TemplateDto> getTemplates(Search dto);
 
     /**

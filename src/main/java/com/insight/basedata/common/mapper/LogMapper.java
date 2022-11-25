@@ -26,7 +26,7 @@ public interface LogMapper {
             "<if test = 'tenantId != null'>and tenant_id = #{tenantId} </if>" +
             "<if test = 'tenantId == null'>and isnull(tenant_id) </if>" +
             "<if test = 'keyword!=null'>and (business_id = #{keyword} or creator = #{keyword})</if>" +
-            "order by created_time</script>")
+            "</script>")
     List<Log> getLogs(Search search);
 
     /**
