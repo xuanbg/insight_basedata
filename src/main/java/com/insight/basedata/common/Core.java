@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.insight.basedata.common.mapper.LogMapper;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
 import com.insight.utils.pojo.message.Log;
@@ -52,12 +53,12 @@ public class Core {
      * @param id 日志ID
      * @return Reply
      */
-    public Reply getLog(Long id) {
+    public Log getLog(Long id) {
         Log log = mapper.getLog(id);
         if (log == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
+            throw new BusinessException("ID不存在,未读取数据");
         }
 
-        return ReplyHelper.success(log);
+        return log;
     }
 }

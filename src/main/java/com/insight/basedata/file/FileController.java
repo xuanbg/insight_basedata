@@ -1,8 +1,7 @@
 package com.insight.basedata.file;
 
 import com.insight.basedata.common.dto.FileDto;
-import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.BusinessException;
 import com.qiniu.common.QiniuException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +36,7 @@ public class FileController {
      * @return Reply
      */
     @GetMapping("/v1.0/token")
-    public Reply getToken() {
+    public String getToken() {
         return service.getToken();
     }
 
@@ -48,9 +47,9 @@ public class FileController {
      * @return Reply
      */
     @PostMapping("/v1.0/upload")
-    public Reply uploadFile(@RequestParam MultipartFile file) throws IOException {
+    public String uploadFile(@RequestParam MultipartFile file) throws IOException {
         if (file == null || file.getOriginalFilename() == null) {
-            return ReplyHelper.invalidParam("文件不能为空");
+            throw new BusinessException("文件不能为空");
         }
 
         String contentType = file.getContentType();
@@ -71,7 +70,7 @@ public class FileController {
      * @return Reply
      */
     @PostMapping("/v1.0/stream")
-    public Reply upload(@RequestParam InputStream file) throws QiniuException {
+    public String upload(@RequestParam InputStream file) throws QiniuException {
         FileDto dto = new FileDto();
         dto.setStream(file);
 
@@ -85,7 +84,7 @@ public class FileController {
      * @return Reply
      */
     @PostMapping("/v1.0/data")
-    public Reply upload(@RequestBody @Valid FileDto file) throws QiniuException {
+    public String upload(@RequestBody @Valid FileDto file) throws QiniuException {
         return service.upload(file);
     }
 }

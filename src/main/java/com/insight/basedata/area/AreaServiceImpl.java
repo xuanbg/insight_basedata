@@ -10,6 +10,7 @@ import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import com.insight.utils.pojo.message.OperateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,7 +150,7 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply getLog(Long id) {
+    public Log getLog(Long id) {
         return core.getLog(id);
     }
 }

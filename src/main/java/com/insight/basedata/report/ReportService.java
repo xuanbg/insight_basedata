@@ -5,6 +5,7 @@ import com.insight.basedata.common.entity.Template;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 
 /**
  * @author 宣炳刚
@@ -29,7 +30,7 @@ public interface ReportService {
      * @param id   模板ID
      * @return Reply
      */
-    Reply getTemplate(LoginInfo info, Long id);
+    Template getTemplate(LoginInfo info, Long id);
 
     /**
      * 获取报表模板内容
@@ -38,7 +39,7 @@ public interface ReportService {
      * @param id   模板ID
      * @return Reply
      */
-    Reply getTemplateContent(LoginInfo info, Long id);
+    String getTemplateContent(LoginInfo info, Long id);
 
     /**
      * 导入报表模板
@@ -47,7 +48,7 @@ public interface ReportService {
      * @param template 报表模板实体
      * @return Reply
      */
-    Reply importTemplate(LoginInfo info, Template template);
+    String importTemplate(LoginInfo info, Template template);
 
     /**
      * 复制报表模板
@@ -57,25 +58,23 @@ public interface ReportService {
      * @param template 报表模板实体
      * @return Reply
      */
-    Reply copyTemplate(LoginInfo info, Long id, Template template);
+    String copyTemplate(LoginInfo info, Long id, Template template);
 
     /**
      * 编辑报表模板
      *
      * @param info     用户关键信息
      * @param template 报表模板实体
-     * @return Reply
      */
-    Reply editTemplate(LoginInfo info, Template template);
+    void editTemplate(LoginInfo info, Template template);
 
     /**
      * 设计报表模板
      *
      * @param info     用户关键信息
      * @param template 报表模板实体
-     * @return Reply
      */
-    Reply designTemplate(LoginInfo info, Template template);
+    void designTemplate(LoginInfo info, Template template);
 
     /**
      * 更新模板有效状态
@@ -83,27 +82,24 @@ public interface ReportService {
      * @param info   用户关键信息
      * @param id     模板ID
      * @param status 状态
-     * @return Reply
      */
-    Reply updateTemplateStatus(LoginInfo info, Long id, boolean status);
+    void updateTemplateStatus(LoginInfo info, Long id, boolean status);
 
     /**
      * 删除报表模板
      *
      * @param info 用户关键信息
      * @param id   模板ID
-     * @return Reply
      */
-    Reply deleteTemplate(LoginInfo info, Long id);
+    void deleteTemplate(LoginInfo info, Long id);
 
     /**
      * 新增报表实例
      *
      * @param info   用户关键信息
      * @param report 报表实例实体类
-     * @return Reply
      */
-    Reply newReport(LoginInfo info, Report report);
+    void newReport(LoginInfo info, Report report);
 
     /**
      * 获取报表实例
@@ -112,16 +108,15 @@ public interface ReportService {
      * @param id   报表实例ID
      * @return Reply
      */
-    Reply getReport(LoginInfo info, Long id);
+    Report getReport(LoginInfo info, Long id);
 
     /**
      * 删除报表实例
      *
      * @param info 用户关键信息
      * @param id   报表实例ID
-     * @return Reply
      */
-    Reply deleteReport(LoginInfo info, Long id);
+    void deleteReport(LoginInfo info, Long id);
 
     /**
      * 获取日志列表
@@ -138,5 +133,5 @@ public interface ReportService {
      * @param id 日志ID
      * @return Reply
      */
-    Reply getLog(Long id);
+    Log getLog(Long id);
 }

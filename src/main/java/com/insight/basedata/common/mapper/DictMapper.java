@@ -45,15 +45,13 @@ public interface DictMapper {
     /**
      * 获取字典键值集合
      *
-     * @param appId    应用ID
-     * @param tenantId 租户ID
-     * @param key      字典键名
+     * @param search 查询参数实体
      * @return 键值DTO集合
      */
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select v.* from icd_dict_key k join icd_dict_value v on v.dict_id = k.id where k.app_id = #{appId} " +
             "and k.`code` = #{keyword} and (isnull(v.tenant_id) or v.tenant_id = #{tenantId}) order by v.index;")
-    List<DictKeyDto> getValues(@Param("appId") Long appId, @Param("tenantId") Long tenantId, @Param("key") String key);
+    List<DictKeyDto> getValues(Search search);
 
     /**
      * 获取字典数据

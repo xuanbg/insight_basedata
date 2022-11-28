@@ -1,10 +1,10 @@
 package com.insight.basedata.parameter;
 
 import com.insight.basedata.common.dto.ParamSearchDto;
+import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
-import com.insight.utils.pojo.base.Reply;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class ParamController {
      * @return Reply
      */
     @GetMapping("/v1.0/params")
-    public Reply getParameters(@RequestHeader("loginInfo") String info, ParamSearchDto dto) {
+    public List<ParameterDto> getParameters(@RequestHeader("loginInfo") String info, ParamSearchDto dto) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getParameters(loginInfo, dto);
@@ -51,7 +51,7 @@ public class ParamController {
      * @return Reply
      */
     @GetMapping("/v1.0/params/value")
-    public Reply getParameter(@RequestHeader("loginInfo") String info, ParamSearchDto dto) {
+    public ParameterDto getParameter(@RequestHeader("loginInfo") String info, ParamSearchDto dto) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getParameter(loginInfo, dto);
@@ -62,12 +62,11 @@ public class ParamController {
      *
      * @param info       用户关键信息
      * @param parameters 选项参数实体集合
-     * @return Reply
      */
     @PutMapping("/v1.0/params")
-    public Reply setParameter(@RequestHeader("loginInfo") String info, @RequestBody List<Parameter> parameters) {
+    public void setParameter(@RequestHeader("loginInfo") String info, @RequestBody List<Parameter> parameters) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.setParameter(loginInfo, parameters);
+        service.setParameter(loginInfo, parameters);
     }
 }

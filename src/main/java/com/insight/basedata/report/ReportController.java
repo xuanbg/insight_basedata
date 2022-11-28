@@ -6,6 +6,7 @@ import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -50,7 +51,7 @@ public class ReportController {
      * @return Reply
      */
     @GetMapping("/v1.0/templates/{id}")
-    public Reply getTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public Template getTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getTemplate(loginInfo, id);
@@ -64,7 +65,7 @@ public class ReportController {
      * @return Reply
      */
     @GetMapping("/v1.0/templates/{id}/content")
-    public Reply getTemplateContent(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public String getTemplateContent(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getTemplateContent(loginInfo, id);
@@ -78,7 +79,7 @@ public class ReportController {
      * @return Reply
      */
     @PostMapping("/v1.0/templates")
-    public Reply importTemplate(@RequestHeader("loginInfo") String info, @RequestBody Template template) {
+    public String importTemplate(@RequestHeader("loginInfo") String info, @RequestBody Template template) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.importTemplate(loginInfo, template);
@@ -93,7 +94,7 @@ public class ReportController {
      * @return Reply
      */
     @PostMapping("/v1.0/templates/{id}")
-    public Reply copyTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id, @RequestBody Template template) {
+    public String copyTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id, @RequestBody Template template) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.copyTemplate(loginInfo, id, template);
@@ -105,14 +106,13 @@ public class ReportController {
      * @param info     用户关键信息
      * @param id       模板ID
      * @param template 报表模板实体
-     * @return Reply
      */
     @PutMapping("/v1.0/templates/{id}")
-    public Reply editTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id, @RequestBody Template template) {
+    public void editTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id, @RequestBody Template template) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
         template.setId(id);
 
-        return service.editTemplate(loginInfo, template);
+        service.editTemplate(loginInfo, template);
     }
 
     /**
@@ -121,14 +121,13 @@ public class ReportController {
      * @param info     用户关键信息
      * @param id       模板ID
      * @param template 报表模板实体
-     * @return Reply
      */
     @PutMapping("/v1.0/templates/{id}/content")
-    public Reply designTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id, @RequestBody Template template) {
+    public void designTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id, @RequestBody Template template) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
         template.setId(id);
 
-        return service.designTemplate(loginInfo, template);
+        service.designTemplate(loginInfo, template);
     }
 
     /**
@@ -136,13 +135,12 @@ public class ReportController {
      *
      * @param info 用户关键信息
      * @param id   模板ID
-     * @return Reply
      */
     @PutMapping("/v1.0/templates/{id}/disable")
-    public Reply disableTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public void disableTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.updateTemplateStatus(loginInfo, id, true);
+        service.updateTemplateStatus(loginInfo, id, true);
     }
 
     /**
@@ -150,13 +148,12 @@ public class ReportController {
      *
      * @param info 用户关键信息
      * @param id   模板ID
-     * @return Reply
      */
     @PutMapping("/v1.0/templates/{id}/enable")
-    public Reply enableTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public void enableTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.updateTemplateStatus(loginInfo, id, false);
+        service.updateTemplateStatus(loginInfo, id, false);
     }
 
     /**
@@ -164,13 +161,12 @@ public class ReportController {
      *
      * @param info 用户关键信息
      * @param id   模板ID
-     * @return Reply
      */
     @DeleteMapping("/v1.0/templates/{id}")
-    public Reply deleteTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public void deleteTemplate(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.deleteTemplate(loginInfo, id);
+        service.deleteTemplate(loginInfo, id);
     }
 
     /**
@@ -178,13 +174,12 @@ public class ReportController {
      *
      * @param info   用户关键信息
      * @param report 报表实例实体
-     * @return Reply
      */
     @PostMapping("/v1.0/reports")
-    public Reply importTemplate(@RequestHeader("loginInfo") String info, @RequestBody Report report) {
+    public void importTemplate(@RequestHeader("loginInfo") String info, @RequestBody Report report) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.newReport(loginInfo, report);
+        service.newReport(loginInfo, report);
     }
 
     /**
@@ -195,7 +190,7 @@ public class ReportController {
      * @return Reply
      */
     @GetMapping("/v1.0/reports/{id}")
-    public Reply getReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public Report getReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.getReport(loginInfo, id);
@@ -206,13 +201,12 @@ public class ReportController {
      *
      * @param info 用户关键信息
      * @param id   报表实例ID
-     * @return Reply
      */
     @DeleteMapping("/v1.0/reports/{id}")
-    public Reply deleteReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public void deleteReport(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.deleteReport(loginInfo, id);
+        service.deleteReport(loginInfo, id);
     }
 
     /**
@@ -236,7 +230,7 @@ public class ReportController {
      * @return Reply
      */
     @GetMapping("/v1.0/templates/logs/{id}")
-    public Reply getLog(@PathVariable Long id) {
+    public Log getLog(@PathVariable Long id) {
         return service.getLog(id);
     }
 }

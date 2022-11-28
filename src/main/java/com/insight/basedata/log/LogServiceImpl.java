@@ -4,6 +4,7 @@ import com.insight.basedata.common.Core;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import org.springframework.stereotype.Service;
 
 /**
@@ -44,7 +45,7 @@ public class LogServiceImpl implements LogService {
      * @return Reply
      */
     @Override
-    public Reply getLog(Long id) {
+    public Log getLog(Long id) {
         return core.getLog(id);
     }
 }

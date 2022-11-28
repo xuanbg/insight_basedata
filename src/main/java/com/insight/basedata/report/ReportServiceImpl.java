@@ -11,8 +11,10 @@ import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import com.insight.utils.pojo.message.OperateType;
 import org.springframework.stereotype.Service;
 
@@ -68,17 +70,17 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getTemplate(LoginInfo info, Long id) {
+    public Template getTemplate(LoginInfo info, Long id) {
         Template template = mapper.getTemplate(id);
         if (template == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
+            throw new BusinessException("ID不存在,未读取数据");
         }
 
         if (!template.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权读取该数据");
+            throw new BusinessException("您无权读取该数据");
         }
 
-        return ReplyHelper.success(template);
+        return template;
     }
 
     /**
@@ -89,17 +91,17 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getTemplateContent(LoginInfo info, Long id) {
+    public String getTemplateContent(LoginInfo info, Long id) {
         Template template = mapper.getTemplate(id);
         if (template == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
+            throw new BusinessException("ID不存在,未读取数据");
         }
 
         if (!template.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权读取该数据");
+            throw new BusinessException("您无权读取该数据");
         }
 
-        return ReplyHelper.success(template.getContent());
+        return template.getContent();
     }
 
     /**
@@ -110,7 +112,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply importTemplate(LoginInfo info, Template template) {
+    public String importTemplate(LoginInfo info, Template template) {
         Long tenantId = info.getTenantId();
         String code = getCode(tenantId);
 
@@ -125,7 +127,7 @@ public class ReportServiceImpl implements ReportService {
         mapper.addTemplate(template);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, template);
 
-        return ReplyHelper.success(id + "," + code);
+        return id + "," + code;
     }
 
     /**
@@ -137,14 +139,14 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply copyTemplate(LoginInfo info, Long id, Template template) {
+    public String copyTemplate(LoginInfo info, Long id, Template template) {
         Template data = mapper.getTemplate(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
+            throw new BusinessException("ID不存在,未读取数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权读取该数据");
+            throw new BusinessException("您无权读取该数据");
         }
 
         Long tenantId = info.getTenantId();
@@ -161,7 +163,7 @@ public class ReportServiceImpl implements ReportService {
         mapper.addTemplate(template);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, newId, template);
 
-        return ReplyHelper.success(newId + "," + code);
+        return newId + "," + code;
     }
 
     /**
@@ -169,24 +171,21 @@ public class ReportServiceImpl implements ReportService {
      *
      * @param info     用户关键信息
      * @param template 报表模板实体
-     * @return Reply
      */
     @Override
-    public Reply editTemplate(LoginInfo info, Template template) {
+    public void editTemplate(LoginInfo info, Template template) {
         Long id = template.getId();
         Template data = mapper.getTemplate(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未更新数据");
+            throw new BusinessException("ID不存在,未更新数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权更新该数据");
+            throw new BusinessException("您无权更新该数据");
         }
 
         mapper.updateTemplate(template);
         LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, template);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -194,24 +193,21 @@ public class ReportServiceImpl implements ReportService {
      *
      * @param info     用户关键信息
      * @param template 报表模板实体
-     * @return Reply
      */
     @Override
-    public Reply designTemplate(LoginInfo info, Template template) {
+    public void designTemplate(LoginInfo info, Template template) {
         Long id = template.getId();
         Template data = mapper.getTemplate(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未更新数据");
+            throw new BusinessException("ID不存在,未更新数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权更新该数据");
+            throw new BusinessException("您无权更新该数据");
         }
 
         mapper.updateTemplateContent(template);
         LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, template);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -220,23 +216,20 @@ public class ReportServiceImpl implements ReportService {
      * @param info   用户关键信息
      * @param id     模板ID
      * @param status 状态
-     * @return Reply
      */
     @Override
-    public Reply updateTemplateStatus(LoginInfo info, Long id, boolean status) {
+    public void updateTemplateStatus(LoginInfo info, Long id, boolean status) {
         Template data = mapper.getTemplate(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未更新数据");
+            throw new BusinessException("ID不存在,未更新数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权更新该数据");
+            throw new BusinessException("您无权更新该数据");
         }
 
         mapper.updateTemplateStatus(id, status);
         LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, status);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -244,26 +237,24 @@ public class ReportServiceImpl implements ReportService {
      *
      * @param info 用户关键信息
      * @param id   模板ID
-     * @return Reply
      */
     @Override
-    public Reply deleteTemplate(LoginInfo info, Long id) {
+    public void deleteTemplate(LoginInfo info, Long id) {
         Template data = mapper.getTemplate(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未删除数据");
+            throw new BusinessException("ID不存在,未删除数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权删除该数据");
+            throw new BusinessException("您无权删除该数据");
         }
 
         int count = mapper.deleteTemplate(id);
         if (count == 0) {
-            return ReplyHelper.fail("无法删除使用中数据");
+            throw new BusinessException("无法删除使用中数据");
         }
 
         LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
-        return ReplyHelper.success();
     }
 
     /**
@@ -271,16 +262,14 @@ public class ReportServiceImpl implements ReportService {
      *
      * @param info   用户关键信息
      * @param report 报表实例实体类
-     * @return Reply
      */
     @Override
-    public Reply newReport(LoginInfo info, Report report) {
+    public void newReport(LoginInfo info, Report report) {
         report.setTenantId(info.getTenantId());
         report.setCreator(info.getUserName());
         report.setCreatorId(info.getUserId());
 
         int count = mapper.addReport(report);
-        return count > 0 ? ReplyHelper.created(report) : ReplyHelper.fail("保存数据失败");
     }
 
     /**
@@ -291,14 +280,14 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getReport(LoginInfo info, Long id) {
+    public Report getReport(LoginInfo info, Long id) {
         Report data = mapper.getReport(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
+            throw new BusinessException("ID不存在,未读取数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权读取该数据");
+            throw new BusinessException("您无权读取该数据");
         }
 
         Byte[] bytes = data.getBytes();
@@ -310,7 +299,7 @@ public class ReportServiceImpl implements ReportService {
         data.setBytes(null);
         data.setContent(Json.toJson(content));
 
-        return ReplyHelper.success(data);
+        return data;
     }
 
     /**
@@ -318,21 +307,19 @@ public class ReportServiceImpl implements ReportService {
      *
      * @param info 用户关键信息
      * @param id   报表实例ID
-     * @return Reply
      */
     @Override
-    public Reply deleteReport(LoginInfo info, Long id) {
+    public void deleteReport(LoginInfo info, Long id) {
         Report data = mapper.getReport(id);
         if (data == null) {
-            return ReplyHelper.success("ID不存在,未读取数据");
+            throw new BusinessException("ID不存在,未读取数据");
         }
 
         if (!data.getTenantId().equals(info.getTenantId())) {
-            return ReplyHelper.fail("您无权读取该数据");
+            throw new BusinessException("您无权读取该数据");
         }
 
         int count = mapper.deleteReport(id);
-        return count > 0 ? ReplyHelper.success("删除数据成功") : ReplyHelper.fail("删除数据失败");
     }
 
     /**
@@ -354,7 +341,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Reply getLog(Long id) {
+    public Log getLog(Long id) {
         return core.getLog(id);
     }
 

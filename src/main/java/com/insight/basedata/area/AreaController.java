@@ -7,6 +7,7 @@ import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -120,7 +121,7 @@ public class AreaController {
      * @return Reply
      */
     @GetMapping("/v1.0/areas/logs/{id}")
-    Reply getLog(@PathVariable Long id) {
+    public Log getLog(@PathVariable Long id) {
         return service.getLog(id);
     }
 }

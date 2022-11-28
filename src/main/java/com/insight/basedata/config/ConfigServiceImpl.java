@@ -11,8 +11,10 @@ import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.auth.InterfaceDto;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import com.insight.utils.pojo.message.OperateType;
 import org.springframework.stereotype.Service;
 
@@ -66,13 +68,13 @@ public class ConfigServiceImpl implements ConfigService {
      * @return Reply
      */
     @Override
-    public Reply getConfig(Long id) {
+    public InterfaceConfig getConfig(Long id) {
         InterfaceConfig config = mapper.getConfig(id);
         if (config == null) {
-            return ReplyHelper.fail("ID不存在,未读取数据");
+            throw new BusinessException("ID不存在,未读取数据");
         }
 
-        return ReplyHelper.success(config);
+        return config;
     }
 
     /**
@@ -83,7 +85,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @return Reply
      */
     @Override
-    public Reply newConfig(LoginInfo info, InterfaceConfig dto) {
+    public Long newConfig(LoginInfo info, InterfaceConfig dto) {
         Long id = creator.nextId(4);
         dto.setId(id);
         dto.setCreatedTime(LocalDateTime.now());
@@ -91,13 +93,8 @@ public class ConfigServiceImpl implements ConfigService {
         mapper.addConfig(dto);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dto);
 
-        Reply reply = loadConfigs();
-        if (reply.getSuccess()) {
-            return ReplyHelper.created(id);
-        }
-
-        reply.setData(id);
-        return reply;
+        loadConfigs();
+        return id;
     }
 
     /**
@@ -105,20 +102,18 @@ public class ConfigServiceImpl implements ConfigService {
      *
      * @param info 用户关键信息
      * @param dto  接口配置DTO
-     * @return Reply
      */
     @Override
-    public Reply editConfig(LoginInfo info, InterfaceConfig dto) {
+    public void editConfig(LoginInfo info, InterfaceConfig dto) {
         Long id = dto.getId();
         InterfaceConfig config = mapper.getConfig(id);
         if (config == null) {
-            return ReplyHelper.fail("ID不存在,未更新数据");
+            throw new BusinessException("ID不存在,未更新数据");
         }
 
         mapper.editConfig(dto);
         LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, dto);
-
-        return loadConfigs();
+        loadConfigs();
     }
 
     /**
@@ -126,37 +121,31 @@ public class ConfigServiceImpl implements ConfigService {
      *
      * @param info 用户关键信息
      * @param id   接口配置ID
-     * @return Reply
      */
     @Override
-    public Reply deleteConfig(LoginInfo info, Long id) {
+    public void deleteConfig(LoginInfo info, Long id) {
         InterfaceConfig config = mapper.getConfig(id);
         if (config == null) {
-            return ReplyHelper.fail("ID不存在,未删除数据");
+            throw new BusinessException("ID不存在,未删除数据");
         }
 
         mapper.deleteConfig(id);
         LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, config);
-
-        return loadConfigs();
+        loadConfigs();
     }
 
     /**
      * 加载接口配置到缓存
-     *
-     * @return Reply
      */
     @Override
-    public Reply loadConfigs() {
+    public void loadConfigs() {
         List<InterfaceDto> configs = mapper.loadConfigs();
         if (configs == null || configs.isEmpty()) {
-            return ReplyHelper.fail("读取数据失败,请重新加载");
+            throw new BusinessException("读取数据失败,请重新加载");
         }
 
         String json = Json.toJson(configs);
         Redis.set("Config:Interface", json);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -178,7 +167,7 @@ public class ConfigServiceImpl implements ConfigService {
      * @return Reply
      */
     @Override
-    public Reply getLog(Long id) {
+    public Log getLog(Long id) {
         return core.getLog(id);
     }
 }

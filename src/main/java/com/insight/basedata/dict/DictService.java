@@ -1,10 +1,14 @@
 package com.insight.basedata.dict;
 
+import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
+
+import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -29,16 +33,15 @@ public interface DictService {
      * @param id   字典ID
      * @return Reply
      */
-    Reply getDictKeys(LoginInfo info, Long id);
+    List<DictKeyDto> getDictKeys(LoginInfo info, Long id);
 
     /**
      * 获取指定键名的键值集合
      *
-     * @param info 用户关键信息
-     * @param key  字典键名
+     * @param search 查询参数实体
      * @return Reply
      */
-    Reply getValues(LoginInfo info, String key);
+    List<DictKeyDto> getValues(Search search);
 
     /**
      * 新增字典
@@ -47,25 +50,23 @@ public interface DictService {
      * @param dict 字典实体
      * @return Reply
      */
-    Reply addDict(LoginInfo info, Dict dict);
+    Long addDict(LoginInfo info, Dict dict);
 
     /**
      * 编辑字典
      *
      * @param info 用户关键信息
      * @param dict 字典实体
-     * @return Reply
      */
-    Reply editDict(LoginInfo info, Dict dict);
+    void editDict(LoginInfo info, Dict dict);
 
     /**
      * 删除字典
      *
      * @param info 用户关键信息
      * @param id   字典ID
-     * @return Reply
      */
-    Reply deleteDict(LoginInfo info, Long id);
+    void deleteDict(LoginInfo info, Long id);
 
     /**
      * 新增字典键值
@@ -74,25 +75,23 @@ public interface DictService {
      * @param dictKey 字典键值实体
      * @return Reply
      */
-    Reply addDictKey(LoginInfo info, DictKey dictKey);
+    Long addDictKey(LoginInfo info, DictKey dictKey);
 
     /**
      * 编辑字典键值
      *
      * @param info    用户关键信息
      * @param dictKey 字典键值实体
-     * @return Reply
      */
-    Reply editDictKey(LoginInfo info, DictKey dictKey);
+    void editDictKey(LoginInfo info, DictKey dictKey);
 
     /**
      * 删除字典键值
      *
      * @param info 用户关键信息
      * @param id   字典ID
-     * @return Reply
      */
-    Reply deleteDictKey(LoginInfo info, Long id);
+    void deleteDictKey(LoginInfo info, Long id);
 
     /**
      * 获取日志列表
@@ -109,5 +108,5 @@ public interface DictService {
      * @param id 日志ID
      * @return Reply
      */
-    Reply getLog(Long id);
+    Log getLog(Long id);
 }

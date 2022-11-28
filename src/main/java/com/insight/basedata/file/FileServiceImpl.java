@@ -2,8 +2,7 @@ package com.insight.basedata.file;
 
 import com.insight.basedata.common.dto.FileDto;
 import com.insight.utils.Json;
-import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.BusinessException;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
@@ -49,16 +48,16 @@ public class FileServiceImpl implements FileService {
      * @return Reply
      */
     @Override
-    public Reply upload(FileDto file) throws QiniuException {
+    public String upload(FileDto file) throws QiniuException {
         try {
             String token = getUploadToken();
             Response response = uploadManager.put(file.getBytes(), file.getName(), token);
             DefaultPutRet putRet = Json.toBean(response.bodyString(), DefaultPutRet.class);
 
-            return ReplyHelper.success(putRet.key);
+            return putRet.key;
         } catch (QiniuException ex) {
             Response response = ex.response;
-            return ReplyHelper.fail(response.bodyString());
+            throw new BusinessException(response.bodyString());
         }
     }
 
@@ -68,8 +67,8 @@ public class FileServiceImpl implements FileService {
      * @return Reply
      */
     @Override
-    public Reply getToken() {
-        return ReplyHelper.success(getUploadToken());
+    public String getToken() {
+        return getUploadToken();
     }
 
     /**

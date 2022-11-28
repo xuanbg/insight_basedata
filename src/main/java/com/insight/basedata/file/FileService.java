@@ -1,7 +1,6 @@
 package com.insight.basedata.file;
 
 import com.insight.basedata.common.dto.FileDto;
-import com.insight.utils.pojo.base.Reply;
 import com.qiniu.common.QiniuException;
 
 /**
@@ -17,12 +16,12 @@ public interface FileService {
      * @param file 文件DTO
      * @return Reply
      */
-    Reply upload(FileDto file) throws QiniuException;
+    String upload(FileDto file) throws QiniuException;
 
     /**
      * 获取七牛上传令牌
      *
      * @return Reply
      */
-    Reply getToken();
+    String getToken();
 }

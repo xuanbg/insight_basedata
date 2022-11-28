@@ -14,8 +14,10 @@ import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import com.insight.utils.pojo.message.OperateType;
 import org.springframework.stereotype.Service;
 
@@ -94,24 +96,19 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply getDictKeys(LoginInfo info, Long id) {
-        List<DictKeyDto> list = mapper.getDictKeys(info.getTenantId(), id);
-
-        return ReplyHelper.success(list);
+    public List<DictKeyDto> getDictKeys(LoginInfo info, Long id) {
+        return mapper.getDictKeys(info.getTenantId(), id);
     }
 
     /**
      * 获取指定键名的键值集合
      *
-     * @param info 用户关键信息
-     * @param key  字典键名
+     * @param search 查询参数实体
      * @return Reply
      */
     @Override
-    public Reply getValues(LoginInfo info, String key) {
-        List<DictKeyDto> list = mapper.getValues(info.getAppId(), info.getTenantId(), key);
-
-        return ReplyHelper.success(list);
+    public List<DictKeyDto> getValues(Search search) {
+        return mapper.getValues(search);
     }
 
     /**
@@ -122,7 +119,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply addDict(LoginInfo info, Dict dict) {
+    public Long addDict(LoginInfo info, Dict dict) {
         Long id = creator.nextId(2);
         dict.setId(id);
         dict.setCreator(info.getUserName());
@@ -131,7 +128,7 @@ public class DictServiceImpl implements DictService {
         mapper.addDict(dict);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dict);
 
-        return ReplyHelper.success(id);
+        return id;
     }
 
     /**
@@ -139,20 +136,17 @@ public class DictServiceImpl implements DictService {
      *
      * @param info 用户关键信息
      * @param dict 字典实体
-     * @return Reply
      */
     @Override
-    public Reply editDict(LoginInfo info, Dict dict) {
+    public void editDict(LoginInfo info, Dict dict) {
         Long id = dict.getId();
         DictDto data = mapper.getDict(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未更新数据");
+            throw new BusinessException("ID不存在,未更新数据");
         }
 
         mapper.updateDict(dict);
         LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, dict);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -160,19 +154,16 @@ public class DictServiceImpl implements DictService {
      *
      * @param info 用户关键信息
      * @param id   字典ID
-     * @return Reply
      */
     @Override
-    public Reply deleteDict(LoginInfo info, Long id) {
+    public void deleteDict(LoginInfo info, Long id) {
         DictDto data = mapper.getDict(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未删除数据");
+            throw new BusinessException("ID不存在,未删除数据");
         }
 
         mapper.deleteDict(id);
         LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -183,11 +174,11 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply addDictKey(LoginInfo info, DictKey dictKey) {
+    public Long addDictKey(LoginInfo info, DictKey dictKey) {
         Long id = creator.nextId(3);
         int count = mapper.getDictKeyCount(dictKey.getDictId(), dictKey.getCode(), dictKey.getValue());
         if (count > 0) {
-            return ReplyHelper.invalidParam("已存在键值或编码");
+            throw new BusinessException("已存在键值或编码");
         }
 
         dictKey.setId(id);
@@ -198,7 +189,7 @@ public class DictServiceImpl implements DictService {
         mapper.addDictKey(dictKey);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dictKey);
 
-        return ReplyHelper.success(id);
+        return id;
     }
 
     /**
@@ -206,24 +197,21 @@ public class DictServiceImpl implements DictService {
      *
      * @param info    用户关键信息
      * @param dictKey 字典键值实体
-     * @return Reply
      */
     @Override
-    public Reply editDictKey(LoginInfo info, DictKey dictKey) {
+    public void editDictKey(LoginInfo info, DictKey dictKey) {
         Long id = dictKey.getId();
         DictKey data = mapper.getDictKey(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未更新数据");
+            throw new BusinessException("ID不存在,未更新数据");
         }
 
         if (info.getTenantId() != null && data.getTenantId() == null) {
-            return ReplyHelper.fail("该数据不允许修改");
+            throw new BusinessException("该数据不允许修改");
         }
 
         mapper.updateDictKey(dictKey);
         LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, dictKey);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -231,23 +219,20 @@ public class DictServiceImpl implements DictService {
      *
      * @param info 用户关键信息
      * @param id   字典ID
-     * @return Reply
      */
     @Override
-    public Reply deleteDictKey(LoginInfo info, Long id) {
+    public void deleteDictKey(LoginInfo info, Long id) {
         DictKey data = mapper.getDictKey(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未删除数据");
+            throw new BusinessException("ID不存在,未删除数据");
         }
 
         if (info.getTenantId() != null && data.getTenantId() == null) {
-            return ReplyHelper.fail("该数据不允许删除");
+            throw new BusinessException("该数据不允许删除");
         }
 
         mapper.deleteDictKey(id);
         LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -269,7 +254,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public Reply getLog(Long id) {
+    public Log getLog(Long id) {
         return core.getLog(id);
     }
 }

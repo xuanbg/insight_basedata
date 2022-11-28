@@ -4,9 +4,8 @@ import com.insight.basedata.common.dto.ParamSearchDto;
 import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.basedata.common.mapper.ParamMapper;
-import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.auth.LoginInfo;
-import com.insight.utils.pojo.base.Reply;
+import com.insight.utils.pojo.base.BusinessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,11 +38,9 @@ public class ParamServiceImpl implements ParamService {
      * @return Reply
      */
     @Override
-    public Reply getParameters(LoginInfo info, ParamSearchDto dto) {
+    public List<ParameterDto> getParameters(LoginInfo info, ParamSearchDto dto) {
         dto.setTenantId(info.getTenantId());
-        List<ParameterDto> list = mapper.getParameters(dto);
-
-        return ReplyHelper.success(list);
+        return mapper.getParameters(dto);
     }
 
     /**
@@ -54,14 +51,14 @@ public class ParamServiceImpl implements ParamService {
      * @return Reply
      */
     @Override
-    public Reply getParameter(LoginInfo info, ParamSearchDto dto) {
+    public ParameterDto getParameter(LoginInfo info, ParamSearchDto dto) {
         dto.setTenantId(info.getTenantId());
         ParameterDto data = mapper.getParameter(dto);
         if (data == null) {
-            return ReplyHelper.fail("数据不存在");
+            throw new BusinessException("数据不存在");
         }
 
-        return ReplyHelper.success(data);
+        return data;
     }
 
     /**
@@ -69,11 +66,10 @@ public class ParamServiceImpl implements ParamService {
      *
      * @param info       用户关键信息
      * @param parameters 选项参数实体集合
-     * @return Reply
      */
     @Override
     @Transactional
-    public Reply setParameter(LoginInfo info, List<Parameter> parameters) {
+    public void setParameter(LoginInfo info, List<Parameter> parameters) {
         for (Parameter dto : parameters) {
             Long id = dto.getId();
             if (id == null) {
@@ -87,7 +83,5 @@ public class ParamServiceImpl implements ParamService {
                 mapper.updateParameter(dto);
             }
         }
-
-        return ReplyHelper.success();
     }
 }
