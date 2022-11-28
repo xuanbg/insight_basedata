@@ -5,12 +5,12 @@ import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
 import com.insight.basedata.common.mapper.AreaMapper;
-import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
-import com.insight.utils.pojo.OperateType;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.OperateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -50,10 +50,8 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply getAreas() {
-        List<AreaListDto> list = mapper.getAreas();
-
-        return ReplyHelper.success(list);
+    public List<AreaListDto> getAreas() {
+        return mapper.getAreas();
     }
 
     /**
@@ -62,10 +60,8 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply getProvinces() {
-        List<AreaListDto> list = mapper.getProvinces();
-
-        return ReplyHelper.success(list);
+    public List<AreaListDto> getProvinces() {
+        return mapper.getProvinces();
     }
 
     /**
@@ -75,10 +71,8 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply getAreas(Long id) {
-        List<AreaListDto> list = mapper.getAreas(id);
-
-        return ReplyHelper.success(list);
+    public List<AreaListDto> getAreas(Long id) {
+        return mapper.getAreas(id);
     }
 
     /**
@@ -89,7 +83,7 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Reply addArea(LoginInfo info, Area area) {
+    public Long addArea(LoginInfo info, Area area) {
         Long id = creator.nextId(1);
         area.setId(id);
         area.setCreator(info.getUserName());
@@ -98,7 +92,7 @@ public class AreaServiceImpl implements AreaService {
         mapper.addArea(area);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, area);
 
-        return ReplyHelper.success(id);
+        return id;
     }
 
     /**
@@ -106,20 +100,17 @@ public class AreaServiceImpl implements AreaService {
      *
      * @param info 用户关键信息
      * @param area 行政区划实体
-     * @return Reply
      */
     @Override
-    public Reply editArea(LoginInfo info, Area area) {
+    public void editArea(LoginInfo info, Area area) {
         Long id = area.getId();
         AreaListDto data = mapper.getArea(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未更新数据");
+            throw new BusinessException("ID不存在,未更新数据");
         }
 
         mapper.updateArea(area);
         LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, area);
-
-        return ReplyHelper.success();
     }
 
     /**
@@ -127,19 +118,16 @@ public class AreaServiceImpl implements AreaService {
      *
      * @param info 用户关键信息
      * @param id   行政区划ID
-     * @return Reply
      */
     @Override
-    public Reply deleteArea(LoginInfo info, Long id) {
+    public void deleteArea(LoginInfo info, Long id) {
         AreaListDto data = mapper.getArea(id);
         if (data == null) {
-            return ReplyHelper.fail("ID不存在,未删除数据");
+            throw new BusinessException("ID不存在,未删除数据");
         }
 
         mapper.deleteArea(id);
         LogClient.writeLog(info, BUSINESS, OperateType.DELETE, id, data);
-
-        return ReplyHelper.success();
     }
 
     /**

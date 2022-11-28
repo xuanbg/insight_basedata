@@ -1,8 +1,8 @@
 package com.insight.basedata.common.mapper;
 
-import com.insight.utils.common.JsonTypeHandler;
-import com.insight.utils.pojo.Log;
+import com.insight.utils.pojo.base.JsonTypeHandler;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -45,7 +45,7 @@ public interface LogMapper {
      * @param log 日志DTO
      */
     @Insert("insert icl_operate_log(app_id, tenant_id, type, business, business_id, content, creator, creator_id, created_time) values " +
-            "(#{appId}, #{tenantId}, #{type}, #{business}, #{businessId}, #{content, typeHandler = com.insight.utils.common.JsonTypeHandler}, " +
+            "(#{appId}, #{tenantId}, #{type}, #{business}, #{businessId}, #{content, typeHandler = com.insight.utils.pojo.base.JsonTypeHandler}, " +
             "#{creator}, #{creatorId}, #{createdTime});")
     void addLog(Log log);
 }

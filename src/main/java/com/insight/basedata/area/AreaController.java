@@ -1,14 +1,16 @@
 package com.insight.basedata.area;
 
+import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
 import com.insight.utils.Json;
-import com.insight.utils.ReplyHelper;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -36,7 +38,7 @@ public class AreaController {
      * @return Reply
      */
     @GetMapping("/v1.0/areas/provinces")
-    public Reply getProvinces() {
+    public List<AreaListDto> getProvinces() {
         return service.getProvinces();
     }
 
@@ -47,9 +49,9 @@ public class AreaController {
      * @return Reply
      */
     @GetMapping("/v1.0/areas/{id}/subs")
-    public Reply getAreas(@PathVariable Long id) {
+    public List<AreaListDto> getAreas(@PathVariable Long id) {
         if (id == null) {
-            return ReplyHelper.invalidParam();
+            throw new BusinessException("ID不可为空");
         }
 
         return service.getAreas(id);
@@ -63,7 +65,7 @@ public class AreaController {
      * @return Reply
      */
     @PostMapping("/v1.0/areas")
-    public Reply addArea(@RequestHeader("loginInfo") String info, @Valid @RequestBody Area area) {
+    public Long addArea(@RequestHeader("loginInfo") String info, @Valid @RequestBody Area area) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
         return service.addArea(loginInfo, area);
@@ -75,14 +77,13 @@ public class AreaController {
      * @param info 用户关键信息
      * @param id   行政区划ID
      * @param area 行政区划实体
-     * @return Reply
      */
     @PutMapping("/v1.0/areas/{id}")
-    public Reply editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody Area area) {
+    public void editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody Area area) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
         area.setId(id);
 
-        return service.editArea(loginInfo, area);
+        service.editArea(loginInfo, area);
     }
 
     /**
@@ -90,13 +91,12 @@ public class AreaController {
      *
      * @param info 用户关键信息
      * @param id   行政区划ID
-     * @return Reply
      */
     @DeleteMapping("/v1.0/areas/{id}")
-    public Reply editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
+    public void editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
 
-        return service.deleteArea(loginInfo, id);
+        service.deleteArea(loginInfo, id);
     }
 
     /**

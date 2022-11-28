@@ -2,7 +2,7 @@ package com.insight.basedata.common.config;
 
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.common.BusinessException;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import feign.FeignException;
 import org.slf4j.Logger;

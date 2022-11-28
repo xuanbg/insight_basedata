@@ -1,9 +1,12 @@
 package com.insight.basedata.area;
 
+import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+
+import java.util.List;
 
 /**
  * @author 宣炳刚
@@ -17,14 +20,14 @@ public interface AreaService {
      *
      * @return Reply
      */
-    Reply getAreas();
+    List<AreaListDto> getAreas();
 
     /**
      * 查询全部省级行政区划
      *
      * @return Reply
      */
-    Reply getProvinces();
+    List<AreaListDto> getProvinces();
 
     /**
      * 查询指定行政区划的下级区划
@@ -32,7 +35,7 @@ public interface AreaService {
      * @param id 行政区划ID
      * @return Reply
      */
-    Reply getAreas(Long id);
+    List<AreaListDto> getAreas(Long id);
 
     /**
      * 新增行政区划
@@ -41,25 +44,23 @@ public interface AreaService {
      * @param area 行政区划实体
      * @return Reply
      */
-    Reply addArea(LoginInfo info, Area area);
+    Long addArea(LoginInfo info, Area area);
 
     /**
      * 编辑行政区划
      *
      * @param info 用户关键信息
      * @param area 行政区划实体
-     * @return Reply
      */
-    Reply editArea(LoginInfo info, Area area);
+    void editArea(LoginInfo info, Area area);
 
     /**
      * 删除行政区划
      *
      * @param info 用户关键信息
      * @param id   行政区划ID
-     * @return Reply
      */
-    Reply deleteArea(LoginInfo info, Long id);
+    void deleteArea(LoginInfo info, Long id);
 
     /**
      * 获取日志列表

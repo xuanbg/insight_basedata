@@ -3,7 +3,7 @@ package com.insight.basedata.common;
 import com.insight.basedata.common.config.QueueConfig;
 import com.insight.basedata.common.mapper.LogMapper;
 import com.insight.utils.Json;
-import com.insight.utils.pojo.Log;
+import com.insight.utils.pojo.message.Log;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -9,11 +9,11 @@ import com.insight.utils.Json;
 import com.insight.utils.Redis;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
-import com.insight.utils.pojo.OperateType;
 import com.insight.utils.pojo.auth.InterfaceDto;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.OperateType;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

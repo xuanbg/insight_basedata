@@ -3,10 +3,10 @@ package com.insight.basedata.common;
 import com.github.pagehelper.PageHelper;
 import com.insight.basedata.common.mapper.LogMapper;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.Log;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import com.insight.utils.pojo.message.Log;
 import org.springframework.stereotype.Component;
 
 /**

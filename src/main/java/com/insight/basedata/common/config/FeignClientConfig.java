@@ -34,7 +34,7 @@ public class FeignClientConfig implements RequestInterceptor {
         Enumeration<String> headers = request.getHeaderNames();
         while (headers.hasMoreElements()) {
             String name = headers.nextElement();
-            if (name.matches(REGULAR)) {
+            if (name.toLowerCase().matches(REGULAR)) {
                 String values = request.getHeader(name);
                 template.header(name, values);
             }

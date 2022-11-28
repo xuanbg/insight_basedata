@@ -22,7 +22,7 @@ public interface ConfigMapper {
      * @return 接口配置表
      */
     @Select("<script>select * from ici_interface " +
-            "<if test = 'key!=null'>where name like concat('%',#{key},'%') or url like concat('%',#{key},'%') or auth_code = #{key}</if>" +
+            "<if test = 'keyword!=null'>where name like concat('%',#{keyword},'%') or url like concat('%',#{keyword},'%') or auth_code = #{keyword}</if>" +
             "</script>")
     List<InterfaceConfig> getConfigs(Search search);
 

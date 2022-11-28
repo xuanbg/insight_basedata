@@ -4,7 +4,7 @@ import com.insight.basedata.common.dto.DictDto;
 import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
-import com.insight.utils.common.JsonTypeHandler;
+import com.insight.utils.pojo.base.JsonTypeHandler;
 import com.insight.utils.pojo.base.Search;
 import org.apache.ibatis.annotations.*;
 
@@ -52,7 +52,7 @@ public interface DictMapper {
      */
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select v.* from icd_dict_key k join icd_dict_value v on v.dict_id = k.id where k.app_id = #{appId} " +
-            "and k.`code` = #{key} and (isnull(v.tenant_id) or v.tenant_id = #{tenantId}) order by v.index;")
+            "and k.`code` = #{keyword} and (isnull(v.tenant_id) or v.tenant_id = #{tenantId}) order by v.index;")
     List<DictKeyDto> getValues(@Param("appId") Long appId, @Param("tenantId") Long tenantId, @Param("key") String key);
 
     /**
@@ -116,7 +116,7 @@ public interface DictMapper {
      * @param dictKey 键值实体
      */
     @Insert("insert icd_dict_value(id, dict_id, tenant_id, `index`, `code`, `value`, extend, remark, creator, creator_id, created_time) " +
-            "values (#{id}, #{dictId}, #{tenantId}, #{index}, #{code}, #{value}, #{extend, typeHandler = com.insight.utils.common.JsonTypeHandler}, " +
+            "values (#{id}, #{dictId}, #{tenantId}, #{index}, #{code}, #{value}, #{extend, typeHandler = com.insight.utils.pojo.base.JsonTypeHandler}, " +
             "#{remark}, #{creator}, #{creatorId}, #{createdTime});")
     void addDictKey(DictKey dictKey);
 
@@ -126,7 +126,7 @@ public interface DictMapper {
      * @param dictKey 键值实体
      */
     @Update("update icd_dict_value set `index` = #{index}, `code` = #{code}, `value` = #{value}, " +
-            "extend = #{extend, typeHandler = com.insight.utils.common.JsonTypeHandler}, remark = #{remark} where id = #{id};")
+            "extend = #{extend, typeHandler = com.insight.utils.pojo.base.JsonTypeHandler}, remark = #{remark} where id = #{id};")
     void updateDictKey(DictKey dictKey);
 
     /**
