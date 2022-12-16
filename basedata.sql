@@ -291,7 +291,7 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 (135118329873432597, '更新用户头像', 'PUT', '/base/user/v1.0/users/head', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 (135119846986743829, '更新用户备注', 'PUT', '/base/user/v1.0/users/remark', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 (135120694030630933, '修改密码', 'PUT', '/base/user/v1.0/users/password', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
-(135121284928372757, '重置密码', 'POST', '/base/user/v1.0/users/password', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
+(135121284928372757, '重置密码', 'POST', '/base/user/v1.0/users/password', NULL, 1, NULL, NULL, NULL, 0, 1, now()),
 (135122059712790549, '设置支付密码', 'POST', '/base/user/v1.0/users/password/pay', NULL, 1, NULL, NULL, NULL, 1, 1, now()),
 
 -- 信息中心接口配置
