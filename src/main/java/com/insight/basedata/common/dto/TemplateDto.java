@@ -32,7 +32,7 @@ public class TemplateDto extends BaseXo {
     /**
      * 是否失效:0.有效;1.失效
      */
-    private Boolean isInvalid;
+    private Boolean invalid;
 
     public Long getId() {
         return id;
@@ -67,10 +67,10 @@ public class TemplateDto extends BaseXo {
     }
 
     public Boolean getInvalid() {
-        return isInvalid;
+        return invalid;
     }
 
     public void setInvalid(Boolean invalid) {
-        isInvalid = invalid;
+        this.invalid = invalid;
     }
 }

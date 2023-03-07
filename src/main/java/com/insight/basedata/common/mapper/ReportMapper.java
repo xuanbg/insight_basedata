@@ -22,7 +22,7 @@ public interface ReportMapper {
      * @param dto 查询参数DTO
      * @return 报表模板集合
      */
-    @Select("<script>select id, `code`, `name`, remark, is_invalid from icc_template where tenant_id = #{tenantId} " +
+    @Select("<script>select id, `code`, `name`, remark, invalid from icc_template where tenant_id = #{tenantId} " +
             "<if test = 'keyword != null'>and (`code` = #{keyword} or `name` like concat('%',#{keyword},'%')) </if>" +
             "</script>")
     List<TemplateDto> getTemplates(Search dto);
@@ -77,7 +77,7 @@ public interface ReportMapper {
      * @param id     报表模板ID
      * @param status 有效状态
      */
-    @Update("update icc_template set is_invalid = #{status} where id = #{id};")
+    @Update("update icc_template set invalid = #{status} where id = #{id};")
     void updateTemplateStatus(@Param("id") Long id, @Param("status") boolean status);
 
     /**
@@ -86,7 +86,7 @@ public interface ReportMapper {
      * @param id 报表模板ID
      * @return 受影响行数
      */
-    @Delete("delete from icc_template where id = #{id} and is_invalid = 1;")
+    @Delete("delete from icc_template where id = #{id} and invalid = 1;")
     int deleteTemplate(Long id);
 
     /**

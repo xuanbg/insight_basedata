@@ -77,18 +77,18 @@ public class InterfaceConfig extends BaseXo {
      * 是否验证Token
      */
     @NotNull(message = "接口验证设置不能为空")
-    private Boolean isVerify;
+    private Boolean verify;
 
     /**
      * 是否限流
      */
     @NotNull(message = "接口限流设置不能为空")
-    private Boolean isLimit;
+    private Boolean limit;
 
     /**
      * 是否通过日志输出返回值
      */
-    private Boolean isLogResult;
+    private Boolean logResult;
 
     /**
      * 创建时间
@@ -186,27 +186,27 @@ public class InterfaceConfig extends BaseXo {
     }
 
     public Boolean getVerify() {
-        return isVerify;
+        return verify;
     }
 
     public void setVerify(Boolean verify) {
-        isVerify = verify;
+        this.verify = verify;
     }
 
     public Boolean getLimit() {
-        return isLimit;
+        return limit;
     }
 
     public void setLimit(Boolean limit) {
-        isLimit = limit;
+        this.limit = limit;
     }
 
     public Boolean getLogResult() {
-        return isLogResult;
+        return logResult;
     }
 
     public void setLogResult(Boolean logResult) {
-        isLogResult = logResult;
+        this.logResult = logResult;
     }
 
     public LocalDateTime getCreatedTime() {

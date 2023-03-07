@@ -40,8 +40,8 @@ public interface ConfigMapper {
      *
      * @param config 接口配置
      */
-    @Insert("insert ici_interface(id, name, method, url, auth_code, limit_gap, limit_cycle, limit_max, message, remark, need_token, is_verify, is_limit, is_log_result, created_time) values " +
-            "(#{id}, #{name}, #{method}, #{url}, #{authCode}, #{limitGap}, #{limitCycle}, #{limitMax}, #{message}, #{remark}, #{needToken}, #{isVerify}, #{isLimit}, #{isLogResult}, #{createdTime});")
+    @Insert("insert ici_interface(id, name, method, url, auth_code, limit_gap, limit_cycle, limit_max, message, remark, need_token, verify, limit, log_result, created_time) values " +
+            "(#{id}, #{name}, #{method}, #{url}, #{authCode}, #{limitGap}, #{limitCycle}, #{limitMax}, #{message}, #{remark}, #{needToken}, #{verify}, #{limit}, #{logResult}, #{createdTime});")
     void addConfig(InterfaceConfig config);
 
     /**
@@ -51,7 +51,7 @@ public interface ConfigMapper {
      */
     @Update("update ici_interface set name = #{name}, method = #{method}, url = #{url}, auth_code = #{authCode}, " +
             "limit_gap = #{limitGap}, limit_cycle = #{limitCycle}, limit_max = #{limitMax}, message = #{message}, " +
-            "remark = #{remark}, need_token = #{needToken}, is_verify = #{isVerify}, is_limit = #{isLimit}, is_log_result = #{isLogResult} where id = #{id};")
+            "remark = #{remark}, need_token = #{needToken}, verify = #{verify}, limit = #{limit}, log_result = #{logResult} where id = #{id};")
     void editConfig(InterfaceConfig config);
 
     /**
@@ -67,6 +67,6 @@ public interface ConfigMapper {
      *
      * @return 接口配置表
      */
-    @Select("select method, url, auth_code, limit_gap, limit_cycle, limit_max, message, need_token, is_verify, is_limit, is_log_result from ici_interface;")
+    @Select("select method, url, auth_code, limit_gap, limit_cycle, limit_max, message, need_token, verify, limit, log_result from ici_interface;")
     List<InterfaceDto> loadConfigs();
 }

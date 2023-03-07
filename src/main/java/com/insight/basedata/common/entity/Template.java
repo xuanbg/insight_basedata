@@ -46,7 +46,7 @@ public class Template extends BaseXo {
     /**
      * 是否失效:0.有效;1.失效
      */
-    private Boolean isInvalid;
+    private Boolean invalid;
 
     /**
      * 创建人
@@ -112,11 +112,11 @@ public class Template extends BaseXo {
     }
 
     public Boolean getInvalid() {
-        return isInvalid;
+        return invalid;
     }
 
     public void setInvalid(Boolean invalid) {
-        isInvalid = invalid;
+        this.invalid = invalid;
     }
 
     public String getCreator() {
