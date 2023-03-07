@@ -29,7 +29,7 @@ CREATE TABLE `icc_template` (
   `name`               varchar(64)       NOT NULL                COMMENT '名称',
   `content`            text              NOT NULL                COMMENT '模板内容',
   `remark`             varchar(512)               DEFAULT NULL   COMMENT '描述',
-  `is_invalid`         bit               NOT NULL DEFAULT b'0'   COMMENT '是否失效:0.有效;1.失效',
+  `invalid`            bit               NOT NULL DEFAULT b'0'   COMMENT '是否失效: 0.有效, 1.失效',
   `creator`            varchar(64)       NOT NULL                COMMENT '创建人',
   `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
@@ -131,10 +131,10 @@ CREATE TABLE `ici_interface` (
   `limit_max`          int(10) unsigned           DEFAULT NULL   COMMENT '限制次数/限流周期,NULL表示不进行周期性限流',
   `message`            varchar(32)                DEFAULT NULL   COMMENT '限流消息',
   `remark`             varchar(512)               DEFAULT NULL   COMMENT '描述',
-  `need_token`         bit               NOT NULL DEFAULT b'0'   COMMENT '是否需要一次性Token:0.不需要;1.需要',
-  `is_verify`          bit               NOT NULL DEFAULT b'0'   COMMENT '是否验证Token:0.公开接口,不需要验证Token;1.私有接口,需要验证Token',
-  `is_limit`           bit               NOT NULL DEFAULT b'0'   COMMENT '是否限流:0.不限流;1.限流',
-  `is_log_result`      bit               NOT NULL DEFAULT b'0'   COMMENT '是否日志输出返回值',
+  `need_token`         bit               NOT NULL DEFAULT b'0'   COMMENT '是否需要一次性Token: 0.不需要, 1.需要',
+  `verify`             bit               NOT NULL DEFAULT b'0'   COMMENT '是否验证Token: 0.公开接口,不需要验证Token, 1.私有接口,需要验证Token',
+  `limit`              bit               NOT NULL DEFAULT b'0'   COMMENT '是否限流: 0.不限流, 1.限流',
+  `log_result`         bit               NOT NULL DEFAULT b'0'   COMMENT '是否日志输出返回值',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `idx_interface_hash` (`method`, `url`) USING BTREE,
@@ -155,7 +155,7 @@ CREATE TABLE `icl_operate_log` (
   `type`               varchar(16)       NOT NULL                COMMENT '类型',
   `content`            json                       DEFAULT NULL   COMMENT '日志内容',
   `creator`            varchar(32)       NOT NULL                COMMENT '创建人,系统自动为系统',
-  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID,系统自动为32个0',
+  `creator_id`         bigint unsigned   NOT NULL                COMMENT '创建人ID,系统自动为0',
   `created_time`       datetime          NOT NULL                COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_operate_log_app_id&business` (`app_id`, `business`) USING BTREE,
@@ -168,7 +168,7 @@ CREATE TABLE `icl_operate_log` (
 -- ----------------------------
 -- 初始化接口配置
 -- ----------------------------
-INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, `limit_cycle`, `limit_max`, `message`, `is_verify`, `is_limit`, `created_time`) VALUES
+INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, `limit_cycle`, `limit_max`, `message`, `verify`, `limit`, `created_time`) VALUES
 (134659190399434773, '获取Code', 'GET', '/base/auth/v1.0/tokens/codes', NULL, NULL, 86400, 360, '获取Code接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
 (134660755520749589, '获取Token', 'POST', '/base/auth/v1.0/tokens', NULL, NULL, 86400, 360, '获取Token接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
 (134660855520749589, '获取授权码', 'POST', '/base/auth/v1.0/tokens/codes', NULL, NULL, 86400, 360, '获取授权URL接口每24小时调用次数为360次,请合理使用', 0, 1, now()),
