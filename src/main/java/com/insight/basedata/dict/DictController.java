@@ -64,17 +64,14 @@ public class DictController {
     /**
      * 获取指定键名的键值集合
      *
-     * @param info   用户关键信息
-     * @param search 查询参数实体
+     * @param info 用户关键信息
+     * @param key  字典KEY
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/values")
-    public List<DictKeyDto> getValues(@RequestHeader("loginInfo") String info, Search search) {
+    public List<DictKeyDto> getValues(@RequestHeader("loginInfo") String info, @RequestParam String key) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        search.setTenantId(loginInfo.getTenantId());
-        search.setAppId(loginInfo.getAppId());
-        return service.getValues(search);
+        return service.getValues(loginInfo.getTenantId(), key);
     }
 
     /**

@@ -40,18 +40,19 @@ public interface DictMapper {
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select * from (select * from icd_dict_value where dict_id = #{dictId} and isnull(tenant_id) union all " +
             "select * from icd_dict_value where dict_id = #{dictId} and tenant_id = #{tenantId}) t order by t.index;")
-    List<DictKeyDto> getDictKeys(@Param("tenantId") Long tenantId, @Param("dictId") Long dictId);
+    List<DictKeyDto> getDictKeys(Long tenantId, Long dictId);
 
     /**
      * 获取字典键值集合
      *
-     * @param search 查询参数实体
+     * @param tenantId 租户ID
+     * @param key      字典KEY
      * @return 键值DTO集合
      */
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
-    @Select("select v.* from icd_dict_key k join icd_dict_value v on v.dict_id = k.id where k.app_id = #{appId} " +
-            "and k.`code` = #{keyword} and (isnull(v.tenant_id) or v.tenant_id = #{tenantId}) order by v.index;")
-    List<DictKeyDto> getValues(Search search);
+    @Select("select v.* from icd_dict_key k join icd_dict_value v on v.dict_id = k.id " +
+            "where k.`code` = #{key} and (isnull(v.tenant_id) or v.tenant_id = #{tenantId}) order by v.index;")
+    List<DictKeyDto> getValues(Long tenantId, String key);
 
     /**
      * 获取字典数据

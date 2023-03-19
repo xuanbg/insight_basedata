@@ -38,10 +38,11 @@ public interface DictService {
     /**
      * 获取指定键名的键值集合
      *
-     * @param search 查询参数实体
+     * @param tenantId 租户ID
+     * @param key      字典KEY
      * @return Reply
      */
-    List<DictKeyDto> getValues(Search search);
+    List<DictKeyDto> getValues(Long tenantId, String key);
 
     /**
      * 新增字典
