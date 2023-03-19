@@ -3,6 +3,7 @@ package com.insight.basedata.dict;
 import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
+import com.insight.basedata.common.entity.DictValue;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
@@ -69,7 +70,7 @@ public class DictController {
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/values")
-    public List<DictKeyDto> getValues(@RequestHeader("loginInfo") String info, @RequestParam String key) {
+    public List<DictValue> getValues(@RequestHeader("loginInfo") String info, @RequestParam String key) {
         LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
         return service.getValues(loginInfo.getTenantId(), key);
     }

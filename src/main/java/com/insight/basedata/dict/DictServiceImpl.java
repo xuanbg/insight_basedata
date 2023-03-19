@@ -9,6 +9,7 @@ import com.insight.basedata.common.dto.DictDto;
 import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
+import com.insight.basedata.common.entity.DictValue;
 import com.insight.basedata.common.mapper.DictMapper;
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
@@ -108,7 +109,7 @@ public class DictServiceImpl implements DictService {
      * @return Reply
      */
     @Override
-    public List<DictKeyDto> getValues(Long tenantId, String key) {
+    public List<DictValue> getValues(Long tenantId, String key) {
         return mapper.getValues(tenantId, key);
     }
 

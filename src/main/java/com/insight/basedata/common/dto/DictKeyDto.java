@@ -1,5 +1,6 @@
 package com.insight.basedata.common.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.insight.utils.pojo.base.BaseXo;
 
 /**
@@ -17,11 +18,13 @@ public class DictKeyDto extends BaseXo {
     /**
      * 租户ID
      */
+    @JsonIgnore
     private Long tenantId;
 
     /**
      * 字典ID
      */
+    @JsonIgnore
     private Long dictId;
 
     /**

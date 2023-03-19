@@ -3,6 +3,7 @@ package com.insight.basedata.dict;
 import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
+import com.insight.basedata.common.entity.DictValue;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
@@ -42,7 +43,7 @@ public interface DictService {
      * @param key      字典KEY
      * @return Reply
      */
-    List<DictKeyDto> getValues(Long tenantId, String key);
+    List<DictValue> getValues(Long tenantId, String key);
 
     /**
      * 新增字典

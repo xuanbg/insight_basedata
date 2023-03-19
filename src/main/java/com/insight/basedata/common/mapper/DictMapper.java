@@ -4,6 +4,7 @@ import com.insight.basedata.common.dto.DictDto;
 import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
+import com.insight.basedata.common.entity.DictValue;
 import com.insight.utils.pojo.base.JsonTypeHandler;
 import com.insight.utils.pojo.base.Search;
 import org.apache.ibatis.annotations.*;
@@ -52,7 +53,7 @@ public interface DictMapper {
     @Results({@Result(property = "extend", column = "extend", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select v.* from icd_dict_key k join icd_dict_value v on v.dict_id = k.id " +
             "where k.`code` = #{key} and (isnull(v.tenant_id) or v.tenant_id = #{tenantId}) order by v.index;")
-    List<DictKeyDto> getValues(Long tenantId, String key);
+    List<DictValue> getValues(Long tenantId, String key);
 
     /**
      * 获取字典数据
