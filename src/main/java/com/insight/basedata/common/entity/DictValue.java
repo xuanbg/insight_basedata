@@ -10,6 +10,11 @@ import com.insight.utils.pojo.base.BaseXo;
 public class DictValue extends BaseXo {
 
     /**
+     * 排序
+     */
+    private Integer index;
+
+    /**
      * 编码
      */
     private String code;
@@ -23,6 +28,14 @@ public class DictValue extends BaseXo {
      * 扩展数据
      */
     private Object extend;
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
 
     public String getCode() {
         return code;
