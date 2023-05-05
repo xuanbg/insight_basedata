@@ -6,7 +6,7 @@ import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.basedata.common.mapper.ReportMapper;
-import com.insight.utils.Generator;
+import com.insight.utils.redis.Generator;
 import com.insight.utils.Json;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
@@ -120,8 +120,8 @@ public class ReportServiceImpl implements ReportService {
         template.setId(id);
         template.setTenantId(tenantId);
         template.setCode(code);
-        template.setCreator(info.getUserName());
-        template.setCreatorId(info.getUserId());
+        template.setCreator(info.getName());
+        template.setCreatorId(info.getId());
         template.setCreatedTime(LocalDateTime.now());
 
         mapper.addTemplate(template);
@@ -156,8 +156,8 @@ public class ReportServiceImpl implements ReportService {
         template.setTenantId(tenantId);
         template.setCode(code);
         template.setContent(data.getContent());
-        template.setCreator(info.getUserName());
-        template.setCreatorId(info.getUserId());
+        template.setCreator(info.getName());
+        template.setCreatorId(info.getId());
         template.setCreatedTime(LocalDateTime.now());
 
         mapper.addTemplate(template);
@@ -266,8 +266,8 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void newReport(LoginInfo info, Report report) {
         report.setTenantId(info.getTenantId());
-        report.setCreator(info.getUserName());
-        report.setCreatorId(info.getUserId());
+        report.setCreator(info.getName());
+        report.setCreatorId(info.getId());
 
         int count = mapper.addReport(report);
     }

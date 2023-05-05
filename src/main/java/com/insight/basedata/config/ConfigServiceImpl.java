@@ -6,7 +6,7 @@ import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.entity.InterfaceConfig;
 import com.insight.basedata.common.mapper.ConfigMapper;
 import com.insight.utils.Json;
-import com.insight.utils.Redis;
+import com.insight.utils.redis.Redis;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.auth.InterfaceDto;

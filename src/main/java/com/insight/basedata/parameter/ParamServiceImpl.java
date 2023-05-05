@@ -74,8 +74,8 @@ public class ParamServiceImpl implements ParamService {
             Long id = dto.getId();
             if (id == null) {
                 dto.setTenantId(info.getTenantId());
-                dto.setCreator(info.getUserName());
-                dto.setCreatorId(info.getUserId());
+                dto.setCreator(info.getName());
+                dto.setCreatorId(info.getId());
                 dto.setCreatedTime(LocalDateTime.now());
 
                 mapper.addParameter(dto);

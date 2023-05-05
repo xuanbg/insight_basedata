@@ -87,8 +87,8 @@ public class AreaServiceImpl implements AreaService {
     public Long addArea(LoginInfo info, Area area) {
         Long id = creator.nextId(1);
         area.setId(id);
-        area.setCreator(info.getUserName());
-        area.setCreatorId(info.getUserId());
+        area.setCreator(info.getName());
+        area.setCreatorId(info.getId());
         area.setCreatedTime(LocalDateTime.now());
         mapper.addArea(area);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, area);

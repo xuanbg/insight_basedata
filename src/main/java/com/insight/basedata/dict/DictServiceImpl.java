@@ -124,8 +124,8 @@ public class DictServiceImpl implements DictService {
     public Long addDict(LoginInfo info, Dict dict) {
         Long id = creator.nextId(2);
         dict.setId(id);
-        dict.setCreator(info.getUserName());
-        dict.setCreatorId(info.getUserId());
+        dict.setCreator(info.getName());
+        dict.setCreatorId(info.getId());
         dict.setCreatedTime(LocalDateTime.now());
         mapper.addDict(dict);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dict);
@@ -185,8 +185,8 @@ public class DictServiceImpl implements DictService {
 
         dictKey.setId(id);
         dictKey.setTenantId(info.getTenantId());
-        dictKey.setCreator(info.getUserName());
-        dictKey.setCreatorId(info.getUserId());
+        dictKey.setCreator(info.getName());
+        dictKey.setCreatorId(info.getId());
         dictKey.setCreatedTime(LocalDateTime.now());
         mapper.addDictKey(dictKey);
         LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dictKey);

@@ -2,7 +2,7 @@ package com.insight.basedata.common.entity;
 
 import com.insight.utils.pojo.base.BaseXo;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 /**

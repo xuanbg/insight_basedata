@@ -6,7 +6,7 @@ import com.qiniu.common.QiniuException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 

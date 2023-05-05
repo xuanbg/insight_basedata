@@ -11,7 +11,7 @@ import com.insight.utils.pojo.base.Search;
 import com.insight.utils.pojo.message.Log;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 /**
