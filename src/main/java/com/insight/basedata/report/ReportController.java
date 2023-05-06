@@ -212,15 +212,19 @@ public class ReportController {
     /**
      * 获取日志列表
      *
-     * @param info   用户关键信息
-     * @param search 查询参数DTO
+     * @param loginInfo 用户关键信息
+     * @param id        行政区划ID
+     * @param search    查询实体类
      * @return Reply
      */
-    @GetMapping("/v1.0/templates/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, Search search) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+    @GetMapping("/v1.0/templates/{id}/logs")
+    public Reply getLogs(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id, Search search) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
 
-        return service.getLogs(loginInfo, search);
+        search.setId(id);
+        search.setAppId(info.getAppId());
+        search.setTenantId(info.getTenantId());
+        return service.getLogs(search);
     }
 
     /**

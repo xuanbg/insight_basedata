@@ -121,11 +121,10 @@ public interface ReportService {
     /**
      * 获取日志列表
      *
-     * @param info 用户关键信息
-     * @param dto  查询参数DTO
+     * @param dto 查询参数DTO
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, Search dto);
+    Reply getLogs(Search dto);
 
     /**
      * 获取日志详情

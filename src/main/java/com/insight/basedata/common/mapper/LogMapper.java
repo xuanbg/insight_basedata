@@ -21,12 +21,15 @@ public interface LogMapper {
      * @param search   查询实体类
      * @return 操作日志列表
      */
-    @Select("<script>select id, type, business, business_id, creator, creator_id, created_time from icl_operate_log " +
-            "where app_id = #{appId} and business = #{value} " +
-            "<if test = 'tenantId != null'>and tenant_id = #{tenantId} </if>" +
-            "<if test = 'tenantId == null'>and isnull(tenant_id) </if>" +
-            "<if test = 'keyword!=null'>and (business_id = #{keyword} or creator = #{keyword})</if>" +
-            "</script>")
+    @Results({@Result(property = "content", column = "content", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
+    @Select("""
+            <script>select id, type, content, creator, creator_id, created_time from icl_operate_log
+            where business_id = #{id} and app_id = #{appId} and business = #{code}
+            <if test = 'tenantId != null'>and tenant_id = #{tenantId}</if>
+            <if test = 'tenantId == null'>and isnull(tenant_id)</if>
+            <if test = 'keyword!=null'>and (business_id = #{keyword} or creator = #{keyword})</if>
+            </script>
+            """)
     List<Log> getLogs(Search search);
 
     /**

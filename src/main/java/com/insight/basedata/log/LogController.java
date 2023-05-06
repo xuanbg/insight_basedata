@@ -30,16 +30,17 @@ public class LogController {
     /**
      * 获取日志列表
      *
-     * @param info     用户关键信息
-     * @param business 业务类型
-     * @param search   查询参数DTO
+     * @param loginInfo 用户关键信息
+     * @param search    查询参数DTO
      * @return Reply
      */
     @GetMapping("/v1.0/logs")
-    public Reply getLogs(@RequestHeader("loginInfo") String info, @RequestParam String business, Search search) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+    public Reply getLogs(@RequestHeader("loginInfo") String loginInfo, Search search) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
 
-        return service.getLogs(loginInfo, business, search);
+        search.setAppId(info.getAppId());
+        search.setTenantId(info.getTenantId());
+        return service.getLogs(search);
     }
 
     /**

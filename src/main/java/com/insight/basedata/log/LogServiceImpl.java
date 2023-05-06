@@ -1,7 +1,6 @@
 package com.insight.basedata.log;
 
 import com.insight.basedata.common.Core;
-import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
 import com.insight.utils.pojo.message.Log;
@@ -28,14 +27,12 @@ public class LogServiceImpl implements LogService {
     /**
      * 获取日志列表
      *
-     * @param info     用户关键信息
-     * @param business 业务类型
-     * @param search   查询参数DTO
+     * @param search 查询参数DTO
      * @return Reply
      */
     @Override
-    public Reply getLogs(LoginInfo info, String business, Search search) {
-        return core.getLogs(info, business, search);
+    public Reply getLogs(Search search) {
+        return core.getLogs(search);
     }
 
     /**

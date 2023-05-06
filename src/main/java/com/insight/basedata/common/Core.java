@@ -3,7 +3,6 @@ package com.insight.basedata.common;
 import com.github.pagehelper.PageHelper;
 import com.insight.basedata.common.mapper.LogMapper;
 import com.insight.utils.ReplyHelper;
-import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
@@ -31,20 +30,19 @@ public class Core {
     /**
      * 获取日志列表
      *
-     * @param info     租户ID
-     * @param business 业务类型
-     * @param search   查询实体类
+     * @param search 查询实体类
      * @return Reply
      */
-    public Reply getLogs(LoginInfo info, String business, Search search) {
-        search.setValue(business);
-        search.setAppId(info.getAppId());
-        search.setTenantId(info.getTenantId());
-        var page = PageHelper.startPage(search.getPageNum(), search.getPageSize())
-                .setOrderBy(search.getOrderBy()).doSelectPage(() -> mapper.getLogs(search));
+    public Reply getLogs(Search search) {
+        if (search.getId() == null) {
+            throw new BusinessException("业务ID不能为空");
+        }
 
-        var total = page.getTotal();
-        return total > 0 ? ReplyHelper.success(page.getResult(), total) : ReplyHelper.resultIsEmpty();
+        try (var page = PageHelper.startPage(search.getPageNum(), search.getPageSize()).setOrderBy(search.getOrderBy())
+                .doSelectPage(() -> mapper.getLogs(search))) {
+            var total = page.getTotal();
+            return total > 0 ? ReplyHelper.success(page.getResult(), total) : ReplyHelper.resultIsEmpty();
+        }
     }
 
     /**

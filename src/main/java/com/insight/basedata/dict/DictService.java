@@ -98,11 +98,10 @@ public interface DictService {
     /**
      * 获取日志列表
      *
-     * @param info   用户关键信息
      * @param search 查询实体类
      * @return Reply
      */
-    Reply getLogs(LoginInfo info, Search search);
+    Reply getLogs(Search search);
 
     /**
      * 获取日志详情
