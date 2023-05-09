@@ -1,10 +1,10 @@
 package com.insight.basedata.config;
 
 import com.insight.basedata.common.entity.InterfaceConfig;
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 
 /**
  * @author 宣炳刚
@@ -73,5 +73,5 @@ public interface ConfigService {
      * @param id 日志ID
      * @return Reply
      */
-    Log getLog(Long id);
+    LogInfo getLog(Long id);
 }

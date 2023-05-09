@@ -3,6 +3,7 @@ package com.insight.basedata.report;
 import com.github.pagehelper.PageHelper;
 import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.basedata.common.mapper.ReportMapper;
@@ -14,7 +15,6 @@ import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 import com.insight.utils.pojo.message.OperateType;
 import org.springframework.stereotype.Service;
 
@@ -341,7 +341,7 @@ public class ReportServiceImpl implements ReportService {
      * @return Reply
      */
     @Override
-    public Log getLog(Long id) {
+    public LogInfo getLog(Long id) {
         return core.getLog(id);
     }
 

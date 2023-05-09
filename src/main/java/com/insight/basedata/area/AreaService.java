@@ -2,10 +2,10 @@ package com.insight.basedata.area;
 
 import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 
 import java.util.List;
 
@@ -77,5 +77,5 @@ public interface AreaService {
      * @param id 日志ID
      * @return Reply
      */
-    Log getLog(Long id);
+    LogInfo getLog(Long id);
 }

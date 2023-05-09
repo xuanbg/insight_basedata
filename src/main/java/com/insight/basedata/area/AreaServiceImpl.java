@@ -4,13 +4,13 @@ import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.basedata.common.mapper.AreaMapper;
 import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 import com.insight.utils.pojo.message.OperateType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -150,7 +150,7 @@ public class AreaServiceImpl implements AreaService {
      * @return Reply
      */
     @Override
-    public Log getLog(Long id) {
+    public LogInfo getLog(Long id) {
         return core.getLog(id);
     }
 }

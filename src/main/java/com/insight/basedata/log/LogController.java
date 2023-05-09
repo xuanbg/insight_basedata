@@ -1,10 +1,10 @@
 package com.insight.basedata.log;
 
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -50,7 +50,7 @@ public class LogController {
      * @return Reply
      */
     @GetMapping("/v1.0/logs/{id}")
-    Log getLog(@PathVariable Long id) {
+    LogInfo getLog(@PathVariable Long id) {
         return service.getLog(id);
     }
 }

@@ -1,8 +1,8 @@
 package com.insight.basedata.log;
 
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 
 /**
  * @author 宣炳刚
@@ -25,5 +25,5 @@ public interface LogService {
      * @param id 日志ID
      * @return Reply
      */
-    Log getLog(Long id);
+    LogInfo getLog(Long id);
 }

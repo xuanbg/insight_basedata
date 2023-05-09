@@ -1,12 +1,12 @@
 package com.insight.basedata.report;
 
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.basedata.common.entity.Report;
 import com.insight.basedata.common.entity.Template;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -234,7 +234,7 @@ public class ReportController {
      * @return Reply
      */
     @GetMapping("/v1.0/templates/logs/{id}")
-    public Log getLog(@PathVariable Long id) {
+    public LogInfo getLog(@PathVariable Long id) {
         return service.getLog(id);
     }
 }

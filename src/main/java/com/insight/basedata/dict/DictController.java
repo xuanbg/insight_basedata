@@ -4,11 +4,11 @@ import com.insight.basedata.common.dto.DictKeyDto;
 import com.insight.basedata.common.entity.Dict;
 import com.insight.basedata.common.entity.DictKey;
 import com.insight.basedata.common.entity.DictValue;
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -185,7 +185,7 @@ public class DictController {
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/logs/{id}")
-    public Log getLog(@PathVariable Long id) {
+    public LogInfo getLog(@PathVariable Long id) {
         return service.getLog(id);
     }
 }

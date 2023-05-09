@@ -1,5 +1,6 @@
 package com.insight.basedata.common.mapper;
 
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.pojo.base.JsonTypeHandler;
 import com.insight.utils.pojo.base.Search;
 import com.insight.utils.pojo.message.Log;
@@ -23,14 +24,13 @@ public interface LogMapper {
      */
     @Results({@Result(property = "content", column = "content", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("""
-            <script>select id, type, content, creator, creator_id, created_time from icl_operate_log
-            where business_id = #{id} and app_id = #{appId} and business = #{code}
+            <script>select * from icl_operate_log where business_id = #{id} and app_id = #{appId} and business = #{code}
             <if test = 'tenantId != null'>and tenant_id = #{tenantId}</if>
             <if test = 'tenantId == null'>and isnull(tenant_id)</if>
             <if test = 'keyword!=null'>and (business_id = #{keyword} or creator = #{keyword})</if>
             </script>
             """)
-    List<Log> getLogs(Search search);
+    List<LogInfo> getLogs(Search search);
 
     /**
      * 获取操作日志列表
@@ -40,7 +40,7 @@ public interface LogMapper {
      */
     @Results({@Result(property = "content", column = "content", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
     @Select("select * from icl_operate_log where id = #{id};")
-    Log getLog(Long id);
+    LogInfo getLog(Long id);
 
     /**
      * 记录操作日志

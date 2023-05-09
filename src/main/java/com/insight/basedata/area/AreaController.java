@@ -2,12 +2,12 @@ package com.insight.basedata.area;
 
 import com.insight.basedata.common.dto.AreaListDto;
 import com.insight.basedata.common.entity.Area;
+import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.Log;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -125,7 +125,7 @@ public class AreaController {
      * @return Reply
      */
     @GetMapping("/v1.0/areas/logs/{id}")
-    public Log getLog(@PathVariable Long id) {
+    public LogInfo getLog(@PathVariable Long id) {
         return service.getLog(id);
     }
 }
