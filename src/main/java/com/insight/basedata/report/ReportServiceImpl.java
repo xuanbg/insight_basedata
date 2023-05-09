@@ -125,7 +125,7 @@ public class ReportServiceImpl implements ReportService {
         template.setCreatedTime(LocalDateTime.now());
 
         mapper.addTemplate(template);
-        LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, template);
+        LogClient.writeLog(info, BUSINESS, OperateType.NEW, id, template);
 
         return id + "," + code;
     }
@@ -161,7 +161,7 @@ public class ReportServiceImpl implements ReportService {
         template.setCreatedTime(LocalDateTime.now());
 
         mapper.addTemplate(template);
-        LogClient.writeLog(info, BUSINESS, OperateType.INSERT, newId, template);
+        LogClient.writeLog(info, BUSINESS, OperateType.NEW, newId, template);
 
         return newId + "," + code;
     }
@@ -185,7 +185,7 @@ public class ReportServiceImpl implements ReportService {
         }
 
         mapper.updateTemplate(template);
-        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, template);
+        LogClient.writeLog(info, BUSINESS, OperateType.EDIT, id, template);
     }
 
     /**
@@ -207,7 +207,7 @@ public class ReportServiceImpl implements ReportService {
         }
 
         mapper.updateTemplateContent(template);
-        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, template);
+        LogClient.writeLog(info, BUSINESS, OperateType.EDIT, id, template);
     }
 
     /**
@@ -229,7 +229,7 @@ public class ReportServiceImpl implements ReportService {
         }
 
         mapper.updateTemplateStatus(id, status);
-        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, status);
+        LogClient.writeLog(info, BUSINESS, OperateType.EDIT, id, status);
     }
 
     /**

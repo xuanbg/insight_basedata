@@ -128,7 +128,7 @@ public class DictServiceImpl implements DictService {
         dict.setCreatorId(info.getId());
         dict.setCreatedTime(LocalDateTime.now());
         mapper.addDict(dict);
-        LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dict);
+        LogClient.writeLog(info, BUSINESS, OperateType.NEW, id, dict);
 
         return id;
     }
@@ -148,7 +148,7 @@ public class DictServiceImpl implements DictService {
         }
 
         mapper.updateDict(dict);
-        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, dict);
+        LogClient.writeLog(info, BUSINESS, OperateType.EDIT, id, dict);
     }
 
     /**
@@ -189,7 +189,7 @@ public class DictServiceImpl implements DictService {
         dictKey.setCreatorId(info.getId());
         dictKey.setCreatedTime(LocalDateTime.now());
         mapper.addDictKey(dictKey);
-        LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dictKey);
+        LogClient.writeLog(info, BUSINESS, OperateType.NEW, id, dictKey);
 
         return id;
     }
@@ -213,7 +213,7 @@ public class DictServiceImpl implements DictService {
         }
 
         mapper.updateDictKey(dictKey);
-        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, dictKey);
+        LogClient.writeLog(info, BUSINESS, OperateType.EDIT, id, dictKey);
     }
 
     /**

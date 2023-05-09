@@ -91,7 +91,7 @@ public class AreaServiceImpl implements AreaService {
         area.setCreatorId(info.getId());
         area.setCreatedTime(LocalDateTime.now());
         mapper.addArea(area);
-        LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, area);
+        LogClient.writeLog(info, BUSINESS, OperateType.NEW, id, area);
 
         return id;
     }
@@ -111,7 +111,7 @@ public class AreaServiceImpl implements AreaService {
         }
 
         mapper.updateArea(area);
-        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, area);
+        LogClient.writeLog(info, BUSINESS, OperateType.EDIT, id, area);
     }
 
     /**

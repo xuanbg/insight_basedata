@@ -91,7 +91,7 @@ public class ConfigServiceImpl implements ConfigService {
         dto.setCreatedTime(LocalDateTime.now());
 
         mapper.addConfig(dto);
-        LogClient.writeLog(info, BUSINESS, OperateType.INSERT, id, dto);
+        LogClient.writeLog(info, BUSINESS, OperateType.NEW, id, dto);
 
         loadConfigs();
         return id;
@@ -112,7 +112,7 @@ public class ConfigServiceImpl implements ConfigService {
         }
 
         mapper.editConfig(dto);
-        LogClient.writeLog(info, BUSINESS, OperateType.UPDATE, id, dto);
+        LogClient.writeLog(info, BUSINESS, OperateType.EDIT, id, dto);
         loadConfigs();
     }
 
