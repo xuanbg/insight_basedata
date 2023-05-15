@@ -27,7 +27,7 @@ public interface LogMapper {
             <script>select * from icl_operate_log where business_id = #{id} and app_id = #{appId} and business = #{code}
             <if test = 'tenantId != null'>and tenant_id = #{tenantId}</if>
             <if test = 'tenantId == null'>and isnull(tenant_id)</if>
-            <if test = 'keyword!=null'>and (business_id = #{keyword} or creator = #{keyword})</if>
+            <if test = 'keyword!=null'>and creator = #{keyword}</if>
             </script>
             """)
     List<LogInfo> getLogs(Search search);
