@@ -2,7 +2,6 @@ package com.insight.basedata.common;
 
 import com.insight.basedata.common.config.QueueConfig;
 import com.insight.basedata.common.mapper.LogMapper;
-import com.insight.utils.Json;
 import com.insight.utils.pojo.message.Log;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
@@ -10,10 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 宣炳刚
@@ -43,12 +45,16 @@ public class Listener {
      */
     @RabbitHandler
     @RabbitListener(queues = QueueConfig.PROCESS_QUEUE_NAME)
-    public void receiveLog(Channel channel, Message message) throws IOException {
+    public void receiveLog(@Payload Log log, Channel channel, Message message) throws IOException {
         try {
-            String body = new String(message.getBody());
-            Log log = Json.toBean(body, Log.class);
             if (log == null) {
                 return;
+            }
+
+            if (log.getContent() instanceof String) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("Log", log.getContent());
+                log.setContent(map);
             }
 
             log.setCreatedTime(LocalDateTime.now());
