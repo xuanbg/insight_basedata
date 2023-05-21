@@ -15,7 +15,7 @@ import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.utils.pojo.message.OperateType;
+import com.insight.basedata.common.entity.OperateType;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
