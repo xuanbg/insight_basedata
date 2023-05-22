@@ -21,7 +21,7 @@ public class LogInfo extends BaseXo {
     /**
      * 类型
      */
-    private OperateType type;
+    private String type;
 
     /**
      * 关联业务名称
@@ -58,11 +58,11 @@ public class LogInfo extends BaseXo {
         this.id = id;
     }
 
-    public OperateType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(OperateType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
