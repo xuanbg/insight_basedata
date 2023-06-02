@@ -14,7 +14,6 @@ import java.util.List;
  * @date 2020/6/25
  * @remark 选项参数服务控制器
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/common/param")
 public class ParamController {

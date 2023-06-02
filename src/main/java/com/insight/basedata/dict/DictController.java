@@ -19,7 +19,6 @@ import java.util.List;
  * @date 2020/6/1
  * @remark 字典服务控制器
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/common/dict")
 public class DictController {

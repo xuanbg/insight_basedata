@@ -15,7 +15,6 @@ import java.io.InputStream;
  * @date 2020/12/31
  * @remark 文件管理服务控制器
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/common/file")
 public class FileController {

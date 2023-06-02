@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
  * @date 2020/6/25
  * @remark 报表服务控制器
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/common/report")
 public class ReportController {

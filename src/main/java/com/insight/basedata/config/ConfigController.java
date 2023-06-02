@@ -15,7 +15,6 @@ import jakarta.validation.Valid;
  * @date 2019-09-02
  * @remark 配置管理服务控制器
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/common/config")
 public class ConfigController {

@@ -18,7 +18,6 @@ import java.util.List;
  * @date 2020/3/15
  * @remark 行政区划服务控制器
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/common/area")
 public class AreaController {

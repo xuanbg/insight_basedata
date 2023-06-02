@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
  * @date 2019-09-02
  * @remark 配置管理服务控制器
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/common/log")
 public class LogController {
