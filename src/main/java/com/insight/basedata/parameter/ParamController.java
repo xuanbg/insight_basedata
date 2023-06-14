@@ -5,6 +5,7 @@ import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.redis.Redis;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,41 +32,49 @@ public class ParamController {
     /**
      * 查询选项参数
      *
-     * @param info 用户关键信息
-     * @param dto  选项参数查询DTO
+     * @param loginInfo 用户关键信息
+     * @param dto       选项参数查询DTO
      * @return Reply
      */
     @GetMapping("/v1.0/params")
-    public List<ParameterDto> getParameters(@RequestHeader("loginInfo") String info, ParamSearchDto dto) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.getParameters(loginInfo, dto);
+    public List<ParameterDto> getParameters(@RequestHeader("loginInfo") String loginInfo, ParamSearchDto dto) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.getParameters(info, dto);
     }
 
     /**
      * 获取选项参数
      *
-     * @param info 用户关键信息
-     * @param dto  选项参数查询DTO
+     * @param loginInfo 用户关键信息
+     * @param dto       选项参数查询DTO
      * @return Reply
      */
     @GetMapping("/v1.0/params/value")
-    public ParameterDto getParameter(@RequestHeader("loginInfo") String info, ParamSearchDto dto) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.getParameter(loginInfo, dto);
+    public ParameterDto getParameter(@RequestHeader("loginInfo") String loginInfo, ParamSearchDto dto) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.getParameter(info, dto);
     }
 
     /**
      * 更新选项参数
      *
-     * @param info       用户关键信息
+     * @param loginInfo  用户关键信息
      * @param parameters 选项参数实体集合
      */
     @PutMapping("/v1.0/params")
-    public void setParameter(@RequestHeader("loginInfo") String info, @RequestBody List<Parameter> parameters) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+    public void setParameter(@RequestHeader("loginInfo") String loginInfo, @RequestBody List<Parameter> parameters) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        service.setParameter(info, parameters);
+    }
 
-        service.setParameter(loginInfo, parameters);
+    /**
+     * 按倒序获取Set中指定数量的数据
+     *
+     * @param key   Set KEY
+     * @param count Set数据量
+     */
+    @GetMapping("/v1.0/sets")
+    public void getSet(@RequestParam String key, @RequestParam Long count) {
+        Redis.reverseRange(key, count);
     }
 }

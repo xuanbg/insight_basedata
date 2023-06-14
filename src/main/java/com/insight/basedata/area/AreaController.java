@@ -60,43 +60,41 @@ public class AreaController {
     /**
      * 新增行政区划
      *
-     * @param info 用户关键信息
-     * @param area 行政区划实体
+     * @param loginInfo 用户关键信息
+     * @param area      行政区划实体
      * @return Reply
      */
     @PostMapping("/v1.0/areas")
-    public Long addArea(@RequestHeader("loginInfo") String info, @Valid @RequestBody Area area) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.addArea(loginInfo, area);
+    public Long addArea(@RequestHeader("loginInfo") String loginInfo, @Valid @RequestBody Area area) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.addArea(info, area);
     }
 
     /**
      * 编辑行政区划
      *
-     * @param info 用户关键信息
-     * @param id   行政区划ID
-     * @param area 行政区划实体
+     * @param loginInfo 用户关键信息
+     * @param id        行政区划ID
+     * @param area      行政区划实体
      */
     @PutMapping("/v1.0/areas/{id}")
-    public void editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody Area area) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+    public void editArea(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id, @Valid @RequestBody Area area) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
         area.setId(id);
 
-        service.editArea(loginInfo, area);
+        service.editArea(info, area);
     }
 
     /**
      * 删除行政区划
      *
-     * @param info 用户关键信息
-     * @param id   行政区划ID
+     * @param loginInfo 用户关键信息
+     * @param id        行政区划ID
      */
     @DeleteMapping("/v1.0/areas/{id}")
-    public void editArea(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        service.deleteArea(loginInfo, id);
+    public void editArea(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        service.deleteArea(info, id);
     }
 
     /**

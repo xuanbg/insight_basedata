@@ -6,9 +6,8 @@ import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import org.springframework.web.bind.annotation.*;
-
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 宣炳刚
@@ -54,43 +53,41 @@ public class ConfigController {
     /**
      * 新增接口配置
      *
-     * @param info 用户关键信息
-     * @param dto  接口配置
+     * @param loginInfo 用户关键信息
+     * @param dto       接口配置
      * @return Reply
      */
     @PostMapping("/v1.0/configs")
-    public Long newConfig(@RequestHeader("loginInfo") String info, @Valid @RequestBody InterfaceConfig dto) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.newConfig(loginInfo, dto);
+    public Long newConfig(@RequestHeader("loginInfo") String loginInfo, @Valid @RequestBody InterfaceConfig dto) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.newConfig(info, dto);
     }
 
     /**
      * 编辑接口配置
      *
-     * @param info 用户关键信息
-     * @param id   接口配置ID
-     * @param dto  接口配置
+     * @param loginInfo 用户关键信息
+     * @param id        接口配置ID
+     * @param dto       接口配置
      */
     @PutMapping("/v1.0/configs/{id}")
-    public void editConfig(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody InterfaceConfig dto) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+    public void editConfig(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id, @Valid @RequestBody InterfaceConfig dto) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
         dto.setId(id);
 
-        service.editConfig(loginInfo, dto);
+        service.editConfig(info, dto);
     }
 
     /**
      * 删除接口配置
      *
-     * @param info 用户关键信息
-     * @param id   接口配置ID
+     * @param loginInfo 用户关键信息
+     * @param id        接口配置ID
      */
     @DeleteMapping("/v1.0/configs/{id}")
-    public void deleteConfig(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        service.deleteConfig(loginInfo, id);
+    public void deleteConfig(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        service.deleteConfig(info, id);
     }
 
     /**

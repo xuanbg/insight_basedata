@@ -9,9 +9,9 @@ import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -36,127 +36,121 @@ public class DictController {
     /**
      * 获取字典列表
      *
-     * @param info 用户关键信息
-     * @param dto  查询参数DTO
+     * @param loginInfo 用户关键信息
+     * @param dto       查询参数DTO
      * @return Reply
      */
     @GetMapping("/v1.0/dicts")
-    public Reply getDicts(@RequestHeader("loginInfo") String info, Search dto) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.getDicts(loginInfo, dto);
+    public Reply getDicts(@RequestHeader("loginInfo") String loginInfo, Search dto) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.getDicts(info, dto);
     }
 
     /**
      * 获取字典键值集合
      *
-     * @param info 用户关键信息
-     * @param id   字典ID
+     * @param loginInfo 用户关键信息
+     * @param id        字典ID
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/{id}")
-    public List<DictKeyDto> getDictKeys(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.getDictKeys(loginInfo, id);
+    public List<DictKeyDto> getDictKeys(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.getDictKeys(info, id);
     }
 
     /**
      * 获取指定键名的键值集合
      *
-     * @param info 用户关键信息
-     * @param key  字典KEY
+     * @param loginInfo 用户关键信息
+     * @param key       字典KEY
      * @return Reply
      */
     @GetMapping("/v1.0/dicts/values")
-    public List<DictValue> getValues(@RequestHeader("loginInfo") String info, @RequestParam String key) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-        return service.getValues(loginInfo.getTenantId(), key);
+    public List<DictValue> getValues(@RequestHeader("loginInfo") String loginInfo, @RequestParam String key) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.getValues(info.getTenantId(), key);
     }
 
     /**
      * 新增字典
      *
-     * @param info 用户关键信息
-     * @param dict 字典实体
+     * @param loginInfo 用户关键信息
+     * @param dict      字典实体
      * @return Reply
      */
     @PostMapping("/v1.0/dicts")
-    public Long addDict(@RequestHeader("loginInfo") String info, @Valid @RequestBody Dict dict) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        return service.addDict(loginInfo, dict);
+    public Long addDict(@RequestHeader("loginInfo") String loginInfo, @Valid @RequestBody Dict dict) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        return service.addDict(info, dict);
     }
 
     /**
      * 编辑字典
      *
-     * @param info 用户关键信息
-     * @param id   字典ID
-     * @param dict 字典实体
+     * @param loginInfo 用户关键信息
+     * @param id        字典ID
+     * @param dict      字典实体
      */
     @PutMapping("/v1.0/dicts/{id}")
-    public void editDict(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody Dict dict) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+    public void editDict(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id, @Valid @RequestBody Dict dict) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
         dict.setId(id);
 
-        service.editDict(loginInfo, dict);
+        service.editDict(info, dict);
     }
 
     /**
      * 删除字典
      *
-     * @param info 用户关键信息
-     * @param id   字典ID
+     * @param loginInfo 用户关键信息
+     * @param id        字典ID
      */
     @DeleteMapping("/v1.0/dicts/{id}")
-    public void deleteDict(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        service.deleteDict(loginInfo, id);
+    public void deleteDict(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        service.deleteDict(info, id);
     }
 
     /**
      * 新增字典键值
      *
-     * @param info    用户关键信息
-     * @param id      字典ID
-     * @param dictKey 字典键值实体
+     * @param loginInfo 用户关键信息
+     * @param id        字典ID
+     * @param dictKey   字典键值实体
      * @return Reply
      */
     @PostMapping("/v1.0/dicts/{id}/keys")
-    public Long addDictKey(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody DictKey dictKey) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
+    public Long addDictKey(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id, @Valid @RequestBody DictKey dictKey) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
         dictKey.setDictId(id);
 
-        return service.addDictKey(loginInfo, dictKey);
+        return service.addDictKey(info, dictKey);
     }
 
     /**
      * 编辑字典键值
      *
-     * @param info    用户关键信息
-     * @param id      字典键值ID
-     * @param dictKey 字典键值实体
+     * @param loginInfo 用户关键信息
+     * @param id        字典键值ID
+     * @param dictKey   字典键值实体
      */
     @PutMapping("/v1.0/dicts/keys/{id}")
-    public void editDictKey(@RequestHeader("loginInfo") String info, @PathVariable Long id, @Valid @RequestBody DictKey dictKey) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        service.editDictKey(loginInfo, dictKey);
+    public void editDictKey(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id, @Valid @RequestBody DictKey dictKey) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        service.editDictKey(info, dictKey);
     }
 
     /**
      * 删除字典键值
      *
-     * @param info 用户关键信息
-     * @param id   字典键值ID
+     * @param loginInfo 用户关键信息
+     * @param id        字典键值ID
      */
     @DeleteMapping("/v1.0/dicts/keys/{id}")
-    public void deleteDictKey(@RequestHeader("loginInfo") String info, @PathVariable Long id) {
-        LoginInfo loginInfo = Json.toBeanFromBase64(info, LoginInfo.class);
-
-        service.deleteDictKey(loginInfo, id);
+    public void deleteDictKey(@RequestHeader("loginInfo") String loginInfo, @PathVariable Long id) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        service.deleteDictKey(info, id);
     }
 
     /**
