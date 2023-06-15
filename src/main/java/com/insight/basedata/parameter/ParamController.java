@@ -9,6 +9,7 @@ import com.insight.utils.redis.Redis;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author 宣炳刚
@@ -72,9 +73,10 @@ public class ParamController {
      *
      * @param key   Set KEY
      * @param count Set数据量
+     * @return Set数据
      */
     @GetMapping("/v1.0/sets")
-    public void getSet(@RequestParam String key, @RequestParam Long count) {
-        Redis.reverseRange(key, count);
+    public Set<String> getSet(@RequestParam String key, @RequestParam Long count) {
+        return Redis.reverseRange(key, count);
     }
 }
