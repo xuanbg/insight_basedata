@@ -5,11 +5,10 @@ import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
-import com.insight.utils.redis.Redis;
+import com.insight.utils.redis.ZsetOps;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author 宣炳刚
@@ -76,7 +75,7 @@ public class ParamController {
      * @return Set数据
      */
     @GetMapping("/v1.0/sets")
-    public Set<String> getSet(@RequestParam String key, @RequestParam Long count) {
-        return Redis.reverseRange(key, count);
+    public List<String> getSet(@RequestParam String key, @RequestParam Long count) {
+        return ZsetOps.reverseRange(key, count);
     }
 }
