@@ -10,7 +10,7 @@ public enum OperateType {
     /**
      * 查询操作
      */
-    SELETE("查询数据"),
+    SELECT("查询数据"),
 
     /**
      * 新增操作
