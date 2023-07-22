@@ -324,7 +324,7 @@ INSERT `ici_interface`(`id`, `name`, `method`, `url`, `auth_code`, `limit_gap`, 
 -- 上传文件接口
 (134650654863841100, '获取七牛上传Token', 'GET', '/common/file/v1.0/token', 'getQiniuToken', 1, NULL, NULL, NULL, 1, 1, now()),
 (134650654863841110, '文件直接上传', 'POST', '/common/file/v1.0/upload', 'uploadFile', 1, NULL, NULL, NULL, 1, 1, now()),
-(134650654863841120, '文件流上传', 'POST', '/common/file/v1.0/stream', 'uploadFile', 1, NULL, NULL, NULL, 1, 1, now()),
+(134650654863841120, '文件流上传', 'POST', '/common/file/v1.0/file', 'uploadFile', 1, NULL, NULL, NULL, 1, 1, now()),
 (134650654863841130, 'Base64编码上传', 'POST', '/common/file/v1.0/data', 'uploadFile', 1, NULL, NULL, NULL, 1, 1, now()),
 
 -- 基础数据接口配置

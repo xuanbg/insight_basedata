@@ -1,7 +1,6 @@
 package com.insight.basedata.file;
 
-import com.insight.basedata.common.dto.FileDto;
-import com.qiniu.common.QiniuException;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 宣炳刚
@@ -11,17 +10,17 @@ import com.qiniu.common.QiniuException;
 public interface FileService {
 
     /**
-     * 上传文件
-     *
-     * @param file 文件DTO
-     * @return Reply
-     */
-    String upload(FileDto file) throws QiniuException;
-
-    /**
      * 获取七牛上传令牌
      *
      * @return Reply
      */
     String getToken();
+
+    /**
+     * 上传文件
+     *
+     * @param file 文件DTO
+     * @return Reply
+     */
+    String upload(MultipartFile file);
 }

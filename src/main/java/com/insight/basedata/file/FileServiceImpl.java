@@ -1,17 +1,13 @@
 package com.insight.basedata.file;
 
-import com.insight.basedata.common.dto.FileDto;
-import com.insight.utils.Json;
 import com.insight.utils.pojo.base.BusinessException;
-import com.qiniu.common.QiniuException;
-import com.qiniu.http.Response;
-import com.qiniu.storage.Configuration;
-import com.qiniu.storage.Region;
-import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  * @author 宣炳刚
@@ -20,8 +16,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FileServiceImpl implements FileService {
-    private final Configuration cfg = new Configuration(Region.region0());
-    private final UploadManager uploadManager = new UploadManager(cfg);
 
     /**
      * 七牛accessKey
@@ -42,42 +36,32 @@ public class FileServiceImpl implements FileService {
     private String bucket;
 
     /**
-     * 上传文件
-     *
-     * @param file 文件DTO
-     * @return Reply
-     */
-    @Override
-    public String upload(FileDto file) throws QiniuException {
-        try {
-            String token = getUploadToken();
-            Response response = uploadManager.put(file.getBytes(), file.getName(), token);
-            DefaultPutRet putRet = Json.toBean(response.bodyString(), DefaultPutRet.class);
-
-            return putRet.key;
-        } catch (QiniuException ex) {
-            Response response = ex.response;
-            throw new BusinessException(response.bodyString());
-        }
-    }
-
-    /**
      * 获取七牛上传令牌
      *
      * @return Reply
      */
     @Override
     public String getToken() {
-        return getUploadToken();
+        var auth = Auth.create(accessKey, secretKey);
+        return auth.uploadToken(bucket);
     }
 
     /**
-     * 获取七牛上传令牌
+     * 上传文件
      *
-     * @return 上传令牌
+     * @param file 文件DTO
+     * @return Reply
      */
-    private String getUploadToken() {
-        Auth auth = Auth.create(accessKey, secretKey);
-        return auth.uploadToken(bucket);
+    @Override
+    public String upload(MultipartFile file) {
+        var name = file.getOriginalFilename();
+        try {
+            var path = Paths.get("/upload/" + name);
+            file.transferTo(path);
+
+            return path.toString();
+        } catch (IOException ex) {
+            throw new BusinessException(ex.getMessage());
+        }
     }
 }
