@@ -1,12 +1,12 @@
 package com.insight.basedata.file;
 
+import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BusinessException;
 import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.nio.file.Paths;
 
 /**
@@ -55,12 +55,15 @@ public class FileServiceImpl implements FileService {
     @Override
     public String upload(MultipartFile file) {
         var name = file.getOriginalFilename();
-        try {
-            var path = Paths.get("/opt/upload/" + name);
-            file.transferTo(path);
+        if (Util.isEmpty(name)) {
+            throw new BusinessException("文件名不能为空");
+        }
 
-            return path.toString();
-        } catch (IOException ex) {
+        var path = "/opt/upload/" + Util.uuid() + name.substring(name.lastIndexOf("."));
+        try {
+            file.transferTo(Paths.get(path));
+            return path;
+        } catch (Exception ex) {
             throw new BusinessException(ex.getMessage());
         }
     }
