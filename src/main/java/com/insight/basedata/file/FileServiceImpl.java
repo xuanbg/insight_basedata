@@ -56,7 +56,7 @@ public class FileServiceImpl implements FileService {
     public String upload(MultipartFile file) {
         var name = file.getOriginalFilename();
         try {
-            var path = Paths.get("/upload/" + name);
+            var path = Paths.get("/opt/upload/" + name);
             file.transferTo(path);
 
             return path.toString();
