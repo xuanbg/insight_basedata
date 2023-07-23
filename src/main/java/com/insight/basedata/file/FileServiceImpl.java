@@ -59,7 +59,7 @@ public class FileServiceImpl implements FileService {
             throw new BusinessException("文件名不能为空");
         }
 
-        var path = "/upload/" + Util.uuid() + name.substring(name.lastIndexOf("."));
+        var path = "/files/" + Util.uuid() + name.substring(name.lastIndexOf("."));
         try {
             file.transferTo(Paths.get(path));
             return path;
