@@ -1,9 +1,6 @@
 package com.insight.basedata.common.dto;
 
 import com.insight.utils.pojo.base.BaseXo;
-import jakarta.validation.constraints.NotNull;
-
-import java.io.InputStream;
 
 /**
  * @author 宣炳刚
@@ -13,15 +10,19 @@ import java.io.InputStream;
 public class FileDto extends BaseXo {
 
     /**
-     * 字节数组
+     * 文件记录ID
      */
-    @NotNull
-    private byte[] bytes;
+    private Long id;
 
     /**
-     * 输入流
+     * 父级ID
      */
-    private InputStream stream;
+    private Long parentId;
+
+    /**
+     * 类型: 0.文件夹, 1.图片, 2.音频, 3.视频, 4.文档, 5.压缩包, 6.其他
+     */
+    private Integer type;
 
     /**
      * 文件名
@@ -29,24 +30,72 @@ public class FileDto extends BaseXo {
     private String name;
 
     /**
-     * 扩展名
+     * 文件扩展名
      */
     private String ext;
 
-    public byte[] getBytes() {
-        return bytes;
+    /**
+     * 文件域名
+     */
+    private String domain;
+
+    /**
+     * 文件URL
+     */
+    private String url;
+
+    /**
+     * 文件哈希值
+     */
+    private String hash;
+
+    /**
+     * 文件字节数
+     */
+    private Integer size;
+
+    /**
+     * 拥有人ID
+     */
+    private Long ownerId;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setBytes(byte[] bytes) {
-        this.bytes = bytes;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public InputStream getStream() {
-        return stream;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setStream(InputStream stream) {
-        this.stream = stream;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public Integer getType() {
+        if (type != null) {
+            return type;
+        }
+
+        if (ext == null) {
+            return 0;
+        }
+
+        return switch (ext) {
+            case "jpg", "jpeg", "bmp", "png" -> 1;
+            case "mp3", "wav" -> 2;
+            case "mp4", "mov" -> 3;
+            case "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "txt" -> 4;
+            case "zip", "rar", "7z" -> 5;
+            default -> 6;
+        };
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -57,11 +106,65 @@ public class FileDto extends BaseXo {
         this.name = name;
     }
 
+    public String getFullPath() {
+        var array = name.split(":");
+        var path = array.length > 1 ? array[1] : array[0];
+
+        return path.replaceAll("\\\\", "/").trim();
+    }
+
+    public String getFullName() {
+        var fullPath = getFullPath();
+        var split = fullPath.indexOf("/");
+
+        return fullPath.substring(split);
+    }
+
     public String getExt() {
         return ext;
     }
 
     public void setExt(String ext) {
         this.ext = ext;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }

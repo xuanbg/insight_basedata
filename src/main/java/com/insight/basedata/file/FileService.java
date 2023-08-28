@@ -1,5 +1,7 @@
 package com.insight.basedata.file;
 
+import com.insight.basedata.common.dto.FileDto;
+import com.insight.basedata.common.entity.UploadFile;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -10,17 +12,26 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileService {
 
     /**
-     * 获取七牛上传令牌
-     *
-     * @return Reply
-     */
-    String getToken();
-
-    /**
      * 上传文件
      *
      * @param file 文件DTO
      * @return Reply
      */
     String upload(MultipartFile file);
+
+    /**
+     * 上传文件
+     *
+     * @param file 文件DTO
+     * @return 上传令牌
+     */
+    UploadFile addFileToQiniu(FileDto file);
+
+    /**
+     * 获取指定的文件路径
+     *
+     * @param id 文件ID
+     * @return 文件路径
+     */
+    String getFileUrl(Long id);
 }

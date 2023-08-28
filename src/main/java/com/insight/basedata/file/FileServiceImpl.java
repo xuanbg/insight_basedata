@@ -1,10 +1,16 @@
 package com.insight.basedata.file;
 
+import com.insight.basedata.common.Core;
+import com.insight.basedata.common.dto.FileDto;
+import com.insight.basedata.common.entity.UploadFile;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BusinessException;
+import com.qiniu.common.QiniuException;
+import com.qiniu.storage.DownloadUrl;
 import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Paths;
@@ -16,6 +22,19 @@ import java.nio.file.Paths;
  */
 @Service
 public class FileServiceImpl implements FileService {
+    private final Core core;
+
+    /**
+     * 七牛文件域名
+     */
+    @Value("${qiniu.domain}")
+    private String domain;
+
+    /**
+     * 七牛文件空间bucket
+     */
+    @Value("${qiniu.bucket}")
+    private String bucket;
 
     /**
      * 七牛accessKey
@@ -30,20 +49,12 @@ public class FileServiceImpl implements FileService {
     private String secretKey;
 
     /**
-     * 七牛文件空间bucket
-     */
-    @Value("${qiniu.bucket}")
-    private String bucket;
-
-    /**
-     * 获取七牛上传令牌
+     * 构造方法
      *
-     * @return Reply
+     * @param core 核心功能类
      */
-    @Override
-    public String getToken() {
-        var auth = Auth.create(accessKey, secretKey);
-        return auth.uploadToken(bucket);
+    public FileServiceImpl(Core core) {
+        this.core = core;
     }
 
     /**
@@ -65,6 +76,46 @@ public class FileServiceImpl implements FileService {
             return path;
         } catch (Exception ex) {
             throw new BusinessException(ex.getMessage());
+        }
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param file 文件DTO
+     * @return 上传令牌
+     */
+    @Override
+    @Transactional
+    public UploadFile addFileToQiniu(FileDto file) {
+        file.setParentId(core.addFolder(file));
+        file.setDomain(domain);
+
+        var uploadFile = new UploadFile();
+        var auth = Auth.create(accessKey, secretKey);
+        uploadFile.setPath(core.addFile(file));
+        uploadFile.setToken(auth.uploadToken(bucket));
+
+        return uploadFile;
+    }
+
+    /**
+     * 获取指定的文件路径
+     *
+     * @param id 文件ID
+     * @return 文件路径
+     */
+    @Override
+    public String getFileUrl(Long id) {
+        var auth = Auth.create(accessKey, secretKey);
+        var file = core.getFile(id);
+        long deadline = System.currentTimeMillis() / 1000 + 3600;
+
+        try {
+            var url = new DownloadUrl(domain, true, file);
+            return url.buildURL(auth, deadline);
+        } catch (QiniuException e) {
+            throw new BusinessException(e.getMessage());
         }
     }
 }

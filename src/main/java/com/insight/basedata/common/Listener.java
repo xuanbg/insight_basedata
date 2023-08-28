@@ -1,7 +1,7 @@
 package com.insight.basedata.common;
 
 import com.insight.basedata.common.config.QueueConfig;
-import com.insight.basedata.common.mapper.LogMapper;
+import com.insight.basedata.common.mapper.CoreMapper;
 import com.insight.utils.pojo.message.Log;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
@@ -25,14 +25,14 @@ import java.util.Map;
 @Component
 public class Listener {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final LogMapper mapper;
+    private final CoreMapper mapper;
 
     /**
      * 构造方法
      *
      * @param mapper LogMapper
      */
-    public Listener(LogMapper mapper) {
+    public Listener(CoreMapper mapper) {
         this.mapper = mapper;
     }
 
