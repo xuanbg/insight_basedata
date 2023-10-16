@@ -177,7 +177,7 @@ public class FileDto extends BaseXo {
             return url;
         }
 
-        return "/" + ownerId + switch (getType()) {
+        return ownerId + switch (getType()) {
             case 1 -> "/picture/";
             case 2 -> "/audio/";
             case 3 -> "/video/";
