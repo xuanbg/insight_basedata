@@ -2,7 +2,7 @@ package com.insight.basedata.file;
 
 import com.insight.basedata.common.Core;
 import com.insight.basedata.common.dto.FileDto;
-import com.insight.basedata.common.entity.UploadFile;
+import com.insight.basedata.common.entity.File;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BusinessException;
 import com.qiniu.common.QiniuException;
@@ -87,21 +87,18 @@ public class FileServiceImpl implements FileService {
      */
     @Override
     @Transactional
-    public UploadFile addFileToQiniu(FileDto file) {
+    public File addFileToQiniu(FileDto file) {
         file.setParentId(core.addFolder(file));
         file.setDomain(domain);
 
-        var uploadFile = new UploadFile();
         var auth = Auth.create(accessKey, secretKey);
         var data = core.addFile(file);
         if (!data.getExisted()){
-            uploadFile.setToken(auth.uploadToken(bucket));
-            uploadFile.setBucket(bucket);
+            data.setToken(auth.uploadToken(bucket));
+            data.setBucket(bucket);
         }
 
-        uploadFile.setId(data.getId());
-        uploadFile.setPath(data.getUrl());
-        return uploadFile;
+        return data.convert(File.class);
     }
 
     /**

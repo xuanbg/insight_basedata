@@ -1,7 +1,7 @@
 package com.insight.basedata.file;
 
 import com.insight.basedata.common.dto.FileDto;
-import com.insight.basedata.common.entity.UploadFile;
+import com.insight.basedata.common.entity.File;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -25,7 +25,7 @@ public interface FileService {
      * @param file 文件DTO
      * @return 上传令牌
      */
-    UploadFile addFileToQiniu(FileDto file);
+    File addFileToQiniu(FileDto file);
 
     /**
      * 获取指定的文件路径

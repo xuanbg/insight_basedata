@@ -49,8 +49,8 @@ public interface CoreMapper {
      * @return 上传令牌
      */
     @Select("""
-            insert icf_file (id, parent_id, type, name, ext, domain, url, hash, size, owner_id, created_time) values
-            (#{id}, #{parentId}, #{type}, #{name}, #{ext}, #{domain}, #{url}, #{hash}, #{size}, #{ownerId}, now());
+            insert icf_file (id, parent_id, type, name, ext, domain, path, hash, size, owner_id, created_time) values
+            (#{id}, #{parentId}, #{type}, #{name}, #{ext}, #{domain}, #{path}, #{hash}, #{size}, #{ownerId}, now());
             """)
     String addFile(FileDto file);
 
@@ -60,7 +60,7 @@ public interface CoreMapper {
      * @param id 文件ID
      * @return 文件URL
      */
-    @Select("select url from icf_file where id = #{id};")
+    @Select("select path from icf_file where id = #{id};")
     String getFile(Long id);
 
     /**

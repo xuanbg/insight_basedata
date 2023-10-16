@@ -1,7 +1,7 @@
 package com.insight.basedata.file;
 
 import com.insight.basedata.common.dto.FileDto;
-import com.insight.basedata.common.entity.UploadFile;
+import com.insight.basedata.common.entity.File;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
@@ -50,7 +50,7 @@ public class FileController {
      * @return 上传令牌
      */
     @PostMapping("/v1.0/files/qiniu")
-    public UploadFile addFileToQiniu(@RequestHeader("loginInfo") String loginInfo, @RequestBody FileDto file) {
+    public File addFileToQiniu(@RequestHeader("loginInfo") String loginInfo, @RequestBody FileDto file) {
         var info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
 
         file.setOwnerId(info.getId());
