@@ -24,8 +24,8 @@ public interface CoreMapper {
      * @param hash 文件哈希值
      * @return 文件ID
      */
-    @Select("select url from icf_file where hash = #{hash};")
-    String getFileByHash(String hash);
+    @Select("select * from icf_file where hash = #{hash};")
+    FileDto getFileByHash(String hash);
 
     /**
      * 获取指定名称的路径ID

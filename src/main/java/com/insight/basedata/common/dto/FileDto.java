@@ -27,12 +27,12 @@ public class FileDto extends BaseXo {
     /**
      * 文件名
      */
-    private String name;
+    private String file;
 
     /**
-     * 文件扩展名
+     * 名称
      */
-    private String ext;
+    private String name;
 
     /**
      * 文件域名
@@ -59,6 +59,11 @@ public class FileDto extends BaseXo {
      */
     private Long ownerId;
 
+    /**
+     * 文件是否已存在
+     */
+    private Boolean existed;
+
     public Long getId() {
         return id;
     }
@@ -80,11 +85,11 @@ public class FileDto extends BaseXo {
             return type;
         }
 
-        if (ext == null) {
+        if (getExt() == null) {
             return 0;
         }
 
-        return switch (ext) {
+        return switch (getExt()) {
             case "jpg", "jpeg", "bmp", "png" -> 1;
             case "mp3", "wav" -> 2;
             case "mp4", "mov" -> 3;
@@ -98,16 +103,20 @@ public class FileDto extends BaseXo {
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getFile() {
+        return file;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public String getFullPath() {
-        var array = name.split(":");
+        if (file == null) {
+            return null;
+        }
+
+        var array = file.split(":");
         var path = array.length > 1 ? array[1] : array[0];
 
         return path.replaceAll("\\\\", "/").trim();
@@ -115,17 +124,40 @@ public class FileDto extends BaseXo {
 
     public String getFullName() {
         var fullPath = getFullPath();
-        var split = fullPath.indexOf("/");
+        if (fullPath == null) {
+            return null;
+        }
 
-        return fullPath.substring(split);
+        var split = fullPath.lastIndexOf("/");
+        return split < 0 ? fullPath : fullPath.substring(split);
+    }
+
+    public String getName() {
+        if (name != null) {
+            return name;
+        }
+
+        var fullName = getFullName();
+        if (fullName == null) {
+            return null;
+        }
+
+        var array = fullName.split("\\.");
+        return array[0];
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getExt() {
-        return ext;
-    }
+        var fullName = getFullName();
+        if (fullName == null) {
+            return null;
+        }
 
-    public void setExt(String ext) {
-        this.ext = ext;
+        var array = fullName.split("\\.");
+        return array.length > 1 ? array[1] : null;
     }
 
     public String getDomain() {
@@ -137,7 +169,21 @@ public class FileDto extends BaseXo {
     }
 
     public String getUrl() {
-        return url;
+        if ((getType() == 0)) {
+            return null;
+        }
+
+        if (url != null) {
+            return url;
+        }
+
+        return "/" + ownerId + switch (getType()) {
+            case 1 -> "/picture/";
+            case 2 -> "/audio/";
+            case 3 -> "/video/";
+            case 4 -> "/document/";
+            default -> "/other/";
+        } + getFullName();
     }
 
     public void setUrl(String url) {
@@ -166,5 +212,13 @@ public class FileDto extends BaseXo {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public Boolean getExisted() {
+        return existed != null && existed;
+    }
+
+    public void setExisted(Boolean existed) {
+        this.existed = existed;
     }
 }

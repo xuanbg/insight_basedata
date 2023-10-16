@@ -12,6 +12,7 @@ import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -44,7 +45,19 @@ public class Core {
     public Long addFolder(FileDto file) {
         var ownerId = file.getOwnerId();
         var array = file.getFullPath().split("/");
-        var folders = Arrays.stream(array).limit(array.length - 1).toList();
+        var folders = new ArrayList<>(Arrays.stream(array).limit(array.length - 1).toList());
+        if (folders.isEmpty()) {
+            var folder = switch (file.getType()) {
+                case 1 -> "picture";
+                case 2 -> "audio";
+                case 3 -> "video";
+                case 4 -> "document";
+                default -> "other";
+            };
+            folders.add(file.getOwnerId().toString());
+            folders.add(folder);
+        }
+
         var records = mapper.getFolders(ownerId);
         for (var name : folders) {
             if (Util.isEmpty(name)) {
@@ -58,8 +71,8 @@ public class Core {
                 var folder = new FileDto();
                 folder.setId(creator.nextId(5));
                 folder.setParentId(parentId);
-                folder.setName(name);
                 folder.setOwnerId(ownerId);
+                folder.setName(name);
 
                 mapper.addFile(folder);
                 file.setParentId(folder.getId());
@@ -77,23 +90,16 @@ public class Core {
      * @param file 文件DTO
      * @return 文件URL
      */
-    public String addFile(FileDto file) {
-        var array = file.getFullPath().split("/");
-        var name = array[array.length - 1];
-        var split = name.lastIndexOf(".");
-        file.setId(creator.nextId(5));
-        file.setName(split == 0 ? name : name.substring(0, split - 1));
-        file.setExt(split == 0 ? null : name.substring(split));
-
-        var url = mapper.getFileByHash(file.getHash());
-        if (Util.isEmpty(url)) {
-            file.setUrl(file.getFullName());
-        } else {
-            file.setUrl(url);
+    public FileDto addFile(FileDto file) {
+        var data = mapper.getFileByHash(file.getHash());
+        if (data != null) {
+            data.setExisted(true);
+            return data;
         }
 
+        file.setId(creator.nextId(5));
         mapper.addFile(file);
-        return file.getUrl();
+        return file;
     }
 
     /**

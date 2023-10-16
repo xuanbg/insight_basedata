@@ -93,9 +93,14 @@ public class FileServiceImpl implements FileService {
 
         var uploadFile = new UploadFile();
         var auth = Auth.create(accessKey, secretKey);
-        uploadFile.setPath(core.addFile(file));
-        uploadFile.setToken(auth.uploadToken(bucket));
+        var data = core.addFile(file);
+        if (!data.getExisted()){
+            uploadFile.setToken(auth.uploadToken(bucket));
+            uploadFile.setBucket(bucket);
+        }
 
+        uploadFile.setId(data.getId());
+        uploadFile.setPath(data.getUrl());
         return uploadFile;
     }
 

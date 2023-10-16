@@ -10,6 +10,11 @@ import com.insight.utils.pojo.base.BaseXo;
 public class UploadFile extends BaseXo {
 
     /**
+     * 文件ID
+     */
+    private Long id;
+
+    /**
      * 文件路径
      */
     private String path;
@@ -18,6 +23,19 @@ public class UploadFile extends BaseXo {
      * 文件上传令牌
      */
     private String token;
+
+    /**
+     * 七牛文件空间bucket
+     */
+    private String bucket;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getPath() {
         return path;
@@ -33,5 +51,13 @@ public class UploadFile extends BaseXo {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
     }
 }
