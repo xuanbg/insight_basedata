@@ -17,7 +17,7 @@ public class ParameterDto extends BaseXo {
     /**
      * 配置KEY
      */
-    private String key;
+    private Object key;
 
     /**
      * 配置键值
@@ -32,11 +32,11 @@ public class ParameterDto extends BaseXo {
         this.id = id;
     }
 
-    public String getKey() {
+    public Object getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(Object key) {
         this.key = key;
     }
 
