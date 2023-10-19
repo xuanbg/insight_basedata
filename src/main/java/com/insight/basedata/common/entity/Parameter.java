@@ -43,8 +43,8 @@ public class Parameter extends BaseXo {
     /**
      * 配置键值
      */
-    @NotEmpty(message = "参数值不能为空")
-    private String value;
+    @NotNull(message = "参数值不能为空")
+    private Object value;
 
     /**
      * 创建人
@@ -101,11 +101,11 @@ public class Parameter extends BaseXo {
         this.key = key;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 
