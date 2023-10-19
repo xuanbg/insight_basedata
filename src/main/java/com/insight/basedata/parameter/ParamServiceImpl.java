@@ -5,7 +5,6 @@ import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.basedata.common.mapper.ParamMapper;
 import com.insight.utils.pojo.auth.LoginInfo;
-import com.insight.utils.pojo.base.BusinessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,12 +52,7 @@ public class ParamServiceImpl implements ParamService {
     @Override
     public ParameterDto getParameter(LoginInfo info, ParamSearchDto dto) {
         dto.setTenantId(info.getTenantId());
-        ParameterDto data = mapper.getParameter(dto);
-        if (data == null) {
-            throw new BusinessException("数据不存在");
-        }
-
-        return data;
+        return mapper.getParameter(dto);
     }
 
     /**
