@@ -1,7 +1,7 @@
 package com.insight.basedata.file;
 
-import com.insight.basedata.common.dto.FileDto;
-import com.insight.basedata.common.entity.File;
+import com.insight.utils.pojo.base.File;
+import com.insight.utils.pojo.base.FileDto;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

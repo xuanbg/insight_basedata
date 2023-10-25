@@ -1,7 +1,7 @@
 package com.insight.basedata.common.mapper;
 
-import com.insight.basedata.common.dto.FileDto;
 import com.insight.basedata.common.entity.LogInfo;
+import com.insight.utils.pojo.base.FileDto;
 import com.insight.utils.pojo.base.JsonTypeHandler;
 import com.insight.utils.pojo.base.Search;
 import com.insight.utils.pojo.base.TreeBase;

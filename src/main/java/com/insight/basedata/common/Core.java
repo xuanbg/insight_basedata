@@ -1,13 +1,13 @@
 package com.insight.basedata.common;
 
 import com.github.pagehelper.PageHelper;
-import com.insight.basedata.common.dto.FileDto;
 import com.insight.basedata.common.entity.LogInfo;
 import com.insight.basedata.common.mapper.CoreMapper;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BusinessException;
+import com.insight.utils.pojo.base.FileDto;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
 import org.springframework.stereotype.Component;

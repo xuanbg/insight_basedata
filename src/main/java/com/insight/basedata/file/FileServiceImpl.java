@@ -1,10 +1,10 @@
 package com.insight.basedata.file;
 
 import com.insight.basedata.common.Core;
-import com.insight.basedata.common.dto.FileDto;
-import com.insight.basedata.common.entity.File;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BusinessException;
+import com.insight.utils.pojo.base.File;
+import com.insight.utils.pojo.base.FileDto;
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.DownloadUrl;
 import com.qiniu.util.Auth;
@@ -93,7 +93,7 @@ public class FileServiceImpl implements FileService {
 
         var auth = Auth.create(accessKey, secretKey);
         var data = core.addFile(file);
-        if (!data.getExisted()){
+        if (!data.getExisted()) {
             data.setToken(auth.uploadToken(bucket));
             data.setBucket(bucket);
         }

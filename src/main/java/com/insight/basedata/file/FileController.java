@@ -1,10 +1,10 @@
 package com.insight.basedata.file;
 
-import com.insight.basedata.common.dto.FileDto;
-import com.insight.basedata.common.entity.File;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
+import com.insight.utils.pojo.base.File;
+import com.insight.utils.pojo.base.FileDto;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,7 +64,7 @@ public class FileController {
      * @return 文件路径
      */
     @GetMapping("/v1.0/files/{id}")
-    String getFileUrl(@PathVariable Long id){
+    String getFileUrl(@PathVariable Long id) {
         return service.getFileUrl(id);
     }
 }
