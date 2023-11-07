@@ -3,6 +3,7 @@ package com.insight.basedata.log;
 import com.insight.basedata.common.entity.LogInfo;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
+import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,15 @@ public class LogController {
         search.setAppId(info.getAppId());
         search.setTenantId(info.getTenantId());
         return service.getLogs(search);
+    }
+
+    /**
+     * 打印日志
+     * @param log 日志内容
+     */
+    @PostMapping("/v1.0/logs")
+    public void log(@RequestBody String log){
+        throw new BusinessException(log);
     }
 
     /**
