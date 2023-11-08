@@ -1,7 +1,7 @@
 package com.insight.basedata.file;
 
-import com.insight.utils.pojo.base.File;
-import com.insight.utils.pojo.base.FileDto;
+import com.insight.utils.pojo.file.FileDto;
+import com.insight.utils.pojo.file.FileVo;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -25,7 +25,7 @@ public interface FileService {
      * @param file 文件DTO
      * @return 上传令牌
      */
-    File addFileToQiniu(FileDto file);
+    FileVo addFileToQiniu(FileDto file);
 
     /**
      * 获取指定的文件路径

@@ -1,10 +1,12 @@
 package com.insight.basedata.file;
 
-import com.insight.basedata.common.Core;
+import com.insight.basedata.common.mapper.FileMapper;
+import com.insight.utils.SnowflakeCreator;
 import com.insight.utils.Util;
 import com.insight.utils.pojo.base.BusinessException;
-import com.insight.utils.pojo.base.File;
-import com.insight.utils.pojo.base.FileDto;
+import com.insight.utils.pojo.file.FileDto;
+import com.insight.utils.pojo.file.FileVo;
+import com.insight.utils.pojo.file.Folder;
 import com.qiniu.common.QiniuException;
 import com.qiniu.storage.DownloadUrl;
 import com.qiniu.util.Auth;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author 宣炳刚
@@ -22,7 +26,8 @@ import java.nio.file.Paths;
  */
 @Service
 public class FileServiceImpl implements FileService {
-    private final Core core;
+    private final SnowflakeCreator creator;
+    private final FileMapper mapper;
 
     /**
      * 七牛文件域名
@@ -51,10 +56,12 @@ public class FileServiceImpl implements FileService {
     /**
      * 构造方法
      *
-     * @param core 核心功能类
+     * @param creator ID生成器
+     * @param mapper  文件DAL
      */
-    public FileServiceImpl(Core core) {
-        this.core = core;
+    public FileServiceImpl(SnowflakeCreator creator, FileMapper mapper) {
+        this.creator = creator;
+        this.mapper = mapper;
     }
 
     /**
@@ -87,18 +94,68 @@ public class FileServiceImpl implements FileService {
      */
     @Override
     @Transactional
-    public File addFileToQiniu(FileDto file) {
-        file.setParentId(core.addFolder(file));
-        file.setDomain(domain);
-
+    public FileVo addFileToQiniu(FileDto file) {
         var auth = Auth.create(accessKey, secretKey);
-        var data = core.addFile(file);
-        if (!data.getExisted()) {
-            data.setToken(auth.uploadToken(bucket));
-            data.setBucket(bucket);
+        var token = auth.uploadToken(bucket);
+        if (Util.isEmpty(token)) {
+            throw new BusinessException("上传令牌获取失败");
         }
 
-        return data.convert(File.class);
+        // 判断文件是否存在
+        var data = mapper.getFileByHash(file.getHash());
+        if (data != null) {
+            data.setToken(token);
+            data.setBucket(bucket);
+            return data;
+        }
+
+        // 保存文件夹信息
+        var ownerId = file.getOwnerId();
+        var array = file.getFullPath().split("/");
+        var folders = new ArrayList<>(Arrays.stream(array).limit(array.length - 1).toList());
+        if (folders.isEmpty()) {
+            var folder = switch (file.getType()) {
+                case 1 -> "picture";
+                case 2 -> "audio";
+                case 3 -> "video";
+                case 4 -> "document";
+                default -> "other";
+            };
+            folders.add(ownerId.toString());
+            folders.add(folder);
+        }
+
+        var records = mapper.getFolders(ownerId);
+        for (var name : folders) {
+            if (Util.isEmpty(name)) {
+                continue;
+            }
+
+            var parentId = file.getParentId();
+            var record = records.stream().filter(i -> i.equals(parentId, name)).findFirst().orElse(null);
+            if (record == null) {
+                var folder = new Folder();
+                folder.setId(creator.nextId(5));
+                folder.setParentId(parentId);
+                folder.setOwnerId(ownerId);
+                folder.setName(name);
+
+                mapper.addFolder(folder);
+                file.setParentId(folder.getId());
+            } else {
+                file.setParentId(record.getId());
+            }
+        }
+
+        // 保存文件信息
+        file.setId(creator.nextId(5));
+        file.setDomain(domain);
+        mapper.addFile(file);
+
+        var result = file.convert(FileVo.class);
+        result.setToken(token);
+        result.setBucket(bucket);
+        return result;
     }
 
     /**
@@ -110,7 +167,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public String getFileUrl(Long id) {
         var auth = Auth.create(accessKey, secretKey);
-        var file = core.getFile(id);
+        var file = mapper.getFile(id);
         long deadline = System.currentTimeMillis() / 1000 + 3600;
 
         try {

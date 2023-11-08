@@ -3,8 +3,8 @@ package com.insight.basedata.file;
 import com.insight.utils.Json;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
-import com.insight.utils.pojo.base.File;
-import com.insight.utils.pojo.base.FileDto;
+import com.insight.utils.pojo.file.FileDto;
+import com.insight.utils.pojo.file.FileVo;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,7 +50,7 @@ public class FileController {
      * @return 上传令牌
      */
     @PostMapping("/v1.0/files/qiniu")
-    public File addFileToQiniu(@RequestHeader("loginInfo") String loginInfo, @RequestBody FileDto file) {
+    public FileVo addFileToQiniu(@RequestHeader("loginInfo") String loginInfo, @RequestBody FileDto file) {
         var info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
 
         file.setOwnerId(info.getId());
