@@ -95,22 +95,21 @@ public class FileServiceImpl implements FileService {
     @Override
     @Transactional
     public FileVo addFileToQiniu(FileDto file) {
+        var data = mapper.getFileByHash(file.getHash());
+        if (data != null) {
+            return data;
+        }
+
+        // 获取上传参数
         var auth = Auth.create(accessKey, secretKey);
         var token = auth.uploadToken(bucket);
         if (Util.isEmpty(token)) {
             throw new BusinessException("上传令牌获取失败");
         }
 
-        // 判断文件是否存在
-        var data = mapper.getFileByHash(file.getHash());
-        if (data != null) {
-            data.setToken(token);
-            data.setBucket(bucket);
-            return data;
-        }
-
-        // 保存文件夹信息
+        // 获取文件夹信息
         var ownerId = file.getOwnerId();
+        var records = mapper.getFolders(ownerId);
         var array = file.getFullPath().split("/");
         var folders = new ArrayList<>(Arrays.stream(array).limit(array.length - 1).toList());
         if (folders.isEmpty()) {
@@ -125,7 +124,7 @@ public class FileServiceImpl implements FileService {
             folders.add(folder);
         }
 
-        var records = mapper.getFolders(ownerId);
+        // 保存文件夹信息
         for (var name : folders) {
             if (Util.isEmpty(name)) {
                 continue;
@@ -152,6 +151,7 @@ public class FileServiceImpl implements FileService {
         file.setDomain(domain);
         mapper.addFile(file);
 
+        // 返回文件信息和上传令牌
         var result = file.convert(FileVo.class);
         result.setToken(token);
         result.setBucket(bucket);
