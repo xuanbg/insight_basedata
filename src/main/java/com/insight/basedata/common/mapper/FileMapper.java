@@ -20,11 +20,19 @@ public interface FileMapper {
     /**
      * 按文件哈希值查找文件
      *
-     * @param hash 文件哈希值
+     * @param hash   文件哈希值
+     * @param userId 用户ID
      * @return 文件ID
      */
-    @Select("select * from icf_file where hash = #{hash};")
-    FileVo getFileByHash(String hash);
+    @Select("""
+            <script>select *
+            from icf_file
+            where hash = #{hash}
+              <if test = 'userId != null'>and owner_id = #{userId}</if>
+            order by id limit 1;
+            </script>
+            """)
+    FileVo getFileByHash(String hash, Long userId);
 
     /**
      * 获取指定名称的路径ID
