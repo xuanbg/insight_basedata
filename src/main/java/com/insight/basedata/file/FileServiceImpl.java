@@ -97,7 +97,7 @@ public class FileServiceImpl implements FileService {
     public FileVo addFileToQiniu(FileDto file) {
         var ownerId = file.getOwnerId();
         var data = mapper.getFileByHash(file.getHash(), ownerId);
-        if (data != null) {
+        if (data != null && data.equals(file)) {
             return data;
         }
 
