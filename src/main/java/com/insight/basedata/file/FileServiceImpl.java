@@ -96,9 +96,9 @@ public class FileServiceImpl implements FileService {
     @Transactional
     public FileVo addFileToQiniu(FileDto file) {
         var ownerId = file.getOwnerId();
-        var data = mapper.getFileByHash(file.getHash(), ownerId);
-        if (data != null && data.equals(file)) {
-            return data;
+        var files = mapper.getMyFiles(file.getHash(), ownerId);
+        if (files.stream().anyMatch(file::equals)) {
+            return files.stream().filter(file::equals).findFirst().orElseThrow();
         }
 
         // 获取文件夹信息
@@ -142,7 +142,7 @@ public class FileServiceImpl implements FileService {
         // 保存文件信息
         file.setId(creator.nextId(5));
         file.setDomain(domain);
-        data = mapper.getFileByHash(file.getHash(), null);
+        var data = mapper.getFileByHash(file.getHash());
         if (data != null) {
             file.setPath(data.getPath());
         }

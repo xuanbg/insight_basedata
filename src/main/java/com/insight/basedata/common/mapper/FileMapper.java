@@ -25,14 +25,26 @@ public interface FileMapper {
      * @return 文件ID
      */
     @Select("""
-            <script>select *
+            select *
             from icf_file
             where hash = #{hash}
-              <if test = 'userId != null'>and owner_id = #{userId}</if>
-            order by id limit 1;
-            </script>
+              and owner_id = #{userId};
             """)
-    FileVo getFileByHash(String hash, Long userId);
+    List<FileVo> getMyFiles(String hash, Long userId);
+
+    /**
+     * 按文件哈希值查找文件
+     *
+     * @param hash 文件哈希值
+     * @return 文件ID
+     */
+    @Select("""
+            select *
+            from icf_file
+            where hash = #{hash}
+            order by id limit 1;
+            """)
+    FileVo getFileByHash(String hash);
 
     /**
      * 获取指定名称的路径ID
