@@ -4,7 +4,6 @@ import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.basedata.common.mapper.ParamMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class ParamServiceImpl implements ParamService {
     /**
      * 查询选项参数
      *
-     * @param dto  选项参数查询DTO
+     * @param dto 选项参数查询DTO
      * @return Reply
      */
     @Override
@@ -40,7 +39,7 @@ public class ParamServiceImpl implements ParamService {
     /**
      * 获取选项参数
      *
-     * @param dto  选项参数查询DTO
+     * @param dto 选项参数查询DTO
      * @return Reply
      */
     @Override
@@ -51,19 +50,16 @@ public class ParamServiceImpl implements ParamService {
     /**
      * 更新选项参数
      *
-     * @param parameters 选项参数实体集合
+     * @param dto 选项参数
      */
     @Override
-    @Transactional
-    public void setParameter(List<Parameter> parameters) {
-        for (Parameter dto : parameters) {
-            var data = mapper.getParameter(dto);
-            if (data == null) {
-                mapper.addParameter(dto);
-            } else {
-                dto.setId(data.getId());
-                mapper.updateParameter(dto);
-            }
+    public void setParameter(Parameter dto) {
+        var data = mapper.getParameter(dto);
+        if (data == null) {
+            mapper.addParameter(dto);
+        } else {
+            dto.setId(data.getId());
+            mapper.updateParameter(dto);
         }
     }
 }

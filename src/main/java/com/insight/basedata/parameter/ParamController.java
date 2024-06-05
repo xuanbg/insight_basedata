@@ -63,19 +63,17 @@ public class ParamController {
     /**
      * 更新选项参数
      *
-     * @param loginInfo  用户关键信息
-     * @param parameters 选项参数实体集合
+     * @param loginInfo 用户关键信息
+     * @param dto       选项参数
      */
     @PutMapping("/v1.0/params")
-    public void setParameter(@RequestHeader("loginInfo") String loginInfo, @RequestBody List<Parameter> parameters) {
+    public void setParameter(@RequestHeader("loginInfo") String loginInfo, @RequestBody Parameter dto) {
         LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
-        parameters.forEach(i -> {
-            if (i.getTenantId() == null) {
-                i.setTenantId(info.getTenantId());
-            }
-        });
+        if (dto.getTenantId() == null) {
+            dto.setTenantId(info.getTenantId());
+        }
 
-        service.setParameter(parameters);
+        service.setParameter(dto);
     }
 
     /**

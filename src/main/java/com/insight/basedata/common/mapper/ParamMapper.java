@@ -32,8 +32,16 @@ public interface ParamMapper {
      * @return 选项参数DTO
      */
     @Results({@Result(property = "value", column = "value", javaType = Object.class, typeHandler = JsonTypeHandler.class)})
-    @Select("select id, `key`, `value` from icc_param where tenant_id = #{tenantId} and module_id = #{moduleId} and `key` = #{keyword} " +
-            "and (isnull(user_id) or user_id = #{userId}) order by user_id desc limit 1;")
+    @Select("""
+            select id, `key`, `value`
+            from icc_param
+            where tenant_id = #{tenantId}
+              and module_id = #{moduleId}
+              and `key` = #{key}
+              and (user_id is null or user_id = #{userId})
+            order by user_id desc
+            limit 1;
+            """)
     ParameterDto getParameter(Parameter dto);
 
     /**

@@ -31,7 +31,7 @@ public interface ParamService {
     /**
      * 更新选项参数
      *
-     * @param parameters 选项参数实体集合
+     * @param dto 选项参数
      */
-    void setParameter(List<Parameter> parameters);
+    void setParameter(Parameter dto);
 }
