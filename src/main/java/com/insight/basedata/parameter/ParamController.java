@@ -1,6 +1,5 @@
 package com.insight.basedata.parameter;
 
-import com.insight.basedata.common.dto.ParamSearchDto;
 import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.utils.Json;
@@ -37,9 +36,13 @@ public class ParamController {
      * @return Reply
      */
     @GetMapping("/v1.0/params")
-    public List<ParameterDto> getParameters(@RequestHeader("loginInfo") String loginInfo, ParamSearchDto dto) {
+    public List<ParameterDto> getParameters(@RequestHeader("loginInfo") String loginInfo, Parameter dto) {
         LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
-        return service.getParameters(info, dto);
+        if (dto.getTenantId() == null) {
+            dto.setTenantId(info.getTenantId());
+        }
+
+        return service.getParameters(dto);
     }
 
     /**
@@ -50,9 +53,11 @@ public class ParamController {
      * @return Reply
      */
     @GetMapping("/v1.0/params/value")
-    public ParameterDto getParameter(@RequestHeader("loginInfo") String loginInfo, ParamSearchDto dto) {
+    public ParameterDto getParameter(@RequestHeader("loginInfo") String loginInfo, Parameter dto) {
         LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
-        return service.getParameter(info, dto);
+        dto.setTenantId(info.getTenantId());
+        dto.setUserId(info.getId());
+        return service.getParameter(dto);
     }
 
     /**
@@ -64,7 +69,13 @@ public class ParamController {
     @PutMapping("/v1.0/params")
     public void setParameter(@RequestHeader("loginInfo") String loginInfo, @RequestBody List<Parameter> parameters) {
         LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
-        service.setParameter(info, parameters);
+        parameters.forEach(i -> {
+            if (i.getTenantId() == null) {
+                i.setTenantId(info.getTenantId());
+            }
+        });
+
+        service.setParameter(parameters);
     }
 
     /**

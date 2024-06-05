@@ -1,10 +1,8 @@
 package com.insight.basedata.common.entity;
 
 import com.insight.utils.pojo.base.BaseXo;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 /**
  * @author 宣炳刚
@@ -45,21 +43,6 @@ public class Parameter extends BaseXo {
      */
     @NotNull(message = "参数值不能为空")
     private Object value;
-
-    /**
-     * 创建人
-     */
-    private String creator;
-
-    /**
-     * 创建人ID
-     */
-    private Long creatorId;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createdTime;
 
     public Long getId() {
         return id;
@@ -107,29 +90,5 @@ public class Parameter extends BaseXo {
 
     public void setValue(Object value) {
         this.value = value;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public Long getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
-    }
-
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
     }
 }

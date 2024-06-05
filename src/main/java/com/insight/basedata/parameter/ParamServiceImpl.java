@@ -1,14 +1,11 @@
 package com.insight.basedata.parameter;
 
-import com.insight.basedata.common.dto.ParamSearchDto;
 import com.insight.basedata.common.dto.ParameterDto;
 import com.insight.basedata.common.entity.Parameter;
 import com.insight.basedata.common.mapper.ParamMapper;
-import com.insight.utils.pojo.auth.LoginInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -32,48 +29,39 @@ public class ParamServiceImpl implements ParamService {
     /**
      * 查询选项参数
      *
-     * @param info 用户关键信息
      * @param dto  选项参数查询DTO
      * @return Reply
      */
     @Override
-    public List<ParameterDto> getParameters(LoginInfo info, ParamSearchDto dto) {
-        dto.setTenantId(info.getTenantId());
+    public List<ParameterDto> getParameters(Parameter dto) {
         return mapper.getParameters(dto);
     }
 
     /**
      * 获取选项参数
      *
-     * @param info 用户关键信息
      * @param dto  选项参数查询DTO
      * @return Reply
      */
     @Override
-    public ParameterDto getParameter(LoginInfo info, ParamSearchDto dto) {
-        dto.setTenantId(info.getTenantId());
+    public ParameterDto getParameter(Parameter dto) {
         return mapper.getParameter(dto);
     }
 
     /**
      * 更新选项参数
      *
-     * @param info       用户关键信息
      * @param parameters 选项参数实体集合
      */
     @Override
     @Transactional
-    public void setParameter(LoginInfo info, List<Parameter> parameters) {
+    public void setParameter(List<Parameter> parameters) {
         for (Parameter dto : parameters) {
-            Long id = dto.getId();
-            if (id == null) {
-                dto.setTenantId(info.getTenantId());
-                dto.setCreator(info.getName());
-                dto.setCreatorId(info.getId());
-                dto.setCreatedTime(LocalDateTime.now());
-
+            var data = mapper.getParameter(dto);
+            if (data == null) {
                 mapper.addParameter(dto);
             } else {
+                dto.setId(data.getId());
                 mapper.updateParameter(dto);
             }
         }
