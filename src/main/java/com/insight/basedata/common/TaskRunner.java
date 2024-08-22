@@ -1,10 +1,10 @@
 package com.insight.basedata.common;
 
 import com.insight.basedata.common.mapper.ConfigMapper;
-import com.insight.utils.Json;
-import com.insight.utils.redis.Redis;
+import com.insight.utils.Util;
 import com.insight.utils.common.ApplicationContextHolder;
 import com.insight.utils.pojo.auth.InterfaceDto;
+import com.insight.utils.redis.Redis;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
@@ -21,20 +21,22 @@ public class TaskRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         List<InterfaceDto> configs = mapper.loadConfigs();
-        if (configs != null && !configs.isEmpty()) {
-            String json = Json.toJson(configs);
-            Redis.set("Config:Interface", json);
+        if (Util.isNotEmpty(configs)) {
+            for (var config : configs) {
+                var hash = config.getHash();
+                Redis.setHash("Config:Interface", hash, config);
+            }
         }
 
         String headKey = "Config:DefaultHead";
         String defaultHead = Redis.get(headKey);
-        if (defaultHead == null || defaultHead.isEmpty()) {
+        if (Util.isEmpty(defaultHead)) {
             Redis.set(headKey, "head_default.png");
         }
 
         String hostKey = "Config:FileHost";
         String fileHost = Redis.get(hostKey);
-        if (fileHost == null || fileHost.isEmpty()) {
+        if (Util.isEmpty(fileHost)) {
             Redis.set(hostKey, "https://images.i-facture.com/");
         }
     }

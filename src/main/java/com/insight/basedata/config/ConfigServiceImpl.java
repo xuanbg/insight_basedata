@@ -5,17 +5,17 @@ import com.insight.basedata.common.Core;
 import com.insight.basedata.common.client.LogClient;
 import com.insight.basedata.common.entity.InterfaceConfig;
 import com.insight.basedata.common.entity.LogInfo;
+import com.insight.basedata.common.entity.OperateType;
 import com.insight.basedata.common.mapper.ConfigMapper;
-import com.insight.utils.Json;
-import com.insight.utils.redis.Redis;
 import com.insight.utils.ReplyHelper;
 import com.insight.utils.SnowflakeCreator;
+import com.insight.utils.Util;
 import com.insight.utils.pojo.auth.InterfaceDto;
 import com.insight.utils.pojo.auth.LoginInfo;
 import com.insight.utils.pojo.base.BusinessException;
 import com.insight.utils.pojo.base.Reply;
 import com.insight.utils.pojo.base.Search;
-import com.insight.basedata.common.entity.OperateType;
+import com.insight.utils.redis.Redis;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -140,12 +140,14 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public void loadConfigs() {
         List<InterfaceDto> configs = mapper.loadConfigs();
-        if (configs == null || configs.isEmpty()) {
+        if (Util.isEmpty(configs)) {
             throw new BusinessException("读取数据失败,请重新加载");
         }
 
-        String json = Json.toJson(configs);
-        Redis.set("Config:Interface", json);
+        for (var config : configs) {
+            var hash = config.getHash();
+            Redis.setHash("Config:Interface", hash, config);
+        }
     }
 
     /**

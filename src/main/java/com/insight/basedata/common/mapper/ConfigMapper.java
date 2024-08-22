@@ -67,6 +67,9 @@ public interface ConfigMapper {
      *
      * @return 接口配置表
      */
-    @Select("select method, url, auth_code, limit_gap, limit_cycle, limit_max, message, need_token, verify, `limit`, log_result from ici_interface;")
+    @Select("""
+            select method, url, auth_code, limit_gap, limit_cycle, limit_max, message, need_token, verify, `limit`, log_result
+            from ici_interface;
+            """)
     List<InterfaceDto> loadConfigs();
 }
