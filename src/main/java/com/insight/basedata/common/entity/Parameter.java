@@ -24,7 +24,6 @@ public class Parameter extends BaseXo {
     /**
      * 模块ID
      */
-    @NotNull(message = "模块ID不能为空")
     private Long moduleId;
 
     /**

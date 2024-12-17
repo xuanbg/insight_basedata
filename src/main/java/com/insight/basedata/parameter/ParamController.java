@@ -42,7 +42,27 @@ public class ParamController {
             dto.setTenantId(info.getTenantId());
         }
 
+        if (dto.getModuleId() == null) {
+            dto.setModuleId(info.getAppId());
+        }
+
         return service.getParameters(dto);
+    }
+
+    /**
+     * 保存选项参数
+     *
+     * @param loginInfo 用户关键信息
+     * @param dto       选项参数
+     */
+    @PostMapping("/v1.0/params")
+    public void saveParameter(@RequestHeader("loginInfo") String loginInfo, @RequestBody Parameter dto) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+
+        dto.setModuleId(info.getAppId());
+        dto.setTenantId(info.getTenantId());
+        dto.setUserId(info.getId());
+        service.setParameter(dto);
     }
 
     /**
@@ -75,6 +95,10 @@ public class ParamController {
         LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
         if (dto.getTenantId() == null) {
             dto.setTenantId(info.getTenantId());
+        }
+
+        if (dto.getModuleId() == null) {
+            dto.setModuleId(info.getAppId());
         }
 
         service.setParameter(dto);
