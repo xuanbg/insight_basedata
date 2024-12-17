@@ -62,7 +62,7 @@ public class ParamController {
         dto.setModuleId(info.getAppId());
         dto.setTenantId(info.getTenantId());
         dto.setUserId(info.getId());
-        service.setParameter(dto);
+        service.saveParameter(dto);
     }
 
     /**

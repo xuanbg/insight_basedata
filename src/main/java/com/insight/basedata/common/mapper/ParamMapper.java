@@ -45,6 +45,22 @@ public interface ParamMapper {
     ParameterDto getParameter(Parameter dto);
 
     /**
+     * 判断参数是否存在
+     *
+     * @param dto 选项参数实体
+     * @return 是否存在
+     */
+    @Select("""
+            select id
+            from icc_param
+            where tenant_id = #{tenantId}
+              and module_id = #{moduleId}
+              and user_id = #{userId}
+              and `key` = #{key};
+            """)
+    Long parameterExists(Parameter dto);
+
+    /**
      * 新增参数
      *
      * @param dto 选项参数实体

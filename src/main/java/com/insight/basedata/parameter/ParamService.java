@@ -21,6 +21,13 @@ public interface ParamService {
     List<ParameterDto> getParameters(Parameter dto);
 
     /**
+     * 保存选项参数
+     *
+     * @param dto 选项参数
+     */
+    void saveParameter(Parameter dto);
+
+    /**
      * 获取选项参数
      *
      * @param dto 选项参数查询DTO

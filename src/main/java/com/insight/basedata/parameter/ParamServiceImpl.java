@@ -37,6 +37,22 @@ public class ParamServiceImpl implements ParamService {
     }
 
     /**
+     * 保存选项参数
+     *
+     * @param dto 选项参数
+     */
+    @Override
+    public void saveParameter(Parameter dto) {
+        var id = mapper.parameterExists(dto);
+        if (id == null) {
+            mapper.addParameter(dto);
+        } else {
+            dto.setId(id);
+            mapper.updateParameter(dto);
+        }
+    }
+
+    /**
      * 获取选项参数
      *
      * @param dto 选项参数查询DTO
