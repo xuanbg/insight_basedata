@@ -55,6 +55,10 @@ public class ParamController {
     @GetMapping("/v1.0/params/value")
     public ParameterDto getParameter(@RequestHeader("loginInfo") String loginInfo, Parameter dto) {
         LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        if (dto.getModuleId() == null) {
+            dto.setModuleId(info.getAppId());
+        }
+
         dto.setTenantId(info.getTenantId());
         dto.setUserId(info.getId());
         return service.getParameter(dto);
