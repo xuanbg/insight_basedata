@@ -59,9 +59,8 @@ public class ParamServiceImpl implements ParamService {
      * @return Reply
      */
     @Override
-    public Object getParameter(Parameter dto) {
-        var data = mapper.getParameter(dto);
-        return data == null ? null : data.getValue();
+    public ParameterDto getParameter(Parameter dto) {
+        return mapper.getParameter(dto);
     }
 
     /**

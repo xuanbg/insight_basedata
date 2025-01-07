@@ -33,7 +33,7 @@ public interface ParamService {
      * @param dto 选项参数查询DTO
      * @return Reply
      */
-    Object getParameter(Parameter dto);
+    ParameterDto getParameter(Parameter dto);
 
     /**
      * 更新选项参数

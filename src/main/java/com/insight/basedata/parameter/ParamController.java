@@ -73,7 +73,7 @@ public class ParamController {
      * @return Reply
      */
     @GetMapping("/v1.0/params/value")
-    public Object getParameter(@RequestHeader("loginInfo") String loginInfo, Parameter dto) {
+    public ParameterDto getParameter(@RequestHeader("loginInfo") String loginInfo, Parameter dto) {
         LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
         if (dto.getModuleId() == null) {
             dto.setModuleId(info.getAppId());
@@ -82,6 +82,25 @@ public class ParamController {
         dto.setTenantId(info.getTenantId());
         dto.setUserId(info.getId());
         return service.getParameter(dto);
+    }
+
+    /**
+     * 获取选项参数
+     *
+     * @param loginInfo 用户关键信息
+     * @param dto       选项参数查询DTO
+     * @return Reply
+     */
+    @GetMapping("/v2.0/params/value")
+    public Object getParameterValue(@RequestHeader("loginInfo") String loginInfo, Parameter dto) {
+        LoginInfo info = Json.toBeanFromBase64(loginInfo, LoginInfo.class);
+        if (dto.getModuleId() == null) {
+            dto.setModuleId(info.getAppId());
+        }
+
+        dto.setTenantId(info.getTenantId());
+        dto.setUserId(info.getId());
+        return service.getParameter(dto).getValue();
     }
 
     /**
